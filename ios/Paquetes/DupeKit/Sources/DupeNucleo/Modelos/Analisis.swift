@@ -15,6 +15,8 @@ public enum EntradaAnalisis: Sendable, Hashable {
     /// Foto ya reducida (JPEG de ~1024 px).
     case foto(Data)
     case enlace(URL)
+    /// Datos ya leídos de la página (p. ej. desde Safari en la Share Extension).
+    case pagina(DatosPagina)
 }
 
 /// Estado de una carga, para pintar placeholder / resultado / error.

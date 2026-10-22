@@ -14,7 +14,7 @@ final class EstadoCompartido {
         case .outfits:
             pestana = .outfits
             prendaBase = DatosSimulados.prendaBase
-        case .guardados:
+        case .guardados, .outfitGuardado:
             pestana = .guardados
         default:
             pestana = .buscar

@@ -7,7 +7,7 @@ UDID="$1"
 APP="$2"
 SALIDA="$3"
 BUNDLE="com.beeltraan25.dupefinder"
-PANTALLAS=(inicio menu ficha resultados detalle outfits guardados)
+PANTALLAS=(inicio menu ficha resultados detalle outfits guardados outfitGuardado compartir)
 
 mkdir -p "$SALIDA"
 xcrun simctl boot "$UDID" 2>/dev/null || true
@@ -28,3 +28,15 @@ for apariencia in light dark; do
     echo "Captura: $nombre-$pantalla.png"
   done
 done
+
+# Texto grande (accesibilidad): comprueba que nada se corta ni se solapa.
+xcrun simctl ui "$UDID" appearance light
+xcrun simctl ui "$UDID" content_size accessibility-extra-large
+for pantalla in inicio resultados detalle outfits outfitGuardado compartir; do
+  xcrun simctl terminate "$UDID" "$BUNDLE" 2>/dev/null || true
+  xcrun simctl launch "$UDID" "$BUNDLE" -captura "$pantalla"
+  sleep 6
+  xcrun simctl io "$UDID" screenshot "$SALIDA/grande-$pantalla.png"
+  echo "Captura: grande-$pantalla.png"
+done
+xcrun simctl ui "$UDID" content_size large

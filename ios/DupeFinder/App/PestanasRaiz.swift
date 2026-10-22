@@ -8,6 +8,7 @@ enum Pestana: Hashable {
 struct PestanasRaiz: View {
     @Environment(Dependencias.self) private var dependencias
     @Environment(EstadoCompartido.self) private var estado
+    @State private var capturaCompartir = ModoCaptura.actual == .compartir
 
     var body: some View {
         @Bindable var estado = estado
@@ -26,6 +27,7 @@ struct PestanasRaiz: View {
                 GuardadosView { estado.pestana = .buscar }
             }
         }
+        .sheet(isPresented: $capturaCompartir) { CapturaCompartir() }
     }
 }
 

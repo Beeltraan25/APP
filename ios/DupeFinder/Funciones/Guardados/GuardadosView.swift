@@ -3,7 +3,8 @@ import DupeNucleo
 import SwiftData
 import SwiftUI
 
-/// Outfits y prendas guardadas en el iPhone (SwiftData). Tocar una prenda abre la tienda; deslizar borra.
+/// Outfits y prendas guardadas en el iPhone (SwiftData). Tocar un outfit muestra sus piezas;
+/// tocar una prenda abre la tienda; deslizar borra.
 struct GuardadosView: View {
     let irABuscar: () -> Void
 
@@ -13,9 +14,10 @@ struct GuardadosView: View {
     @Query(sort: \OutfitGuardado.fechaGuardado, order: .reverse)
     private var outfits: [OutfitGuardado]
     @State private var tiendaAbierta: EnlaceTienda?
+    @State private var ruta: [OutfitGuardado] = []
 
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $ruta) {
             Group {
                 if prendas.isEmpty && outfits.isEmpty {
                     ContentUnavailableView {
@@ -31,7 +33,9 @@ struct GuardadosView: View {
                         if !outfits.isEmpty {
                             Section("Outfits") {
                                 ForEach(outfits) { outfit in
-                                    FilaOutfitGuardado(outfit: outfit)
+                                    NavigationLink(value: outfit) {
+                                        FilaOutfitGuardado(outfit: outfit)
+                                    }
                                 }
                                 .onDelete { indices in
                                     for indice in indices { contexto.delete(outfits[indice]) }
@@ -57,6 +61,12 @@ struct GuardadosView: View {
                 }
             }
             .navigationTitle("Guardados")
+            .navigationDestination(for: OutfitGuardado.self) { outfit in
+                DetalleOutfitGuardado(outfit: outfit)
+            }
+            .task {
+                if ModoCaptura.actual == .outfitGuardado, let primero = outfits.first { ruta = [primero] }
+            }
             .sheet(item: $tiendaAbierta) { enlace in
                 NavegadorTienda(url: enlace.url).ignoresSafeArea()
             }

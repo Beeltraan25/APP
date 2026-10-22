@@ -19,6 +19,7 @@ struct BuscarView: View {
     @State private var textoEnlace = ""
     @State private var hayEnlaceCopiado = false
     @Environment(\.scenePhase) private var fase
+    @Environment(\.accessibilityReduceMotion) private var reducirMovimiento
     @Environment(EstadoCompartido.self) private var estado
     private let modoPrueba: Bool
 
@@ -239,7 +240,8 @@ struct BuscarView: View {
     }
 
     private func cambiarMenu(abierto: Bool) {
-        withAnimation(.bouncy) { menuAbierto = abierto }
+        // Con "Reducir movimiento", un fundido corto en vez del rebote del cristal.
+        withAnimation(reducirMovimiento ? .easeInOut(duration: 0.2) : .bouncy) { menuAbierto = abierto }
     }
 
     private func abrirCamara() {

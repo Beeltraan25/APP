@@ -10,7 +10,7 @@ enum Almacen {
         let configuracion = ModelConfiguration(schema: esquema, isStoredInMemoryOnly: ModoCaptura.actual != nil)
         do {
             let contenedor = try ModelContainer(for: esquema, configurations: configuracion)
-            if ModoCaptura.actual == .guardados { sembrarEjemplos(en: contenedor.mainContext) }
+            if ModoCaptura.actual == .guardados || ModoCaptura.actual == .outfitGuardado { sembrarEjemplos(en: contenedor.mainContext) }
             return contenedor
         } catch {
             fatalError("No se ha podido abrir la base de datos de guardados: \(error)")

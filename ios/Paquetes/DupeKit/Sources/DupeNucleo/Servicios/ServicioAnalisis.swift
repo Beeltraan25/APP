@@ -20,7 +20,7 @@ public struct ServicioAnalisisSimulado: ServicioAnalisis {
         }
         switch entrada {
         case .foto: return DatosSimulados.analisisFoto
-        case .enlace: return DatosSimulados.analisisEnlace
+        case .enlace, .pagina: return DatosSimulados.analisisEnlace
         }
     }
 }

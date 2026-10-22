@@ -14,6 +14,7 @@ ios/Config/Secretos.xcconfig
 # Xcode (el .xcodeproj y el Info.plist se generan con XcodeGen a partir de ios/project.yml)
 *.xcodeproj/
 ios/DupeFinder/Info.plist
+ios/DupeFinderShare/Info.plist
 xcuserdata/
 DerivedData/
 build/

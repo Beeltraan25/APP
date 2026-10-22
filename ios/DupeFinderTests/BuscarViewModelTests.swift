@@ -1,3 +1,4 @@
+import DupeDiseno
 import DupeNucleo
 import Foundation
 import Testing

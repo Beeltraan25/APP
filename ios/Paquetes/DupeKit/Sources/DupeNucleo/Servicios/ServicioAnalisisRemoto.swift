@@ -18,6 +18,8 @@ public struct ServicioAnalisisRemoto: ServicioAnalisis {
         case .enlace(let url):
             let pagina = await lector.leer(url)
             return try await cliente.analizar(pagina: pagina)
+        case .pagina(let pagina):
+            return try await cliente.analizar(pagina: pagina)
         }
     }
 }

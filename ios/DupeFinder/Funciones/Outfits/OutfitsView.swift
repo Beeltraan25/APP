@@ -8,6 +8,7 @@ import UIKit
 struct OutfitsView: View {
     @Environment(EstadoCompartido.self) private var estado
     @Environment(\.modelContext) private var contexto
+    @Environment(\.accessibilityReduceMotion) private var reducirMovimiento
     @Query private var guardados: [OutfitGuardado]
 
     @State private var vm: OutfitsViewModel
@@ -94,7 +95,7 @@ struct OutfitsView: View {
             // Al terminar, baja hasta los outfits: son lo importante.
             .onChange(of: vm.outfits.map(\.id)) { _, ids in
                 guard !ids.isEmpty else { return }
-                withAnimation(.smooth) { desplazamiento.scrollTo("resultados", anchor: .top) }
+                withAnimation(reducirMovimiento ? nil : .smooth) { desplazamiento.scrollTo("resultados", anchor: .top) }
             }
         }
     }

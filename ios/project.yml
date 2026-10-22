@@ -38,6 +38,10 @@ targets:
         product: DupeNucleo
       - package: DupeKit
         product: DupeDiseno
+      - package: DupeKit
+        product: DupeCompartir
+      # La Share Extension va dentro de la app.
+      - target: DupeFinderShare
     info:
       path: DupeFinder/Info.plist
       properties:
@@ -64,6 +68,50 @@ targets:
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
         ENABLE_PREVIEWS: "YES"
+
+  # "Dupe Finder" en la hoja de compartir de Safari, Instagram, Fotos…
+  DupeFinderShare:
+    type: app-extension
+    platform: iOS
+    sources:
+      - path: DupeFinderShare
+        excludes:
+          - Info.plist
+          - Preprocesado.js
+      - path: DupeFinderShare/Preprocesado.js
+        buildPhase: resources
+    dependencies:
+      - package: DupeKit
+        product: DupeNucleo
+      - package: DupeKit
+        product: DupeDiseno
+      - package: DupeKit
+        product: DupeCompartir
+    info:
+      path: DupeFinderShare/Info.plist
+      properties:
+        CFBundleDisplayName: Dupe Finder
+        CFBundleDevelopmentRegion: es
+        URL_BACKEND: "$(URL_BACKEND)"
+        CLAVE_APP: "$(CLAVE_APP)"
+        NSAppTransportSecurity:
+          NSAllowsLocalNetworking: true
+        NSExtension:
+          NSExtensionPointIdentifier: com.apple.share-services
+          NSExtensionPrincipalClass: "$(PRODUCT_MODULE_NAME).ShareViewController"
+          NSExtensionAttributes:
+            # Safari ejecuta Preprocesado.js y nos da la página ya cargada.
+            NSExtensionJavaScriptPreprocessingFile: Preprocesado
+            NSExtensionActivationRule:
+              NSExtensionActivationSupportsWebURLWithMaxCount: 1
+              NSExtensionActivationSupportsWebPageWithMaxCount: 1
+              NSExtensionActivationSupportsImageWithMaxCount: 1
+              NSExtensionActivationSupportsText: true
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.beeltraan25.dupefinder.share
+        TARGETED_DEVICE_FAMILY: "1"
+        APPLICATION_EXTENSION_API_ONLY: "YES"
 
   DupeFinderTests:
     type: bundle.unit-test
