@@ -9,10 +9,13 @@ import type { Candidato, ClienteSerpapi } from "./serpapi";
 
 /** Si Google Lens ya da al menos estas alternativas válidas, no se gasta otra consulta en Shopping. */
 export const MINIMO_SIN_SHOPPING = 6;
-const MAXIMO_ALTERNATIVAS = 40;
+/** Máximo de alternativas: todas se puntúan, y cada una gasta una descarga de miniatura. */
+export const MAXIMO_ALTERNATIVAS = 24;
 
 export interface ResultadoBusqueda {
   alternativas: Alternativa[];
+  /** Miniatura de cada alternativa (mismo orden), para la similitud visual. */
+  miniaturas: (string | null)[];
   /** Consultas de SerpAPI gastadas (el plan gratuito da ~250 al mes). */
   consultas: number;
 }
@@ -52,7 +55,11 @@ export async function buscarAlternativas(
   }
 
   const validos = deduplicar(filtrar(candidatos)).slice(0, MAXIMO_ALTERNATIVAS);
-  return { alternativas: await Promise.all(validos.map(aAlternativa)), consultas };
+  return {
+    alternativas: await Promise.all(validos.map(aAlternativa)),
+    miniaturas: validos.map(({ candidato }) => candidato.miniatura),
+    consultas,
+  };
 }
 
 /** Primera búsqueda propuesta por la IA, asegurando que pide ropa de hombre. */

@@ -31,6 +31,7 @@ function candidato(parcial: Partial<Candidato>): Candidato {
     url: "https://www.zara.com/es/es/sudadera-p1.html",
     nombreTienda: "Zara",
     imagen: "https://static.zara.net/a.jpg",
+    miniatura: null,
     precio: { centimos: 2995, moneda: "EUR" },
     precioAnterior: null,
     ...parcial,

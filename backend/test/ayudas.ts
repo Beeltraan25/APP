@@ -53,6 +53,11 @@ export class IASimulada implements ProveedorIA {
     this.ultimaPeticion = peticion as PeticionJSON<unknown>;
     return peticion.esquema.parse({ ...fichaIAEjemplo(), ...this.respuesta });
   }
+
+  /** Vectores fijos: la misma imagen da siempre el mismo vector. */
+  async embeberImagenes(imagenes: { base64: string }[]): Promise<number[][]> {
+    return imagenes.map((imagen) => [imagen.base64.length % 7, 1, 2]);
+  }
 }
 
 export function fichaIAEjemplo(): FichaIA {

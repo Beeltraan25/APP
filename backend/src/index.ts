@@ -26,7 +26,7 @@ export function crearApp(dependencias: Partial<Dependencias> = {}) {
   app.get("/v1/salud", (c) => c.json({ estado: "ok" }));
   app.route("/v1/imagenes", rutaImagenes);
   app.route("/v1/analizar", crearRutaAnalizar(crearIA, dependencias.fetchImagenes));
-  app.route("/v1/buscar", crearRutaBuscar(crearSerpapi));
+  app.route("/v1/buscar", crearRutaBuscar({ crearSerpapi, crearIA, fetchImagenes: dependencias.fetchImagenes }));
   app.route("/v1/tiendas", rutaTiendas);
 
   app.notFound((c) => respuestaError(c, Errores.noEncontrado()));

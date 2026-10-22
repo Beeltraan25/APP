@@ -27,15 +27,25 @@ struct DecodificacionTests {
         #expect(origen.url.host() == "www.zara.com")
     }
 
-    @Test("Lee una búsqueda con alternativas en los cuatro rangos")
+    @Test("Lee una búsqueda real, puntuada y ordenada por parecido")
     func busqueda() throws {
         let busqueda = DatosSimulados.busqueda
-        #expect(busqueda.alternativas.count == 11)
-        #expect(busqueda.conteoPorRango["premium"] == 1)
-        let zalando = try #require(busqueda.alternativas.first { $0.producto.tienda.id == "zalando" })
-        #expect(zalando.producto.marca == "Carhartt WIP")
-        #expect(zalando.abreGoogleShopping)
+        #expect(busqueda.alternativas.count == 17)
+        #expect(busqueda.conteoPorRango["economico"] == 1)
+        #expect(busqueda.conteoPorRango["premium"] == 0)
         #expect(busqueda.alternativas.allSatisfy { RangoPrecio.para(centimos: $0.producto.precio.centimos) == $0.producto.rango })
+
+        let totales = busqueda.alternativas.compactMap { $0.similitud?.total }
+        #expect(totales.count == 17)
+        #expect(totales == totales.sorted(by: >))
+
+        let cos = busqueda.alternativas[2]
+        #expect(cos.producto.tienda.id == "cos")
+        #expect(cos.similitud?.criterios.count == 6)
+        #expect(cos.similitud?.criterios.first?.titulo == "Aspecto")
+        #expect(cos.etiquetas.count == 3)
+        #expect(!cos.abreGoogleShopping)
+        #expect(busqueda.alternativas.contains { $0.abreGoogleShopping })
     }
 
     @Test("Un fit desconocido se lee como «otro»")

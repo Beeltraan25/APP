@@ -1,13 +1,17 @@
 import { z } from "zod";
 import type { Entorno } from "../entorno";
 import { Errores } from "../infra/errores";
-import type { ParteEntrada, PeticionJSON, ProveedorIA } from "./proveedor";
+import type { ImagenEntrada, ParteEntrada, PeticionJSON, ProveedorIA } from "./proveedor";
 
 const URL_INTERACCIONES = "https://generativelanguage.googleapis.com/v1beta/interactions";
 const MODELOS_POR_DEFECTO = ["gemini-3.8-flash", "gemini-3.5-flash-lite"];
+const MODELO_EMBEDDINGS = "gemini-embedding-2";
+/** 256 dimensiones bastan para comparar prendas y la respuesta pesa 12 veces menos que con 3072. */
+const DIMENSIONES_EMBEDDINGS = 256;
 
 export interface OpcionesGemini {
   apiKey: string;
+  modeloEmbeddings?: string;
   /** En orden de preferencia: si uno agota la cuota o falla, se prueba el siguiente. */
   modelos: string[];
   /** Para los tests. */
@@ -26,6 +30,36 @@ interface RespuestaInteraccion {
 /** Gemini mediante su API REST "Interactions" (sin SDK: menos dependencias dentro del Worker). */
 export class ProveedorGemini implements ProveedorIA {
   constructor(private readonly opciones: OpcionesGemini) {}
+
+  /** Vectores de imagen con gemini-embedding-2 (gratis). Todas las imágenes van en una sola petición. */
+  async embeberImagenes(imagenes: ImagenEntrada[]): Promise<number[][]> {
+    if (!imagenes.length) return [];
+    const peticionFetch = this.opciones.fetch ?? fetch;
+    const modelo = this.opciones.modeloEmbeddings ?? MODELO_EMBEDDINGS;
+    const respuesta = await peticionFetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/${modelo}:batchEmbedContents`,
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "x-goog-api-key": this.opciones.apiKey },
+        body: JSON.stringify({
+          requests: imagenes.map((imagen) => ({
+            model: `models/${modelo}`,
+            content: { parts: [{ inline_data: { mime_type: imagen.mime, data: imagen.base64 } }] },
+            output_dimensionality: DIMENSIONES_EMBEDDINGS,
+          })),
+        }),
+        signal: AbortSignal.timeout(30_000),
+      },
+    );
+    if (respuesta.status === 429) throw Errores.cuotaAgotada();
+    if (!respuesta.ok) throw Errores.iaNoDisponible(`embeddings: HTTP ${respuesta.status} ${(await respuesta.text()).slice(0, 300)}`);
+    const datos = (await respuesta.json()) as { embeddings?: { values?: number[] }[] };
+    const vectores = (datos.embeddings ?? []).map((e) => e.values ?? []);
+    if (vectores.length !== imagenes.length || vectores.some((v) => !v.length)) {
+      throw Errores.iaNoDisponible("embeddings: respuesta incompleta");
+    }
+    return vectores;
+  }
 
   async generarJSON<T>({ instrucciones, partes, esquema }: PeticionJSON<T>): Promise<T> {
     const peticionFetch = this.opciones.fetch ?? fetch;

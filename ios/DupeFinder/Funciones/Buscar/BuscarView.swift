@@ -250,7 +250,7 @@ struct BuscarView: View {
         case .menu: menuAbierto = true
         case .ficha: await vm.analizar(.foto(Data()))
         case .resultados: ruta = [.resultados(.ejemplo)]
-        case .detalle: ruta = [.resultados(.ejemplo), .detalle(DatosSimulados.busqueda.alternativas[6])]
+        case .detalle: ruta = [.resultados(.ejemplo), .detalle(DatosSimulados.busqueda.alternativas[2])]
         default: break
         }
     }

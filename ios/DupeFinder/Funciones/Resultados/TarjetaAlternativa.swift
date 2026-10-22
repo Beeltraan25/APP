@@ -39,17 +39,15 @@ struct TarjetaAlternativa: View {
                     Text("\(similitud.total) %")
                         .font(.caption.weight(.semibold))
                         .foregroundStyle(.tint)
+                        .accessibilityLabel("\(similitud.total) % de parecido")
                 }
             }
 
+            // En la tarjeta caben 2 etiquetas; el detalle las muestra todas.
             if !alternativa.etiquetas.isEmpty {
                 FlujoChips(espacio: 4) {
-                    ForEach(alternativa.etiquetas.prefix(3), id: \.texto) { etiqueta in
-                        Text(etiqueta.texto)
-                            .font(.caption2)
-                            .padding(.horizontal, 6)
-                            .padding(.vertical, 3)
-                            .background(.fill.tertiary, in: .capsule)
+                    ForEach(alternativa.etiquetas.prefix(2), id: \.texto) { etiqueta in
+                        EtiquetaSimilitud(etiqueta, compacta: true)
                     }
                 }
             }

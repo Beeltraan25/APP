@@ -21,8 +21,8 @@ struct ResultadosViewModelTests {
     @Test("Carga todas las alternativas")
     func cargaTodo() async {
         let vm = await cargado()
-        #expect(vm.visibles.count == 11)
-        #expect(vm.conteo(nil) == 11)
+        #expect(vm.visibles.count == 17)
+        #expect(vm.conteo(nil) == 17)
     }
 
     @Test("Filtra por rango sin volver a buscar")
@@ -31,9 +31,9 @@ struct ResultadosViewModelTests {
         vm.rango = .economico
         #expect(vm.visibles.allSatisfy { $0.producto.rango == .economico })
         #expect(vm.visibles.count == vm.conteo(.economico))
-        #expect(vm.conteo(.premium) == 1)
+        #expect(vm.conteo(.premium) == 0)
         vm.rango = nil
-        #expect(vm.visibles.count == 11)
+        #expect(vm.visibles.count == 17)
     }
 
     @Test("Si la búsqueda falla, guarda el error para mostrarlo")

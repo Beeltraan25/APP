@@ -13,6 +13,8 @@ export interface Candidato {
   /** Nombre del vendedor ("source"). */
   nombreTienda: string | null;
   imagen: string | null;
+  /** Imagen pequeña (miniatura de Google): sirve para comparar fotos sin gastar CPU. */
+  miniatura: string | null;
   precio: Precio | null;
   precioAnterior: Precio | null;
 }
@@ -90,6 +92,7 @@ export function leerLens(datos: Objeto): Candidato[] {
         url,
         nombreTienda: texto(item.source),
         imagen: texto(item.image) ?? texto(item.thumbnail),
+        miniatura: texto(item.thumbnail) ?? texto(item.image),
         precio: leerPrecio(item.price, item.extracted_price),
         precioAnterior: leerPrecio(item.old_price, item.extracted_old_price),
       },
@@ -114,6 +117,7 @@ export function leerShopping(datos: Objeto): Candidato[] {
         url,
         nombreTienda: texto(item.source),
         imagen: texto(item.thumbnail) ?? texto(item.serpapi_thumbnail),
+        miniatura: texto(item.thumbnail) ?? texto(item.serpapi_thumbnail),
         precio: leerPrecio(item.price, item.extracted_price),
         precioAnterior: leerPrecio(item.old_price, item.extracted_old_price),
       },

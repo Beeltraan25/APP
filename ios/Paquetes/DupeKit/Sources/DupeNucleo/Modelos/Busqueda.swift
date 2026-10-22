@@ -43,6 +43,19 @@ public struct CriterioSimilitud: Codable, Hashable, Sendable {
     public var pesoAplicado: Double
     public var puntuacion: Int?
     public var disponible: Bool
+
+    /// Nombre para el usuario.
+    public var titulo: String {
+        switch criterio {
+        case "visual": "Aspecto"
+        case "color": "Color"
+        case "gramaje": "Gramaje"
+        case "material": "Material"
+        case "fit": "Corte"
+        case "detalles": "Detalles"
+        default: criterio.capitalized
+        }
+    }
 }
 
 public struct Etiqueta: Codable, Hashable, Sendable {

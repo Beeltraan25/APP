@@ -54,6 +54,10 @@ struct DetalleAlternativaView: View {
                         .foregroundStyle(.secondary)
                 }
 
+                if let similitud = alternativa.similitud {
+                    SeccionSimilitud(similitud: similitud, etiquetas: alternativa.etiquetas)
+                }
+
                 if alternativa.abreGoogleShopping {
                     Label(
                         "Te llevaremos a Google Shopping, donde verás la oferta de \(producto.tienda.nombre).",
@@ -123,7 +127,7 @@ struct DetalleAlternativaView: View {
 
 #Preview {
     NavigationStack {
-        DetalleAlternativaView(alternativa: DatosSimulados.busqueda.alternativas[6])
+        DetalleAlternativaView(alternativa: DatosSimulados.busqueda.alternativas[2])
     }
     .modelContainer(for: [PrendaGuardada.self, OutfitGuardado.self], inMemory: true)
 }
