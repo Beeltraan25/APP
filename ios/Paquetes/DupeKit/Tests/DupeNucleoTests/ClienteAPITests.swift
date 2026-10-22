@@ -112,6 +112,31 @@ struct ClienteAPITests {
         #expect((enviada["json_ld"] as? [String: Any])?["priceCurrency"] as? String == "EUR")
     }
 
+    @Test("Envía la ficha para buscar en snake_case, como espera el backend")
+    func buscar() async throws {
+        let registro = Registro()
+        let codificador = JSONEncoder()
+        codificador.keyEncodingStrategy = .convertToSnakeCase
+        let respuesta = try codificador.encode(DatosSimulados.busqueda)
+        ProtocoloSimulado.responder = { peticion, cuerpo in
+            registro.peticion = peticion
+            registro.cuerpo = cuerpo
+            return (200, respuesta)
+        }
+
+        let ficha = DatosSimulados.analisisFoto.ficha
+        let resultado = try await cliente().buscar(imagenUrl: URL(string: "https://api.prueba/v1/imagenes/an_1"), ficha: ficha)
+
+        #expect(resultado.alternativas.count == 11)
+        #expect(registro.peticion?.url?.path() == "/v1/buscar")
+        let json = try JSONSerialization.jsonObject(with: try #require(registro.cuerpo)) as? [String: Any]
+        #expect(json?["imagen_url"] as? String == "https://api.prueba/v1/imagenes/an_1")
+        let fichaEnviada = try #require(json?["ficha"] as? [String: Any])
+        #expect(fichaEnviada["palabras_clave_busqueda"] as? [String] == ficha.palabrasClaveBusqueda)
+        #expect(fichaEnviada["gramaje_gsm"] as? Int == 350)
+        #expect((fichaEnviada["color_principal"] as? [String: Any])?["hex"] as? String == "#1B2A4A")
+    }
+
     @Test("Los errores del backend llegan con su mensaje en español")
     func errorDelBackend() async {
         ProtocoloSimulado.responder = { _, _ in

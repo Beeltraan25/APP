@@ -1,0 +1,260 @@
+{
+  "busqueda_id": "bs_simulada000000000000001",
+  "alternativas": [
+    {
+      "producto": {
+        "id": "prd_simulado0001",
+        "titulo": "Vaqueros baggy carpintero",
+        "tienda": {
+          "id": "pull-and-bear",
+          "nombre": "Pull&Bear"
+        },
+        "marca": "Pull&Bear",
+        "url": "https://www.pullandbear.com/es/vaqueros-baggy-carpintero-p1.html",
+        "imagen_url": "https://raw.githubusercontent.com/Beeltraan25/APP/main/prenda.jpg",
+        "precio": {
+          "centimos": 3599,
+          "moneda": "EUR"
+        },
+        "precio_anterior": null,
+        "rango": "medio"
+      },
+      "similitud": null,
+      "etiquetas": [],
+      "fuente": "lens"
+    },
+    {
+      "producto": {
+        "id": "prd_simulado0002",
+        "titulo": "Jeans baggy cargo azul oscuro",
+        "tienda": {
+          "id": "bershka",
+          "nombre": "Bershka"
+        },
+        "marca": "Bershka",
+        "url": "https://www.bershka.com/es/jeans-baggy-cargo-p2.html",
+        "imagen_url": "https://raw.githubusercontent.com/Beeltraan25/APP/main/prenda.jpg",
+        "precio": {
+          "centimos": 2999,
+          "moneda": "EUR"
+        },
+        "precio_anterior": null,
+        "rango": "medio"
+      },
+      "similitud": null,
+      "etiquetas": [],
+      "fuente": "lens"
+    },
+    {
+      "producto": {
+        "id": "prd_simulado0003",
+        "titulo": "Vaqueros wide leg",
+        "tienda": {
+          "id": "lefties",
+          "nombre": "Lefties"
+        },
+        "marca": "Lefties",
+        "url": "https://www.lefties.com/es/vaqueros-wide-leg-p3.html",
+        "imagen_url": "https://raw.githubusercontent.com/Beeltraan25/APP/main/prenda.jpg",
+        "precio": {
+          "centimos": 1999,
+          "moneda": "EUR"
+        },
+        "precio_anterior": {
+          "centimos": 2599,
+          "moneda": "EUR"
+        },
+        "rango": "economico"
+      },
+      "similitud": null,
+      "etiquetas": [],
+      "fuente": "lens"
+    },
+    {
+      "producto": {
+        "id": "prd_simulado0004",
+        "titulo": "Jeans baggy fit carpintero",
+        "tienda": {
+          "id": "zara",
+          "nombre": "Zara"
+        },
+        "marca": "Zara",
+        "url": "https://www.zara.com/es/es/jeans-baggy-carpintero-p4.html",
+        "imagen_url": "https://raw.githubusercontent.com/Beeltraan25/APP/main/prenda.jpg",
+        "precio": {
+          "centimos": 3995,
+          "moneda": "EUR"
+        },
+        "precio_anterior": null,
+        "rango": "medio"
+      },
+      "similitud": null,
+      "etiquetas": [],
+      "fuente": "lens"
+    },
+    {
+      "producto": {
+        "id": "prd_simulado0005",
+        "titulo": "Vaqueros relaxed lavado oscuro",
+        "tienda": {
+          "id": "springfield",
+          "nombre": "Springfield"
+        },
+        "marca": "Springfield",
+        "url": "https://myspringfield.com/es/es/vaqueros-relaxed-p5.html",
+        "imagen_url": "https://raw.githubusercontent.com/Beeltraan25/APP/main/prenda.jpg",
+        "precio": {
+          "centimos": 2499,
+          "moneda": "EUR"
+        },
+        "precio_anterior": {
+          "centimos": 3599,
+          "moneda": "EUR"
+        },
+        "rango": "economico"
+      },
+      "similitud": null,
+      "etiquetas": [],
+      "fuente": "lens"
+    },
+    {
+      "producto": {
+        "id": "prd_simulado0006",
+        "titulo": "Jeans relaxed fit",
+        "tienda": {
+          "id": "mango",
+          "nombre": "Mango"
+        },
+        "marca": "Mango",
+        "url": "https://shop.mango.com/es/es/p/hombre/jeans-relaxed-p6",
+        "imagen_url": "https://raw.githubusercontent.com/Beeltraan25/APP/main/prenda.jpg",
+        "precio": {
+          "centimos": 4999,
+          "moneda": "EUR"
+        },
+        "precio_anterior": null,
+        "rango": "medio"
+      },
+      "similitud": null,
+      "etiquetas": [],
+      "fuente": "lens"
+    },
+    {
+      "producto": {
+        "id": "prd_simulado0007",
+        "titulo": "Vaqueros relaxed fit denim rígido",
+        "tienda": {
+          "id": "massimo-dutti",
+          "nombre": "Massimo Dutti"
+        },
+        "marca": "Massimo Dutti",
+        "url": "https://www.massimodutti.com/es/vaqueros-relaxed-p7.html",
+        "imagen_url": "https://raw.githubusercontent.com/Beeltraan25/APP/main/prenda.jpg",
+        "precio": {
+          "centimos": 6995,
+          "moneda": "EUR"
+        },
+        "precio_anterior": null,
+        "rango": "alto"
+      },
+      "similitud": null,
+      "etiquetas": [],
+      "fuente": "lens"
+    },
+    {
+      "producto": {
+        "id": "prd_simulado0008",
+        "titulo": "Vaqueros anchos de algodón orgánico",
+        "tienda": {
+          "id": "cos",
+          "nombre": "COS"
+        },
+        "marca": "COS",
+        "url": "https://www.cos.com/es-es/men/vaqueros-anchos-p8.html",
+        "imagen_url": "https://raw.githubusercontent.com/Beeltraan25/APP/main/prenda.jpg",
+        "precio": {
+          "centimos": 8900,
+          "moneda": "EUR"
+        },
+        "precio_anterior": null,
+        "rango": "alto"
+      },
+      "similitud": null,
+      "etiquetas": [],
+      "fuente": "lens"
+    },
+    {
+      "producto": {
+        "id": "prd_simulado0009",
+        "titulo": "Carhartt WIP Simple Pant",
+        "tienda": {
+          "id": "zalando",
+          "nombre": "Zalando"
+        },
+        "marca": "Carhartt WIP",
+        "url": "https://www.google.com/search?ibp=oshop&prds=catalogid:9",
+        "imagen_url": "https://raw.githubusercontent.com/Beeltraan25/APP/main/prenda.jpg",
+        "precio": {
+          "centimos": 10995,
+          "moneda": "EUR"
+        },
+        "precio_anterior": null,
+        "rango": "alto"
+      },
+      "similitud": null,
+      "etiquetas": [],
+      "fuente": "shopping"
+    },
+    {
+      "producto": {
+        "id": "prd_simulado0010",
+        "titulo": "Levi's 568 Stay Loose Carpenter",
+        "tienda": {
+          "id": "el-corte-ingles",
+          "nombre": "El Corte Inglés"
+        },
+        "marca": "Levi's",
+        "url": "https://www.google.com/search?ibp=oshop&prds=catalogid:10",
+        "imagen_url": "https://raw.githubusercontent.com/Beeltraan25/APP/main/prenda.jpg",
+        "precio": {
+          "centimos": 11900,
+          "moneda": "EUR"
+        },
+        "precio_anterior": null,
+        "rango": "alto"
+      },
+      "similitud": null,
+      "etiquetas": [],
+      "fuente": "shopping"
+    },
+    {
+      "producto": {
+        "id": "prd_simulado0011",
+        "titulo": "Carhartt WIP Double Knee Denim",
+        "tienda": {
+          "id": "zalando",
+          "nombre": "Zalando"
+        },
+        "marca": "Carhartt WIP",
+        "url": "https://www.google.com/search?ibp=oshop&prds=catalogid:11",
+        "imagen_url": null,
+        "precio": {
+          "centimos": 15995,
+          "moneda": "EUR"
+        },
+        "precio_anterior": null,
+        "rango": "premium"
+      },
+      "similitud": null,
+      "etiquetas": [],
+      "fuente": "shopping"
+    }
+  ],
+  "conteo_por_rango": {
+    "economico": 2,
+    "medio": 4,
+    "alto": 4,
+    "premium": 1
+  },
+  "desde_cache": false
+}

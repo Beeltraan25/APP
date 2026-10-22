@@ -61,6 +61,17 @@ public final class ClienteAPI: Sendable {
         return try await enviar(peticion)
     }
 
+    /// POST /v1/buscar con la ficha revisada por el usuario.
+    public func buscar(imagenUrl: URL?, ficha: FichaPrenda) async throws -> RespuestaBusqueda {
+        var peticion = peticion(ruta: "v1/buscar")
+        peticion.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let codificador = JSONEncoder()
+        // La ficha no tiene claves dinámicas: aquí sí se puede convertir a snake_case.
+        codificador.keyEncodingStrategy = .convertToSnakeCase
+        peticion.httpBody = try codificador.encode(CuerpoBusqueda(imagenUrl: imagenUrl, ficha: ficha))
+        return try await enviar(peticion)
+    }
+
     // MARK: - Base
 
     private func peticion(ruta: String) -> URLRequest {
@@ -110,6 +121,11 @@ public final class ClienteAPI: Sendable {
             .desconocido
         }
     }
+}
+
+private struct CuerpoBusqueda: Encodable {
+    let imagenUrl: URL?
+    let ficha: FichaPrenda
 }
 
 /// Cuerpo de error del backend: { "error": { "codigo", "mensaje" } }

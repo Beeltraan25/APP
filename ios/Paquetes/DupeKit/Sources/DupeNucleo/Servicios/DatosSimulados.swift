@@ -22,6 +22,12 @@ public enum DatosSimulados {
         try! cargar("analisis-foto")
     }
 
+    /// Alternativas a los vaqueros de la foto, en los cuatro rangos de precio.
+    public static var busqueda: RespuestaBusqueda {
+        // swiftlint:disable:next force_try
+        try! cargar("busqueda")
+    }
+
     /// Respuesta del backend para el enlace de una sudadera de Zara.
     public static var analisisEnlace: RespuestaAnalisis {
         // swiftlint:disable:next force_try

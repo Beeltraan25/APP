@@ -12,7 +12,11 @@ struct PestanasRaiz: View {
     var body: some View {
         TabView(selection: $seleccion) {
             Tab("Buscar", systemImage: "magnifyingglass", value: .buscar) {
-                BuscarView(servicio: dependencias.analisis, modoPrueba: dependencias.modoPrueba)
+                BuscarView(
+                    servicio: dependencias.analisis,
+                    busqueda: dependencias.busqueda,
+                    modoPrueba: dependencias.modoPrueba
+                )
             }
             Tab("Outfits", systemImage: "tshirt", value: .outfits) {
                 OutfitsView { seleccion = .buscar }

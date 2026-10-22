@@ -12,10 +12,12 @@ struct FichaSheet: View {
     @State private var campoEditando: CampoEditable?
     @State private var listaAnadiendo: ListaFicha?
     @State private var textoEditado = ""
-    @State private var avisoResultados = false
+    /// Se llama con la ficha revisada al pulsar "Buscar alternativas".
+    private let alBuscar: (FichaPrenda) -> Void
 
-    init(analisis: AnalisisPresentado) {
+    init(analisis: AnalisisPresentado, alBuscar: @escaping (FichaPrenda) -> Void = { _ in }) {
         _vm = State(initialValue: FichaViewModel(analisis: analisis))
+        self.alBuscar = alBuscar
         _tamano = State(initialValue: ModoCaptura.actual == .ficha ? .large : .medium)
     }
 
@@ -76,11 +78,6 @@ struct FichaSheet: View {
             TextField("Escribe aquí", text: $textoEditado)
             Button("Añadir") { vm.anadir(textoEditado, a: lista) }
             Button("Cancelar", role: .cancel) {}
-        }
-        .alert("Muy pronto", isPresented: $avisoResultados) {
-            Button("Vale", role: .cancel) {}
-        } message: {
-            Text("La búsqueda de alternativas llega en la fase 3.")
         }
     }
 
@@ -216,7 +213,11 @@ struct FichaSheet: View {
     }
 
     private var botonBuscar: some View {
-        Button { avisoResultados = true } label: {
+        Button {
+            let ficha = vm.ficha
+            cerrar()
+            alBuscar(ficha)
+        } label: {
             Label("Buscar alternativas", systemImage: "magnifyingglass")
                 .font(.headline)
                 .frame(maxWidth: .infinity)
@@ -226,7 +227,6 @@ struct FichaSheet: View {
         .controlSize(.large)
         .padding(.horizontal, 20)
         .padding(.bottom, Espacio.s)
-        .sensoryFeedback(.impact, trigger: avisoResultados)
     }
 
     // MARK: - Edición

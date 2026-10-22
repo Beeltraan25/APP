@@ -5,12 +5,13 @@ import SwiftUI
 struct DupeFinderApp: App {
     /// Backend real si está configurado (Secretos.xcconfig); si no, datos de prueba.
     @State private var dependencias = Dependencias.crear()
+    private let almacen = Almacen.crear()
 
     var body: some Scene {
         WindowGroup {
             PestanasRaiz()
                 .environment(dependencias)
         }
-        .modelContainer(for: [PrendaGuardada.self, OutfitGuardado.self])
+        .modelContainer(almacen)
     }
 }

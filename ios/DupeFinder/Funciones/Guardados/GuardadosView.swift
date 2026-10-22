@@ -1,13 +1,16 @@
+import DupeDiseno
 import DupeNucleo
 import SwiftData
 import SwiftUI
 
-/// Prendas guardadas en el iPhone (SwiftData). Guardar se activa en la fase 3.
+/// Prendas guardadas en el iPhone (SwiftData). Tocar una abre la tienda; deslizar la borra.
 struct GuardadosView: View {
     let irABuscar: () -> Void
 
+    @Environment(\.modelContext) private var contexto
     @Query(sort: \PrendaGuardada.fechaGuardado, order: .reverse)
     private var prendas: [PrendaGuardada]
+    @State private var tiendaAbierta: EnlaceTienda?
 
     var body: some View {
         NavigationStack {
@@ -22,19 +25,53 @@ struct GuardadosView: View {
                             .buttonStyle(.glass)
                     }
                 } else {
-                    List(prendas) { prenda in
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(prenda.titulo)
-                                .font(.headline)
-                            Text("\(prenda.tiendaNombre) · \(Precio(centimos: prenda.precioCentimos).formateado)")
-                                .font(.subheadline)
-                                .foregroundStyle(.secondary)
+                    List {
+                        ForEach(prendas) { prenda in
+                            Button { tiendaAbierta = EnlaceTienda(url: prenda.url) } label: {
+                                FilaGuardada(prenda: prenda)
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityHint("Abre la tienda")
+                        }
+                        .onDelete { indices in
+                            for indice in indices { contexto.delete(prendas[indice]) }
                         }
                     }
+                    .listStyle(.plain)
                 }
             }
             .navigationTitle("Guardados")
+            .sheet(item: $tiendaAbierta) { enlace in
+                NavegadorTienda(url: enlace.url).ignoresSafeArea()
+            }
         }
+    }
+}
+
+private struct FilaGuardada: View {
+    let prenda: PrendaGuardada
+
+    var body: some View {
+        HStack(spacing: Espacio.m) {
+            ImagenRemota(url: prenda.imagenUrl)
+                .frame(width: 60, height: 76)
+                .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+            VStack(alignment: .leading, spacing: 3) {
+                Text(prenda.marca ?? prenda.tiendaNombre)
+                    .font(.caption.weight(.semibold))
+                    .textCase(.uppercase)
+                    .foregroundStyle(.secondary)
+                Text(prenda.titulo)
+                    .font(.subheadline)
+                    .lineLimit(2)
+                Text(Precio(centimos: prenda.precioCentimos).formateado)
+                    .font(.subheadline.weight(.semibold))
+            }
+            Spacer(minLength: 0)
+        }
+        .padding(.vertical, 4)
+        .contentShape(.rect)
+        .accessibilityElement(children: .combine)
     }
 }
 

@@ -12,6 +12,8 @@ export type CodigoError =
   | "PAGINA_SIN_DATOS"
   | "CUOTA_AGOTADA"
   | "IA_NO_DISPONIBLE"
+  | "CUOTA_BUSQUEDAS"
+  | "BUSQUEDA_NO_DISPONIBLE"
   | "NO_ENCONTRADO"
   | "SERVIDOR_NO_CONFIGURADO"
   | "ERROR_INTERNO";
@@ -65,6 +67,19 @@ export const Errores = {
       "IA_NO_DISPONIBLE",
       502,
       "No hemos podido analizar la prenda ahora mismo. Inténtalo de nuevo en unos segundos.",
+      detalle,
+    ),
+  cuotaBusquedas: () =>
+    new ErrorApp(
+      "CUOTA_BUSQUEDAS",
+      503,
+      "Hemos llegado al límite gratuito de búsquedas en tiendas. Vuelve a intentarlo más adelante.",
+    ),
+  busquedaNoDisponible: (detalle?: unknown) =>
+    new ErrorApp(
+      "BUSQUEDA_NO_DISPONIBLE",
+      502,
+      "No hemos podido buscar en las tiendas ahora mismo. Inténtalo de nuevo en unos segundos.",
       detalle,
     ),
   noEncontrado: () => new ErrorApp("NO_ENCONTRADO", 404, "No hemos encontrado lo que buscabas."),

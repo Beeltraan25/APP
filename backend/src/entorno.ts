@@ -9,6 +9,8 @@ export interface Entorno {
 
   /** Secreto: clave de la API de Gemini. */
   GEMINI_API_KEY?: string;
+  /** Secreto: clave de SerpAPI (Google Lens y Google Shopping). */
+  SERPAPI_KEY?: string;
   /** Secreto: clave compartida entre la app y el backend. */
   CLAVE_APP?: string;
   /** Modelos de Gemini separados por comas, en orden de preferencia. */

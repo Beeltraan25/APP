@@ -7,6 +7,8 @@ import UIKit
 /// Inicio: una sola acción principal, "Buscar prenda", que se abre en Cámara / Fotos / Pegar enlace.
 struct BuscarView: View {
     @State private var vm: BuscarViewModel
+    @State private var ruta: [Destino] = []
+    private let busqueda: any ServicioBusqueda
     @Namespace private var cristal
 
     @State private var menuAbierto = false
@@ -19,13 +21,14 @@ struct BuscarView: View {
     @Environment(\.scenePhase) private var fase
     private let modoPrueba: Bool
 
-    init(servicio: any ServicioAnalisis, modoPrueba: Bool = false) {
+    init(servicio: any ServicioAnalisis, busqueda: any ServicioBusqueda, modoPrueba: Bool = false) {
         _vm = State(initialValue: BuscarViewModel(servicio: servicio))
+        self.busqueda = busqueda
         self.modoPrueba = modoPrueba
     }
 
     var body: some View {
-        NavigationStack {
+        NavigationStack(path: $ruta) {
             VStack(spacing: 0) {
                 Spacer()
                 presentacion
@@ -48,9 +51,19 @@ struct BuscarView: View {
             }
             .animation(.smooth, value: vm.analizando)
             .toolbar(.hidden, for: .navigationBar)
+            .navigationDestination(for: Destino.self) { destino in
+                switch destino {
+                case .resultados(let peticion):
+                    ResultadosView(peticion: peticion, servicio: busqueda)
+                case .detalle(let alternativa):
+                    DetalleAlternativaView(alternativa: alternativa)
+                }
+            }
         }
         .sheet(item: $vm.analisis) { analisis in
-            FichaSheet(analisis: analisis)
+            FichaSheet(analisis: analisis) { ficha in
+                ruta = [.resultados(PeticionResultados(ficha: ficha, imagenUrl: analisis.respuesta.imagenUrl))]
+            }
         }
         .fullScreenCover(isPresented: $mostrandoCamara) {
             CamaraView { datos in
@@ -236,11 +249,13 @@ struct BuscarView: View {
         switch ModoCaptura.actual {
         case .menu: menuAbierto = true
         case .ficha: await vm.analizar(.foto(Data()))
+        case .resultados: ruta = [.resultados(.ejemplo)]
+        case .detalle: ruta = [.resultados(.ejemplo), .detalle(DatosSimulados.busqueda.alternativas[6])]
         default: break
         }
     }
 }
 
 #Preview {
-    BuscarView(servicio: ServicioAnalisisSimulado())
+    BuscarView(servicio: ServicioAnalisisSimulado(), busqueda: ServicioBusquedaSimulado())
 }

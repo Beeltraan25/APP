@@ -9,6 +9,8 @@ export interface TiendaConfig {
   activa: boolean;
   /** Vende otras marcas (Zalando, ASOS, El Corte Inglés). */
   multimarca?: boolean;
+  /** Otros nombres con los que aparece en Google Shopping ("Zalando.es", "Pull & Bear"…). */
+  alias?: string[];
 }
 
 export const TIENDAS: readonly TiendaConfig[] = tiendasJson;
@@ -33,6 +35,39 @@ export function tiendaDeUrl(url: string, { soloActivas = false } = {}): TiendaCo
         tienda.dominios.some((d) => dominio === d || dominio.endsWith(`.${d}`)),
     ) ?? null
   );
+}
+
+/** "El Corte Inglés" → "elcorteingles" (sin tildes, espacios ni símbolos). */
+export function normalizarNombre(texto: string): string {
+  return texto
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, "");
+}
+
+const nombresPorTienda = new Map(
+  TIENDAS.map((tienda) => [
+    tienda,
+    new Set(
+      [
+        tienda.nombre,
+        ...(tienda.alias ?? []),
+        ...tienda.dominios,
+        ...tienda.dominios.map((d) => d.split(".")[0] ?? d),
+      ].map(normalizarNombre),
+    ),
+  ]),
+);
+
+/**
+ * Tienda a partir del nombre del vendedor ("source" de Google Shopping), que no da la URL de la tienda.
+ * Coincidencia exacta tras normalizar: "Mango Outlet" no es "Mango".
+ */
+export function tiendaDeNombre(nombre: string, { soloActivas = false } = {}): TiendaConfig | null {
+  const buscado = normalizarNombre(nombre);
+  if (!buscado) return null;
+  return TIENDAS.find((tienda) => (!soloActivas || tienda.activa) && nombresPorTienda.get(tienda)?.has(buscado)) ?? null;
 }
 
 export function tiendasActivas() {

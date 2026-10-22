@@ -27,6 +27,17 @@ struct DecodificacionTests {
         #expect(origen.url.host() == "www.zara.com")
     }
 
+    @Test("Lee una búsqueda con alternativas en los cuatro rangos")
+    func busqueda() throws {
+        let busqueda = DatosSimulados.busqueda
+        #expect(busqueda.alternativas.count == 11)
+        #expect(busqueda.conteoPorRango["premium"] == 1)
+        let zalando = try #require(busqueda.alternativas.first { $0.producto.tienda.id == "zalando" })
+        #expect(zalando.producto.marca == "Carhartt WIP")
+        #expect(zalando.abreGoogleShopping)
+        #expect(busqueda.alternativas.allSatisfy { RangoPrecio.para(centimos: $0.producto.precio.centimos) == $0.producto.rango })
+    }
+
     @Test("Un fit desconocido se lee como «otro»")
     func fitDesconocido() throws {
         let valores = try JSONDecoder().decode([Fit].self, from: Data(#"["slim", "regular"]"#.utf8))

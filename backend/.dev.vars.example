@@ -4,5 +4,8 @@
 # Clave gratuita de Google AI Studio: https://aistudio.google.com/apikey
 GEMINI_API_KEY=
 
+# Clave gratuita de SerpAPI (≈250 búsquedas al mes): https://serpapi.com/manage-api-key
+SERPAPI_KEY=
+
 # Clave privada que comparten la app y el backend (inventa una larga, por ejemplo con: npx uuid)
 CLAVE_APP=
