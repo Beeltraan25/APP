@@ -35,7 +35,7 @@ Requisitos: Node.js 24.
 ```bash
 cd backend
 npm install
-cp .dev.vars.example .dev.vars   # y rellena las claves
+cp .dev.vars.example .dev.vars   # y rellena las claves (Gemini, SerpAPI y la clave de la app)
 npm run dev                      # http://localhost:8787
 ```
 

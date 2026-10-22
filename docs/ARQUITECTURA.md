@@ -191,6 +191,14 @@ ios/
 - `ServicioAnalisisRemoto` une las dos piezas. Si no hay `Secretos.xcconfig`, la app usa `ServicioAnalisisSimulado` y muestra "Modo de prueba".
 - Sin verificar todavía en un iPhone real: que el navegador invisible supere las verificaciones de Zara y Mango.
 
+**Estado tras la fase 3 (búsqueda y resultados):**
+- Backend `POST /v1/buscar`: Google Lens con la imagen y, solo si da menos de 6 resultados válidos, Google Shopping con la primera palabra clave (siempre con "hombre"). Filtra tiendas activas de la lista blanca, ropa de hombre y precios en euros; quita duplicados; Lens va primero. Caché de 24 h (1 h si no hay resultados).
+- **Limitación de Google Shopping:** SerpAPI no da la URL de la tienda, solo un enlace a Google Shopping y el nombre del vendedor. Se filtra por ese nombre (con `alias` en `tiendas.json`) y "Ver en tienda" abre Google Shopping, que enlaza a la tienda. Pedir la URL directa costaría una consulta más por producto.
+- **Sin verificar con datos reales:** la documentación de SerpAPI no muestra el formato del precio en Google Lens; el lector acepta un objeto `{ value, extracted_value, currency }` o un texto. Hay que confirmarlo con la primera búsqueda real.
+- Google Lens no puede leer imágenes de un backend en `localhost`: en local solo se busca por texto.
+- `similitud` y `etiquetas` llegan vacías hasta la fase 4.
+- App: `ResultadosView` (2 columnas, selector de rango segmentado nativo en una `safeAreaBar`), `TarjetaAlternativa`, `DetalleAlternativaView` (Ver en tienda con `SFSafariViewController` y Guardar en SwiftData), `ImagenRemota` + `CacheImagenes` en `DupeDiseno`. El selector incluye "Todo" además de los cuatro rangos.
+
 **Notas de diseño que afectan a la estructura**
 
 - **Servicios con versión simulada:** cada servicio es un protocolo con dos implementaciones (`…Remoto` y `…Simulado`). La fase 1 funciona entera con los JSON de `Simulados/` y, en la fase 2, basta con cambiar a la versión remota. Además, las pruebas de diseño no gastan cuota gratuita.
@@ -290,7 +298,7 @@ Cabeceras en todas las peticiones de la app:
 |---|---|---|---|
 | POST | `/v1/analizar` | `multipart` con `imagen` **o** JSON `{ "pagina": DatosPagina }` | `RespuestaAnalisis` |
 | GET | `/v1/imagenes/:id` | — (público, id aleatorio, caduca en 24 h) | la foto, para Google Lens |
-| POST | `/v1/buscar` | `{ "imagen_url", "ficha" }` | `RespuestaBusqueda` (todos los rangos de una vez) |
+| POST | `/v1/buscar` | `{ "imagen_url"?, "ficha" }` | `RespuestaBusqueda` (todos los rangos de una vez) |
 | POST | `/v1/outfits` | `{ "prenda_base", "estilo", "presupuesto" }` | `RespuestaOutfits` (en streaming, con pasos de progreso) |
 | POST | `/v1/outfits/cambiar-pieza` | `{ "outfit", "pieza_id", "estilo", "presupuesto" }` | `{ "opciones": [Producto] }` |
 | GET | `/v1/tiendas` | — | lista blanca |
