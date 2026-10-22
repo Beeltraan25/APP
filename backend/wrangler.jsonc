@@ -1,0 +1,30 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "dupe-finder",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-10-01",
+
+  // Workers KV (plan gratuito): caché de 24 h y fotos temporales para Google Lens.
+  // Al desplegar por primera vez, Wrangler crea los espacios y rellena los id.
+  "kv_namespaces": [
+    { "binding": "CACHE" },
+    { "binding": "IMAGENES" }
+  ],
+
+  // Límite de peticiones por instalación. Si tu plan no lo permitiera, quita este bloque:
+  // el backend usa entonces un límite en memoria más sencillo.
+  "ratelimits": [
+    {
+      "name": "LIMITADOR",
+      "namespace_id": "1001",
+      "simple": { "limit": 20, "period": 60 }
+    }
+  ],
+
+  "vars": {
+    // Modelos de Gemini en orden de preferencia: si el primero agota la cuota gratuita, se usa el siguiente.
+    "GEMINI_MODELOS": "gemini-3.8-flash,gemini-3.5-flash-lite"
+  },
+
+  "observability": { "enabled": true }
+}

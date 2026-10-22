@@ -1,0 +1,24 @@
+# Dependencias y archivos generados
+node_modules/
+dist/
+coverage/
+.wrangler/
+
+# Secretos: nunca se suben (el repositorio es público)
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+.env
+ios/Config/Secretos.xcconfig
+
+# Xcode (el .xcodeproj se genera con XcodeGen a partir de ios/project.yml)
+*.xcodeproj/
+xcuserdata/
+DerivedData/
+build/
+.build/
+.swiftpm/
+
+# Sistema
+.DS_Store
+Thumbs.db
