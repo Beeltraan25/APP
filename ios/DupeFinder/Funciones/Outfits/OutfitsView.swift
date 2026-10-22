@@ -75,19 +75,27 @@ struct OutfitsView: View {
     }
 
     private func contenido(_ base: PrendaBase) -> some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: Espacio.l) {
-                Group {
-                    tarjetaBase(base)
-                    seccionEstilo
-                    seccionPresupuesto
-                    botonCrear(base)
-                }
-                .padding(.horizontal, 20)
+        ScrollViewReader { desplazamiento in
+            ScrollView {
+                VStack(alignment: .leading, spacing: Espacio.l) {
+                    Group {
+                        tarjetaBase(base)
+                        seccionEstilo
+                        seccionPresupuesto
+                        botonCrear(base)
+                    }
+                    .padding(.horizontal, 20)
 
-                resultados(base)
+                    resultados(base)
+                        .id("resultados")
+                }
+                .padding(.vertical, Espacio.m)
             }
-            .padding(.vertical, Espacio.m)
+            // Al terminar, baja hasta los outfits: son lo importante.
+            .onChange(of: vm.outfits.map(\.id)) { _, ids in
+                guard !ids.isEmpty else { return }
+                withAnimation(.smooth) { desplazamiento.scrollTo("resultados", anchor: .top) }
+            }
         }
     }
 
