@@ -66,4 +66,16 @@ Comandos útiles:
 | `npm test` | Pasa los tests (no gasta cuota: la IA está simulada) |
 | `npm run comprobar` | Revisa los tipos de TypeScript |
 | `npm run dev` | Arranca el backend en local |
-| `npm run desplegar` | Publica en Cloudflare (fase final) |
+| `npm run desplegar` | Publica el Worker en Cloudflare |
+| `npm run secretos` | Sube las claves de `.dev.vars` a Cloudflare (sin mostrarlas) |
+
+## Publicar el backend en Cloudflare
+
+Plan gratuito de Workers. Desde la carpeta `backend`, en PowerShell:
+
+1. `npx wrangler login`: se abre el navegador para que entres en tu cuenta de Cloudflare (o la crees) y autorices a Wrangler.
+2. `npm run desplegar`: crea los espacios KV, publica el Worker y muestra su dirección (`https://dupe-finder.TU-SUBDOMINIO.workers.dev`). La primera vez puede pedirte elegir un subdominio `workers.dev`.
+3. `npm run secretos`: sube `GEMINI_API_KEY`, `SERPAPI_KEY` y `CLAVE_APP` desde `.dev.vars`.
+4. Comprueba que funciona: `curl.exe https://dupe-finder.TU-SUBDOMINIO.workers.dev/v1/salud` debe responder `"estado":"ok"` y `true` en las tres claves.
+
+Después, usa esa dirección con `ios\scripts\configurar-ipa.ps1` para instalar la app conectada al backend.

@@ -1,5 +1,5 @@
 # Copia este archivo como .dev.vars y rellena los valores. .dev.vars nunca se sube a git.
-# En producción se configuran con:  npx wrangler secret put NOMBRE
+# En producción se suben todas con:  npm run secretos
 
 # Clave gratuita de Google AI Studio: https://aistudio.google.com/apikey
 GEMINI_API_KEY=

@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "wrangler dev",
     "desplegar": "wrangler deploy",
+    "secretos": "wrangler secret bulk .dev.vars",
     "test": "vitest run",
     "test:vigilar": "vitest",
     "comprobar": "tsc --noEmit"

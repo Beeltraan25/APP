@@ -24,7 +24,17 @@ export function crearApp(dependencias: Partial<Dependencias> = {}) {
   const crearSerpapi = dependencias.crearSerpapi ?? ((entorno: Entorno) => crearClienteSerpapi(entorno));
   const app = new Hono<ContextoApp>();
 
-  app.get("/v1/salud", (c) => c.json({ estado: "ok" }));
+  // Dice si cada clave está configurada (nunca su valor): sirve para comprobar un despliegue.
+  app.get("/v1/salud", (c) =>
+    c.json({
+      estado: "ok",
+      claves: {
+        gemini: Boolean(c.env.GEMINI_API_KEY),
+        serpapi: Boolean(c.env.SERPAPI_KEY),
+        clave_app: Boolean(c.env.CLAVE_APP),
+      },
+    }),
+  );
   app.route("/v1/imagenes", rutaImagenes);
   app.route("/v1/analizar", crearRutaAnalizar(crearIA, dependencias.fetchImagenes));
   app.route("/v1/buscar", crearRutaBuscar({ crearSerpapi, crearIA, fetchImagenes: dependencias.fetchImagenes }));

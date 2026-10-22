@@ -16,6 +16,9 @@ describe("seguridad", () => {
     const { app, entorno } = preparar();
     const respuesta = await app.request("/v1/salud", {}, entorno);
     expect(respuesta.status).toBe(200);
+    const cuerpo = (await respuesta.json()) as { claves: Record<string, unknown> };
+    // Solo dice si están configuradas, nunca el valor.
+    for (const valor of Object.values(cuerpo.claves)) expect(typeof valor).toBe("boolean");
   });
 
   it("rechaza peticiones sin la clave de la app", async () => {
