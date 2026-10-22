@@ -72,7 +72,7 @@ struct TarjetaOutfit: View {
             .contentShape(.rect)
         }
         .buttonStyle(.plain)
-        .disabled(pieza.esPrendaBase)
+        // Sin .disabled en la prenda base: atenuaría su foto. Tocarla no hace nada (no tiene tienda).
         .contextMenu {
             if !pieza.esPrendaBase {
                 Button("Cambiar esta prenda", systemImage: "arrow.triangle.2.circlepath") { alCambiarPieza(pieza) }
