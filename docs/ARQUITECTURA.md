@@ -211,6 +211,17 @@ ios/
 - Si la IA falla, la búsqueda se devuelve igualmente (con lo que haya, o sin similitud).
 - **Solo hombre, también por la foto:** la IA indica para quién es cada candidata y se descartan las de mujer que la URL y el título no delatan (p. ej. unos "Jeans barrel tiro bajo" de Pull&Bear con modelo femenina). Salvaguarda: si el título o la URL dicen "hombre"/"men", la prenda se queda aunque la IA diga lo contrario (con datos reales la IA marcó por error unos "Calvin Klein Hombres Baggy Jeans").
 
+**Estado tras la fase 5 (outfits):**
+- Backend `POST /v1/outfits` responde **por líneas (NDJSON)**: `{"tipo":"progreso",…}` en cada paso y, al final, `{"tipo":"resultado","datos":…}` o `{"tipo":"error",…}`. Los errores antes de empezar (clave, petición no válida) siguen siendo JSON normal.
+  1. Referencias: Google Images con "outfit {estilo} hombre" (8 miniaturas) → Gemini → `PerfilEstilo` (resumen, prendas típicas, paleta, siluetas, calzado). Caché de **30 días por estilo**.
+  2. Plan: Gemini diseña 3 outfits con 2–4 piezas más la prenda base (nunca otra pieza con su mismo papel), con como mucho **6 búsquedas distintas**.
+  3. Piezas: Google Shopping con `max_price` (presupuesto por prenda), lista blanca, solo hombre, euros, sin segunda mano. Caché de 24 h por búsqueda. Si una pieza no aparece, se reutiliza una del mismo tipo encontrada para otro outfit; un outfit con menos de 2 piezas nuevas se descarta.
+- `POST /v1/outfits/cambiar-pieza`: otras opciones para una pieza desde la caché de su búsqueda (no gasta consultas).
+- Shopping e Images usan `json_restrictor` para recibir solo los campos necesarios (las respuestas completas de Shopping pesan ~400 KB).
+- **Probado con datos reales** ("old money", 60 € por prenda): 7 consultas la primera vez y 108 s (60 s analizando 12 referencias; ahora son 8); con el estilo en caché, 4 consultas y ~60 s. Ejemplo: camisa de lino Massimo Dutti 49,95 € + tus vaqueros + mocasines Pier One + cinturón trenzado de El Corte Inglés = 134,93 €.
+- **Arreglo del contrato:** Swift omite las claves con valor nil al enviar JSON; las peticiones (`/v1/buscar`, `/v1/outfits`) ahora aceptan esas claves ausentes como null.
+- App: pestaña Outfits (tu prenda, chips de estilo o uno escrito, máximo por prenda, progreso en directo, carrusel de collages), "Cambiar esta prenda" al mantener pulsada una pieza, guardar outfits, "Crear outfits" desde la ficha y desde el detalle. `EstadoCompartido` guarda la pestaña activa y la prenda base.
+
 **Notas de diseño que afectan a la estructura**
 
 - **Servicios con versión simulada:** cada servicio es un protocolo con dos implementaciones (`…Remoto` y `…Simulado`). La fase 1 funciona entera con los JSON de `Simulados/` y, en la fase 2, basta con cambiar a la versión remota. Además, las pruebas de diseño no gastan cuota gratuita.

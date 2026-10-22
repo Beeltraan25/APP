@@ -43,18 +43,8 @@ struct OutfitsTests {
     }
 }
 
-@Suite("Cliente: outfits por líneas", .serialized)
-struct ClienteOutfitsTests {
-    private func cliente() -> ClienteAPI {
-        let configuracion = URLSessionConfiguration.ephemeral
-        configuracion.protocolClasses = [ProtocoloSimulado.self]
-        return ClienteAPI(
-            configuracion: ConfiguracionAPI(urlBase: URL(string: "https://api.prueba")!, claveApp: "secreta"),
-            sesion: URLSession(configuration: configuracion),
-            instalacionId: "instalacion-1"
-        )
-    }
-
+/// En la misma suite que el resto del cliente: comparten la red simulada y deben ir en serie.
+extension ClienteAPITests {
     private func lineas(_ eventos: [String]) -> Data {
         Data(eventos.joined(separator: "\n").appending("\n").utf8)
     }

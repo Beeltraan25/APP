@@ -48,7 +48,7 @@ final class Registro: @unchecked Sendable {
 
 @Suite("Cliente de la API", .serialized)
 struct ClienteAPITests {
-    private func cliente() -> ClienteAPI {
+    func cliente() -> ClienteAPI {
         let configuracionSesion = URLSessionConfiguration.ephemeral
         configuracionSesion.protocolClasses = [ProtocoloSimulado.self]
         return ClienteAPI(
