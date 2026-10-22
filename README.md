@@ -28,6 +28,26 @@ Sin configuración, la app funciona con datos de prueba (lo indica en la pantall
 3. Pon en `CLAVE_APP` la misma clave que en `backend/.dev.vars`.
 4. Vuelve a generar el proyecto (`xcodegen generate`) y compila. La Share Extension usa la misma configuración.
 
+## Instalar en tu iPhone sin Mac
+
+GitHub Actions genera en cada compilación un `.ipa` sin firmar. Se firma con tu Apple ID **gratuita** y se instala desde Windows con [Sideloadly](https://sideloadly.io).
+
+1. **Descarga el .ipa:** pestaña *Actions* del repositorio → última ejecución **iOS** en verde → *Artifacts* → `DupeFinder-ipa`. Descomprime el zip: dentro está `DupeFinder.ipa`.
+2. **(Opcional) Conéctalo a tu backend.** Sin esto, la app funciona con datos de prueba. Necesitas el backend publicado en Cloudflare (`127.0.0.1` no funciona desde el iPhone):
+   ```
+   powershell -ExecutionPolicy Bypass -File ios\scripts\configurar-ipa.ps1 -Ipa "$HOME\Downloads\DupeFinder.ipa" -UrlBackend "https://TU-WORKER.workers.dev"
+   ```
+   Crea `DupeFinder-configurada.ipa` con la dirección y la clave de `backend/.dev.vars`. Las claves nunca se suben a GitHub.
+3. **Prepara Windows:** instala iTunes e iCloud **desde la web de Apple** (las versiones de Microsoft Store no funcionan con Sideloadly) y después Sideloadly.
+4. **Conecta el iPhone por cable**, desbloquéalo y pulsa *Confiar en este ordenador*.
+5. **En Sideloadly:** arrastra el `.ipa`, escribe tu Apple ID y pulsa *Start*. Es mejor usar una Apple ID secundaria.
+6. **En el iPhone:**
+   - *Ajustes → General → VPN y gestión de dispositivos* → confía en tu Apple ID.
+   - *Ajustes → Privacidad y seguridad → Modo de desarrollador* → actívalo y reinicia.
+7. **Cada 7 días** la firma gratuita caduca: vuelve a instalar con Sideloadly (los datos guardados se conservan) o activa su refresco automático por Wi‑Fi.
+
+Con una Apple ID gratuita puedes tener como mucho 3 apps instaladas así. La Share Extension va incluida y aparece en la hoja de compartir como «Dupe Finder».
+
 ## Backend en local
 
 Requisitos: Node.js 24.
