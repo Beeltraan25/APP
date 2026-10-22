@@ -1,0 +1,101 @@
+name: iOS
+
+on:
+  push:
+    branches: [main]
+    paths: ["ios/**", ".github/workflows/ios.yml", ".github/scripts/**"]
+  workflow_dispatch:
+
+# Permiso para publicar las capturas en la rama "capturas".
+permissions:
+  contents: write
+
+concurrency:
+  group: ios-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  app:
+    name: Compilar, tests y capturas
+    runs-on: macos-26
+    timeout-minutes: 45
+    env:
+      HOMEBREW_NO_AUTO_UPDATE: "1"
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Versión de Xcode
+        run: xcodebuild -version
+
+      - name: Generar el proyecto con XcodeGen
+        working-directory: ios
+        run: |
+          brew install xcodegen
+          xcodegen generate
+
+      - name: Elegir simulador
+        id: simulador
+        run: |
+          UDID=$(xcrun simctl list devices available -j | python3 .github/scripts/elegir_simulador.py)
+          echo "udid=$UDID" >> "$GITHUB_OUTPUT"
+
+      - name: Tests del paquete DupeKit
+        id: paquete
+        continue-on-error: true
+        working-directory: ios/Paquetes/DupeKit
+        run: |
+          set -o pipefail
+          xcodebuild test -scheme DupeKit-Package \
+            -destination "id=${{ steps.simulador.outputs.udid }}" \
+            2>&1 | tee "$GITHUB_WORKSPACE/registro-paquete.txt" | xcbeautify --renderer github-actions
+
+      - name: Compilar la app
+        id: compilar
+        continue-on-error: true
+        working-directory: ios
+        run: |
+          set -o pipefail
+          xcodebuild build-for-testing -project DupeFinder.xcodeproj -scheme DupeFinder \
+            -destination "id=${{ steps.simulador.outputs.udid }}" \
+            -derivedDataPath build CODE_SIGNING_ALLOWED=NO \
+            2>&1 | tee "$GITHUB_WORKSPACE/registro-app.txt" | xcbeautify --renderer github-actions
+
+      - name: Tests de la app
+        id: tests
+        if: steps.compilar.outcome == 'success'
+        continue-on-error: true
+        working-directory: ios
+        run: |
+          set -o pipefail
+          xcodebuild test-without-building -project DupeFinder.xcodeproj -scheme DupeFinder \
+            -destination "id=${{ steps.simulador.outputs.udid }}" \
+            -derivedDataPath build CODE_SIGNING_ALLOWED=NO \
+            2>&1 | tee "$GITHUB_WORKSPACE/registro-tests.txt" | xcbeautify --renderer github-actions
+
+      - name: Capturas de pantalla
+        id: capturas
+        if: steps.compilar.outcome == 'success'
+        continue-on-error: true
+        run: |
+          bash .github/scripts/capturas.sh "${{ steps.simulador.outputs.udid }}" \
+            ios/build/Build/Products/Debug-iphonesimulator/DupeFinder.app capturas
+
+      - name: Publicar capturas y registros en la rama "capturas"
+        if: always()
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RESULTADOS: >-
+            paquete=${{ steps.paquete.outcome }}
+            compilar=${{ steps.compilar.outcome }}
+            tests=${{ steps.tests.outcome }}
+            capturas=${{ steps.capturas.outcome }}
+        run: bash .github/scripts/publicar.sh
+
+      - name: Resultado
+        if: always()
+        run: |
+          echo "Paquete: ${{ steps.paquete.outcome }} · Compilar: ${{ steps.compilar.outcome }} · Tests: ${{ steps.tests.outcome }} · Capturas: ${{ steps.capturas.outcome }}"
+          [ "${{ steps.paquete.outcome }}" = success ] && [ "${{ steps.compilar.outcome }}" = success ] && [ "${{ steps.tests.outcome }}" = success ]

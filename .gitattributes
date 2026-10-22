@@ -1,0 +1,6 @@
+# Los scripts se ejecutan en Linux/macOS: siempre con saltos de línea LF.
+*.sh text eol=lf
+*.py text eol=lf
+*.yml text eol=lf
+*.swift text eol=lf
+*.json text eol=lf

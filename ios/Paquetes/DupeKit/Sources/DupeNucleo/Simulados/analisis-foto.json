@@ -1,0 +1,43 @@
+{
+  "analisis_id": "an_69a218d7152657c8e6152345",
+  "imagen_url": "http://127.0.0.1:8787/v1/imagenes/an_69a218d7152657c8e6152345",
+  "producto_origen": null,
+  "ficha": {
+    "categoria": "vaqueros",
+    "subcategoria": "vaqueros cargo amplios",
+    "color_principal": { "nombre": "azul oscuro", "hex": "#1B2A4A" },
+    "colores_secundarios": [],
+    "estampado": "liso",
+    "material": "denim de algodón",
+    "composicion": [{ "fibra": "algodón", "porcentaje": 100 }],
+    "gramaje_gsm": 350,
+    "gramaje_estimado": "pesado",
+    "fit": "oversize",
+    "largo": "largo hasta el suelo",
+    "cuello": null,
+    "mangas": null,
+    "cierres": "cremallera y botón",
+    "detalles": ["bolsillos tipo carpintero", "remaches metálicos", "costuras en contraste", "pernera ancha"],
+    "acabado": "denim oscuro sin desteñir",
+    "palabras_clave_busqueda": [
+      "vaqueros anchos hombre",
+      "pantalón denim carpintero hombre",
+      "vaqueros oversize oscuro hombre",
+      "baggy dark denim jeans man"
+    ],
+    "campos_estimados": [
+      "subcategoria",
+      "color_principal",
+      "material",
+      "composicion",
+      "gramaje_gsm",
+      "gramaje_estimado",
+      "fit",
+      "largo",
+      "cierres",
+      "detalles",
+      "acabado"
+    ],
+    "publico": "hombre"
+  }
+}

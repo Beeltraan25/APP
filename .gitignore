@@ -11,8 +11,9 @@ coverage/
 .env
 ios/Config/Secretos.xcconfig
 
-# Xcode (el .xcodeproj se genera con XcodeGen a partir de ios/project.yml)
+# Xcode (el .xcodeproj y el Info.plist se generan con XcodeGen a partir de ios/project.yml)
 *.xcodeproj/
+ios/DupeFinder/Info.plist
 xcuserdata/
 DerivedData/
 build/
