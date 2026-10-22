@@ -7,6 +7,7 @@ import { ErrorApp, Errores, respuestaError } from "./infra/errores";
 import { crearRutaAnalizar } from "./rutas/analizar";
 import { crearRutaBuscar } from "./rutas/buscar";
 import { rutaImagenes } from "./rutas/imagenes";
+import { crearRutaOutfits } from "./rutas/outfits";
 import { rutaTiendas } from "./rutas/tiendas";
 
 export interface Dependencias {
@@ -27,6 +28,7 @@ export function crearApp(dependencias: Partial<Dependencias> = {}) {
   app.route("/v1/imagenes", rutaImagenes);
   app.route("/v1/analizar", crearRutaAnalizar(crearIA, dependencias.fetchImagenes));
   app.route("/v1/buscar", crearRutaBuscar({ crearSerpapi, crearIA, fetchImagenes: dependencias.fetchImagenes }));
+  app.route("/v1/outfits", crearRutaOutfits({ crearSerpapi, crearIA, fetchImagenes: dependencias.fetchImagenes }));
   app.route("/v1/tiendas", rutaTiendas);
 
   app.notFound((c) => respuestaError(c, Errores.noEncontrado()));

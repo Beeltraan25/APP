@@ -42,6 +42,7 @@ function serpapiFalso(lens: Candidato[], shopping: Candidato[] = []) {
   return {
     lens: vi.fn(async () => lens),
     shopping: vi.fn(async () => shopping),
+    imagenes: vi.fn(async () => []),
   } satisfies ClienteSerpapi;
 }
 

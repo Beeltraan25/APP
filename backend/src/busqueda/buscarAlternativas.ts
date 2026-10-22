@@ -1,6 +1,6 @@
 import type { Alternativa } from "../esquemas/busqueda";
 import type { FichaPrenda } from "../esquemas/ficha";
-import type { RangoPrecio } from "../esquemas/producto";
+import type { Producto, RangoPrecio } from "../esquemas/producto";
 import { ErrorApp } from "../infra/errores";
 import { limpiarUrl, sha256Hex } from "../infra/utilidades";
 import { nombresDe, normalizarNombre, tiendaDeNombre, tiendaDeUrl, type TiendaConfig } from "./listaBlanca";
@@ -85,12 +85,13 @@ export function esDeMujer(candidato: Candidato): boolean {
   return SECCION_MUJER.test(candidato.titulo) || SECCION_MUJER.test(candidato.url.replace(/[/_-]/g, " "));
 }
 
-interface Valido {
+export interface Valido {
   candidato: Candidato;
   tienda: TiendaConfig;
 }
 
-function filtrar(candidatos: Candidato[]): Valido[] {
+/** Tiendas activas de la lista blanca, ropa de hombre y precio en euros. */
+export function filtrar(candidatos: Candidato[]): Valido[] {
   return candidatos.flatMap((candidato) => {
     // Lens da la URL de la tienda; Shopping solo su nombre.
     const tienda =
@@ -103,7 +104,7 @@ function filtrar(candidatos: Candidato[]): Valido[] {
 }
 
 /** Lens primero (son los más parecidos visualmente) y sin repetir la misma prenda. */
-function deduplicar(validos: Valido[]): Valido[] {
+export function deduplicar(validos: Valido[]): Valido[] {
   const ordenados = [...validos].sort(
     (a, b) =>
       Number(a.candidato.fuente === "shopping") - Number(b.candidato.fuente === "shopping") ||
@@ -129,27 +130,27 @@ function urlComparable(url: string) {
   }
 }
 
-async function aAlternativa({ candidato, tienda }: Valido): Promise<Alternativa> {
+/** Un resultado válido convertido en el Producto que recibe la app. */
+export async function aProducto({ candidato, tienda }: Valido): Promise<Producto> {
   const precio = candidato.precio!;
   const anterior = candidato.precioAnterior;
   const imagen = candidato.imagen?.startsWith("https://") ? candidato.imagen : null;
   const rango: RangoPrecio = rangoDePrecio(precio.centimos);
   return {
-    producto: {
-      id: `prd_${(await sha256Hex(urlComparable(candidato.url))).slice(0, 16)}`,
-      titulo: limpiarTitulo(candidato.titulo, tienda),
-      tienda: { id: tienda.id, nombre: tienda.nombre },
-      marca: tienda.multimarca ? null : tienda.nombre,
-      url: candidato.url,
-      imagen_url: imagen,
-      precio,
-      precio_anterior: anterior && anterior.moneda === precio.moneda && anterior.centimos > precio.centimos ? anterior : null,
-      rango,
-    },
-    similitud: null,
-    etiquetas: [],
-    fuente: candidato.fuente,
+    id: `prd_${(await sha256Hex(urlComparable(candidato.url))).slice(0, 16)}`,
+    titulo: limpiarTitulo(candidato.titulo, tienda),
+    tienda: { id: tienda.id, nombre: tienda.nombre },
+    marca: tienda.multimarca ? null : tienda.nombre,
+    url: candidato.url,
+    imagen_url: imagen,
+    precio,
+    precio_anterior: anterior && anterior.moneda === precio.moneda && anterior.centimos > precio.centimos ? anterior : null,
+    rango,
   };
+}
+
+async function aAlternativa(valido: Valido): Promise<Alternativa> {
+  return { producto: await aProducto(valido), similitud: null, etiquetas: [], fuente: valido.candidato.fuente };
 }
 
 /**

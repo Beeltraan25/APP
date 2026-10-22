@@ -1,0 +1,327 @@
+{
+  "perfil_estilo": {
+    "estilo": "old money",
+    "resumen": "estilo elegante y clásico inspirado en la estética tradicional de las clases altas, caracterizado por prendas de sastreria relajada, tejidos nobles y una paleta neutra.",
+    "prendas_tipicas": [
+      {
+        "rol": "superior",
+        "descripcion": "camisa de lino o algodón blanca"
+      },
+      {
+        "rol": "superior",
+        "descripcion": "jersey de pico de punto fino"
+      },
+      {
+        "rol": "superior",
+        "descripcion": "blazer estructurada de tonos neutros"
+      },
+      {
+        "rol": "inferior",
+        "descripcion": "pantalón chino beige o blanco"
+      },
+      {
+        "rol": "inferior",
+        "descripcion": "pantalón de vestir de pinzas"
+      },
+      {
+        "rol": "abrigo",
+        "descripcion": "abrigo largo de paño gris"
+      },
+      {
+        "rol": "calzado",
+        "descripcion": "mocasines de ante"
+      }
+    ],
+    "paleta": [
+      {
+        "nombre": "beige",
+        "hex": "#F5F5DC"
+      },
+      {
+        "nombre": "blanco roto",
+        "hex": "#FAF0E6"
+      },
+      {
+        "nombre": "azul marino",
+        "hex": "#000080"
+      },
+      {
+        "nombre": "marrón tabaco",
+        "hex": "#8B4513"
+      }
+    ],
+    "siluetas": [
+      "recta",
+      "relajada",
+      "sastrera"
+    ],
+    "calzado": [
+      "mocasines de ante",
+      "mocasines de piel",
+      "zapatos náuticos"
+    ]
+  },
+  "outfits": [
+    {
+      "id": "out_1",
+      "titulo": "Paseo por el club",
+      "por_que_encaja": "Combina la silueta relajada de los vaqueros con la elegancia clásica de una camisa blanca de lino y unos mocasines de ante.",
+      "piezas": [
+        {
+          "rol": "superior",
+          "es_prenda_base": false,
+          "descripcion": "camisa de lino blanca",
+          "consulta": "camisa lino blanca hombre",
+          "producto": {
+            "id": "prd_92373374941facbf",
+            "titulo": "Massimo Dutti Hombre Camisa Slim Fit 100% Lino",
+            "tienda": {
+              "id": "massimo-dutti",
+              "nombre": "Massimo Dutti"
+            },
+            "marca": "Massimo Dutti",
+            "url": "https://www.google.es/search?ibp=oshop&q=camisa lino blanca hombre&prds=catalogid:11696778888246611775,productid:4533086635770818010,headlineOfferDocid:935192161093026208,imageDocid:1179384966510572253,rds:PC_845940705240638931|PROD_PC_845940705240638931,gpcid:845940705240638931,mid:576462897229005384,pvt:a&hl=es&gl=es&udm=28",
+            "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTMehhzrbskTGwMivFsjqvWsTm8g7z_2FCgCKV0T35_0qESevvdcxTPN-8Owto7xDNOECGVjlm_-ZJhRU5-jMUb6TmlihMmxSKPJQ2drj1QIDIeUdu1S8xevw",
+            "precio": {
+              "centimos": 4995,
+              "moneda": "EUR"
+            },
+            "precio_anterior": null,
+            "rango": "medio"
+          },
+          "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTMehhzrbskTGwMivFsjqvWsTm8g7z_2FCgCKV0T35_0qESevvdcxTPN-8Owto7xDNOECGVjlm_-ZJhRU5-jMUb6TmlihMmxSKPJQ2drj1QIDIeUdu1S8xevw",
+          "id": "pz_1_1"
+        },
+        {
+          "rol": "inferior",
+          "es_prenda_base": true,
+          "descripcion": "vaqueros cargo amplios",
+          "consulta": null,
+          "producto": null,
+          "imagen_url": "https://raw.githubusercontent.com/Beeltraan25/APP/main/prenda.jpg",
+          "id": "pz_1_2"
+        },
+        {
+          "rol": "calzado",
+          "es_prenda_base": false,
+          "descripcion": "mocasines de ante marrón tabaco",
+          "consulta": "mocasines ante marrones hombre",
+          "producto": {
+            "id": "prd_de93d983352b28e2",
+            "titulo": "Elong Mocassin Basse À Enfiler Elong Zapatos sin cordones Hombre",
+            "tienda": {
+              "id": "zalando",
+              "nombre": "Zalando"
+            },
+            "marca": null,
+            "url": "https://www.google.es/search?ibp=oshop&q=mocasines ante marrones hombre&prds=catalogid:5623182556995011302,productid:15503176535830941929,headlineOfferDocid:9429684421236500779,imageDocid:11337689945149933561,rds:PC_1360973430648226414|PROD_PC_1360973430648226414,gpcid:1360973430648226414,mid:576462557540489905,pvt:a&hl=es&gl=es&udm=28",
+            "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQZwGojX218JXBHLssbeebDXF81zHrAR2mZNR70VitxmjYDXp1bWz4V9zk7jtgwgl0Uokq1JwcPzw",
+            "precio": {
+              "centimos": 5636,
+              "moneda": "EUR"
+            },
+            "precio_anterior": null,
+            "rango": "medio"
+          },
+          "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQZwGojX218JXBHLssbeebDXF81zHrAR2mZNR70VitxmjYDXp1bWz4V9zk7jtgwgl0Uokq1JwcPzw",
+          "id": "pz_1_3"
+        },
+        {
+          "rol": "accesorio",
+          "es_prenda_base": false,
+          "descripcion": "cinturón de piel marrón",
+          "consulta": "cinturon piel marron hombre",
+          "producto": {
+            "id": "prd_e0eaa534ab7cd307",
+            "titulo": "Pier One by Zalando Leather Cinturón de vestir Hombre",
+            "tienda": {
+              "id": "zalando",
+              "nombre": "Zalando"
+            },
+            "marca": null,
+            "url": "https://www.google.es/search?ibp=oshop&q=cinturon piel marron hombre&prds=catalogid:377525683883047203,productid:2430426824219585657,headlineOfferDocid:405912181066903058,imageDocid:12710218957364139022,rds:PC_15671353180664377552|PROD_PC_15671353180664377552,gpcid:15373205129803126634,pvt:a&hl=es&gl=es&udm=28",
+            "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRKEvIW4f5oFuH920usOrTGI1h89UDvGM3yKTBxpxxiq13Gcz3FBdJgcIvVGOit_A3rxOmJiT0kJk7XPigrJGdT0o6NN9OmE2nAENyj09aHx-nvKLS9RLmHges",
+            "precio": {
+              "centimos": 1799,
+              "moneda": "EUR"
+            },
+            "precio_anterior": null,
+            "rango": "economico"
+          },
+          "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcRKEvIW4f5oFuH920usOrTGI1h89UDvGM3yKTBxpxxiq13Gcz3FBdJgcIvVGOit_A3rxOmJiT0kJk7XPigrJGdT0o6NN9OmE2nAENyj09aHx-nvKLS9RLmHges",
+          "id": "pz_1_4"
+        }
+      ],
+      "precio_total": {
+        "centimos": 12430,
+        "moneda": "EUR"
+      }
+    },
+    {
+      "id": "out_2",
+      "titulo": "Tarde de terraza",
+      "por_que_encaja": "Eleva el denim oscuro con un jersey de pico de punto fino en tono neutro y unos clásicos zapatos náuticos.",
+      "piezas": [
+        {
+          "rol": "superior",
+          "es_prenda_base": false,
+          "descripcion": "jersey de pico beige",
+          "consulta": "jersey pico beige hombre",
+          "producto": {
+            "id": "prd_cc04f11e931c7acd",
+            "titulo": "Pier One by Zalando Jersey de punto Hombre",
+            "tienda": {
+              "id": "zalando",
+              "nombre": "Zalando"
+            },
+            "marca": null,
+            "url": "https://www.google.es/search?ibp=oshop&q=jersey pico beige hombre&prds=catalogid:9501082567973606415,productid:16916381189896750316,headlineOfferDocid:843450755420682512,imageDocid:17408013292393010556,rds:PC_16723264678519755613|PROD_PC_16723264678519755613,gpcid:14258991516012664223,mid:576462913548439854,pvt:a&hl=es&gl=es&udm=28",
+            "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSpnkaOe8LrSn2JYFIFhO00fUMmtBPoDL9SjTmWHNIU831czd5L5h7-CFPjDoJuHOJ38l2cHw8KU4FBF2AnabZCE8pWYkC58HTN3POtRlhudRryp_zjTjEU",
+            "precio": {
+              "centimos": 2199,
+              "moneda": "EUR"
+            },
+            "precio_anterior": null,
+            "rango": "economico"
+          },
+          "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSpnkaOe8LrSn2JYFIFhO00fUMmtBPoDL9SjTmWHNIU831czd5L5h7-CFPjDoJuHOJ38l2cHw8KU4FBF2AnabZCE8pWYkC58HTN3POtRlhudRryp_zjTjEU",
+          "id": "pz_2_1"
+        },
+        {
+          "rol": "inferior",
+          "es_prenda_base": true,
+          "descripcion": "vaqueros cargo amplios",
+          "consulta": null,
+          "producto": null,
+          "imagen_url": "https://raw.githubusercontent.com/Beeltraan25/APP/main/prenda.jpg",
+          "id": "pz_2_2"
+        },
+        {
+          "rol": "calzado",
+          "es_prenda_base": false,
+          "descripcion": "mocasines de ante marrón tabaco",
+          "consulta": "mocasines ante marrones hombre",
+          "producto": {
+            "id": "prd_de93d983352b28e2",
+            "titulo": "Elong Mocassin Basse À Enfiler Elong Zapatos sin cordones Hombre",
+            "tienda": {
+              "id": "zalando",
+              "nombre": "Zalando"
+            },
+            "marca": null,
+            "url": "https://www.google.es/search?ibp=oshop&q=mocasines ante marrones hombre&prds=catalogid:5623182556995011302,productid:15503176535830941929,headlineOfferDocid:9429684421236500779,imageDocid:11337689945149933561,rds:PC_1360973430648226414|PROD_PC_1360973430648226414,gpcid:1360973430648226414,mid:576462557540489905,pvt:a&hl=es&gl=es&udm=28",
+            "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQZwGojX218JXBHLssbeebDXF81zHrAR2mZNR70VitxmjYDXp1bWz4V9zk7jtgwgl0Uokq1JwcPzw",
+            "precio": {
+              "centimos": 5636,
+              "moneda": "EUR"
+            },
+            "precio_anterior": null,
+            "rango": "medio"
+          },
+          "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQZwGojX218JXBHLssbeebDXF81zHrAR2mZNR70VitxmjYDXp1bWz4V9zk7jtgwgl0Uokq1JwcPzw",
+          "id": "pz_2_3"
+        }
+      ],
+      "precio_total": {
+        "centimos": 7835,
+        "moneda": "EUR"
+      }
+    },
+    {
+      "id": "out_3",
+      "titulo": "Cena informal",
+      "por_que_encaja": "Aporta un toque sofisticado al vaquero amplio superponiendo una camisa blanca y un jersey de punto fino sobre los hombros.",
+      "piezas": [
+        {
+          "rol": "superior",
+          "es_prenda_base": false,
+          "descripcion": "camisa de algodón blanca",
+          "consulta": "camisa lino blanca hombre",
+          "producto": {
+            "id": "prd_92373374941facbf",
+            "titulo": "Massimo Dutti Hombre Camisa Slim Fit 100% Lino",
+            "tienda": {
+              "id": "massimo-dutti",
+              "nombre": "Massimo Dutti"
+            },
+            "marca": "Massimo Dutti",
+            "url": "https://www.google.es/search?ibp=oshop&q=camisa lino blanca hombre&prds=catalogid:11696778888246611775,productid:4533086635770818010,headlineOfferDocid:935192161093026208,imageDocid:1179384966510572253,rds:PC_845940705240638931|PROD_PC_845940705240638931,gpcid:845940705240638931,mid:576462897229005384,pvt:a&hl=es&gl=es&udm=28",
+            "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTMehhzrbskTGwMivFsjqvWsTm8g7z_2FCgCKV0T35_0qESevvdcxTPN-8Owto7xDNOECGVjlm_-ZJhRU5-jMUb6TmlihMmxSKPJQ2drj1QIDIeUdu1S8xevw",
+            "precio": {
+              "centimos": 4995,
+              "moneda": "EUR"
+            },
+            "precio_anterior": null,
+            "rango": "medio"
+          },
+          "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTMehhzrbskTGwMivFsjqvWsTm8g7z_2FCgCKV0T35_0qESevvdcxTPN-8Owto7xDNOECGVjlm_-ZJhRU5-jMUb6TmlihMmxSKPJQ2drj1QIDIeUdu1S8xevw",
+          "id": "pz_3_1"
+        },
+        {
+          "rol": "superior",
+          "es_prenda_base": false,
+          "descripcion": "jersey de pico azul marino",
+          "consulta": "jersey punto marino hombre",
+          "producto": {
+            "id": "prd_160c4eae694cacc9",
+            "titulo": "Pier One by Zalando Jersey de punto Hombre",
+            "tienda": {
+              "id": "zalando",
+              "nombre": "Zalando"
+            },
+            "marca": null,
+            "url": "https://www.google.es/search?ibp=oshop&q=jersey punto marino hombre&prds=catalogid:748020485495006384,productid:5200227430859523455,headlineOfferDocid:13969330157777199302,imageDocid:11148972098841315861,rds:PC_3893493375407176713|PROD_PC_3893493375407176713,gpcid:525113265644025989,pvt:a&hl=es&gl=es&udm=28",
+            "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTPaRThjzXAhT-zgnsMjpuFbovQjkp42JOg0AgYYwyQdoCdSDGDUc8eqL3FpjBq2RegHlhgc4gAORyAXESoicG6S-mDKXKS8SQgW-pJde3y4_13-_MBUh30",
+            "precio": {
+              "centimos": 2799,
+              "moneda": "EUR"
+            },
+            "precio_anterior": null,
+            "rango": "medio"
+          },
+          "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTPaRThjzXAhT-zgnsMjpuFbovQjkp42JOg0AgYYwyQdoCdSDGDUc8eqL3FpjBq2RegHlhgc4gAORyAXESoicG6S-mDKXKS8SQgW-pJde3y4_13-_MBUh30",
+          "id": "pz_3_2"
+        },
+        {
+          "rol": "inferior",
+          "es_prenda_base": true,
+          "descripcion": "vaqueros cargo amplios",
+          "consulta": null,
+          "producto": null,
+          "imagen_url": "https://raw.githubusercontent.com/Beeltraan25/APP/main/prenda.jpg",
+          "id": "pz_3_3"
+        },
+        {
+          "rol": "calzado",
+          "es_prenda_base": false,
+          "descripcion": "mocasines de ante beige",
+          "consulta": "mocasines ante marrones hombre",
+          "producto": {
+            "id": "prd_de93d983352b28e2",
+            "titulo": "Elong Mocassin Basse À Enfiler Elong Zapatos sin cordones Hombre",
+            "tienda": {
+              "id": "zalando",
+              "nombre": "Zalando"
+            },
+            "marca": null,
+            "url": "https://www.google.es/search?ibp=oshop&q=mocasines ante marrones hombre&prds=catalogid:5623182556995011302,productid:15503176535830941929,headlineOfferDocid:9429684421236500779,imageDocid:11337689945149933561,rds:PC_1360973430648226414|PROD_PC_1360973430648226414,gpcid:1360973430648226414,mid:576462557540489905,pvt:a&hl=es&gl=es&udm=28",
+            "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQZwGojX218JXBHLssbeebDXF81zHrAR2mZNR70VitxmjYDXp1bWz4V9zk7jtgwgl0Uokq1JwcPzw",
+            "precio": {
+              "centimos": 5636,
+              "moneda": "EUR"
+            },
+            "precio_anterior": null,
+            "rango": "medio"
+          },
+          "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQZwGojX218JXBHLssbeebDXF81zHrAR2mZNR70VitxmjYDXp1bWz4V9zk7jtgwgl0Uokq1JwcPzw",
+          "id": "pz_3_4"
+        }
+      ],
+      "precio_total": {
+        "centimos": 13430,
+        "moneda": "EUR"
+      }
+    }
+  ],
+  "desde_cache": false
+}

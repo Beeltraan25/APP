@@ -28,7 +28,7 @@ describe("respuestas reales de SerpAPI", () => {
 
   it("de principio a fin: alternativas de hombre, en euros, sin la tienda ni la talla en el título", async () => {
     const ficha = normalizarFicha({ ...fichaIAEjemplo(), palabras_clave_busqueda: ["vaqueros anchos hombre"] }, "pagina");
-    const serpapi = { lens: async () => leerLens(lensReal), shopping: async () => leerShopping(shoppingReal) };
+    const serpapi = { lens: async () => leerLens(lensReal), shopping: async () => leerShopping(shoppingReal), imagenes: async () => [] };
     const { alternativas, consultas } = await buscarAlternativas(serpapi, {
       imagenUrl: "https://raw.githubusercontent.com/Beeltraan25/APP/main/prenda.jpg",
       ficha,

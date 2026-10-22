@@ -14,6 +14,7 @@ export type CodigoError =
   | "IA_NO_DISPONIBLE"
   | "CUOTA_BUSQUEDAS"
   | "BUSQUEDA_NO_DISPONIBLE"
+  | "SIN_PIEZAS"
   | "NO_ENCONTRADO"
   | "SERVIDOR_NO_CONFIGURADO"
   | "ERROR_INTERNO";
@@ -81,6 +82,12 @@ export const Errores = {
       502,
       "No hemos podido buscar en las tiendas ahora mismo. Inténtalo de nuevo en unos segundos.",
       detalle,
+    ),
+  sinPiezas: () =>
+    new ErrorApp(
+      "SIN_PIEZAS",
+      422,
+      "No hemos encontrado piezas para este estilo dentro del presupuesto. Prueba con otro presupuesto o estilo.",
     ),
   noEncontrado: () => new ErrorApp("NO_ENCONTRADO", 404, "No hemos encontrado lo que buscabas."),
   servidorNoConfigurado: (falta: string) =>

@@ -19,12 +19,29 @@ export interface Candidato {
   precioAnterior: Precio | null;
 }
 
+/** Una imagen de referencia de un estilo (Google Images). */
+export interface Referencia {
+  imagen: string;
+  titulo: string | null;
+  fuente: string | null;
+}
+
 export interface ClienteSerpapi {
   /** Google Lens: búsqueda por imagen. La imagen debe estar en una URL pública. */
   lens(urlImagen: string): Promise<Candidato[]>;
-  /** Google Shopping: búsqueda por texto en España. */
-  shopping(consulta: string): Promise<Candidato[]>;
+  /** Google Shopping: búsqueda por texto en España, con precio máximo opcional. */
+  shopping(consulta: string, opciones?: { maxPrecioCentimos?: number | null }): Promise<Candidato[]>;
+  /** Google Images: referencias visuales de un estilo. */
+  imagenes(consulta: string): Promise<Referencia[]>;
 }
+
+/**
+ * Solo los campos que se usan: las respuestas completas de Shopping pesan ~400 KB y leerlas
+ * podría pasar del límite gratuito de CPU de Cloudflare (10 ms por petición).
+ */
+const CAMPOS_SHOPPING =
+  "error, shopping_results[].{position,title,source,price,extracted_price,old_price,extracted_old_price,link,product_link,thumbnail,serpapi_thumbnail,second_hand_condition}";
+const CAMPOS_IMAGENES = "error, images_results[0:15].{thumbnail,title,source}";
 
 export function crearClienteSerpapi(entorno: Entorno, f: typeof fetch = fetch): ClienteSerpapi {
   const apiKey = entorno.SERPAPI_KEY;
@@ -47,9 +64,21 @@ export function crearClienteSerpapi(entorno: Entorno, f: typeof fetch = fetch): 
     async lens(urlImagen) {
       return leerLens(await pedir({ engine: "google_lens", url: urlImagen, country: "es", hl: "es" }));
     },
-    async shopping(consulta) {
-      return leerShopping(
-        await pedir({ engine: "google_shopping", q: consulta, gl: "es", hl: "es", google_domain: "google.es" }),
+    async shopping(consulta, opciones) {
+      const parametros: Record<string, string> = {
+        engine: "google_shopping",
+        q: consulta,
+        gl: "es",
+        hl: "es",
+        google_domain: "google.es",
+        json_restrictor: CAMPOS_SHOPPING,
+      };
+      if (opciones?.maxPrecioCentimos) parametros.max_price = String(Math.floor(opciones.maxPrecioCentimos / 100));
+      return leerShopping(await pedir(parametros));
+    },
+    async imagenes(consulta) {
+      return leerImagenes(
+        await pedir({ engine: "google_images", q: consulta, gl: "es", hl: "es", json_restrictor: CAMPOS_IMAGENES }),
       );
     },
   };
@@ -122,6 +151,16 @@ export function leerShopping(datos: Objeto): Candidato[] {
         precioAnterior: leerPrecio(item.old_price, item.extracted_old_price),
       },
     ];
+  });
+}
+
+/** Resultados de Google Images: solo los que tienen miniatura https. */
+export function leerImagenes(datos: Objeto): Referencia[] {
+  const lista = Array.isArray(datos.images_results) ? (datos.images_results as unknown[]) : [];
+  return lista.filter(esObjeto).flatMap((item) => {
+    const imagen = texto(item.thumbnail);
+    if (!imagen?.startsWith("https://")) return [];
+    return [{ imagen, titulo: texto(item.title), fuente: texto(item.source) }];
   });
 }
 
