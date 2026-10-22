@@ -6,7 +6,8 @@ public struct EtiquetaOpcion: View {
     private let titulo: String
     private let simbolo: String
 
-    public init(_ titulo: String, simbolo: String) {
+    /// `nonisolated`: se crea dentro de cierres que no corren en el hilo principal (p. ej. PhotosPicker).
+    public nonisolated init(_ titulo: String, simbolo: String) {
         self.titulo = titulo
         self.simbolo = simbolo
     }

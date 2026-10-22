@@ -177,6 +177,13 @@ ios/
 └── DupeFinderUITests/                  # recorridos básicos + capturas de pantalla para revisar en CI
 ```
 
+**Estado tras la fase 1** (lo construido difiere un poco del árbol de arriba):
+- Los JSON de prueba están en el paquete (`DupeNucleo/Simulados/`), no en la app: así los comparten la app, las previews y los tests. `analisis-foto.json` es la respuesta real de Gemini con la foto de prueba.
+- `DupeDiseno` contiene `Tema` (espaciados, `Color(hex:)`), `Chip`, `FlujoChips` (chips que saltan de línea) y `EtiquetaOpcion`. El botón principal con morph vive en `BuscarView`.
+- Todavía no existen `ClienteAPI`, `ExtractorPagina`, `IdentificadorInstalacion`, `ImagenRemota` ni `CacheImagenes`: llegan al conectar el backend (fase 2) y con los resultados (fase 3).
+- La app usa aislamiento por defecto en el hilo principal (`SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor`); el paquete no.
+- La app acepta `-captura inicio|menu|ficha|outfits|guardados` al arrancar: lo usa la CI para hacer capturas.
+
 **Notas de diseño que afectan a la estructura**
 
 - **Servicios con versión simulada:** cada servicio es un protocolo con dos implementaciones (`…Remoto` y `…Simulado`). La fase 1 funciona entera con los JSON de `Simulados/` y, en la fase 2, basta con cambiar a la versión remota. Además, las pruebas de diseño no gastan cuota gratuita.

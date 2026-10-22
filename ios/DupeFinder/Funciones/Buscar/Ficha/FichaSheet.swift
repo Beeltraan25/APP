@@ -62,7 +62,8 @@ struct FichaSheet: View {
                     Button("Cerrar", systemImage: "xmark") { cerrar() }
                 }
             }
-            .safeAreaInset(edge: .bottom) { botonBuscar }
+            // safeAreaBar (iOS 26) difumina el contenido bajo el botón, como las barras del sistema.
+            .safeAreaBar(edge: .bottom) { botonBuscar }
         }
         .presentationDetents([.medium, .large], selection: $tamano)
         .presentationDragIndicator(.visible)
