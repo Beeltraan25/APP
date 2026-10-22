@@ -23,9 +23,9 @@ struct DetalleAlternativaView: View {
         let producto = alternativa.producto
         ScrollView {
             VStack(alignment: .leading, spacing: Espacio.l) {
-                // 4:5 (y no 3:4) para que precio y rango se vean sin desplazarse.
+                // Cuadrada: así título, precio y parecido caben sin desplazarse aunque el título sea largo.
                 Color.clear
-                    .aspectRatio(4 / 5, contentMode: .fit)
+                    .aspectRatio(1, contentMode: .fit)
                     .overlay { ImagenRemota(url: producto.imagenUrl) }
                     .clipShape(RoundedRectangle(cornerRadius: 24, style: .continuous))
 
