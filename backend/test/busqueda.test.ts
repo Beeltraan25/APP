@@ -280,3 +280,19 @@ describe("POST /v1/buscar", () => {
     expect((await leerError(respuesta)).codigo).toBe("SERVIDOR_NO_CONFIGURADO");
   });
 });
+
+describe("fichas enviadas desde Swift", () => {
+  it("acepta una ficha sin las claves que valen null (JSONEncoder las omite)", async () => {
+    const serpapi = serpapiFalso([candidato({})]);
+    const app = crearApp({ crearIA: () => new IASimulada(), crearSerpapi: () => serpapi });
+    const { entorno } = crearEntorno();
+    const { cuello, mangas, cierres, subcategoria, ...sinNulos } = { ...ficha, cuello: null, mangas: null, cierres: null, subcategoria: null };
+    void cuello; void mangas; void cierres; void subcategoria;
+    const respuesta = await app.request(
+      "/v1/buscar",
+      { method: "POST", body: JSON.stringify({ ficha: sinNulos }), headers: { "X-Clave-App": CLAVE_PRUEBA, "Content-Type": "application/json" } },
+      entorno,
+    );
+    expect(respuesta.status).toBe(200);
+  });
+});

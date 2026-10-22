@@ -3,19 +3,21 @@ import DupeNucleo
 import SwiftData
 import SwiftUI
 
-/// Prendas guardadas en el iPhone (SwiftData). Tocar una abre la tienda; deslizar la borra.
+/// Outfits y prendas guardadas en el iPhone (SwiftData). Tocar una prenda abre la tienda; deslizar borra.
 struct GuardadosView: View {
     let irABuscar: () -> Void
 
     @Environment(\.modelContext) private var contexto
     @Query(sort: \PrendaGuardada.fechaGuardado, order: .reverse)
     private var prendas: [PrendaGuardada]
+    @Query(sort: \OutfitGuardado.fechaGuardado, order: .reverse)
+    private var outfits: [OutfitGuardado]
     @State private var tiendaAbierta: EnlaceTienda?
 
     var body: some View {
         NavigationStack {
             Group {
-                if prendas.isEmpty {
+                if prendas.isEmpty && outfits.isEmpty {
                     ContentUnavailableView {
                         Label("Aún no has guardado nada", systemImage: "bookmark")
                     } description: {
@@ -26,15 +28,29 @@ struct GuardadosView: View {
                     }
                 } else {
                     List {
-                        ForEach(prendas) { prenda in
-                            Button { tiendaAbierta = EnlaceTienda(url: prenda.url) } label: {
-                                FilaGuardada(prenda: prenda)
+                        if !outfits.isEmpty {
+                            Section("Outfits") {
+                                ForEach(outfits) { outfit in
+                                    FilaOutfitGuardado(outfit: outfit)
+                                }
+                                .onDelete { indices in
+                                    for indice in indices { contexto.delete(outfits[indice]) }
+                                }
                             }
-                            .buttonStyle(.plain)
-                            .accessibilityHint("Abre la tienda")
                         }
-                        .onDelete { indices in
-                            for indice in indices { contexto.delete(prendas[indice]) }
+                        if !prendas.isEmpty {
+                            Section("Prendas") {
+                                ForEach(prendas) { prenda in
+                                    Button { tiendaAbierta = EnlaceTienda(url: prenda.url) } label: {
+                                        FilaGuardada(prenda: prenda)
+                                    }
+                                    .buttonStyle(.plain)
+                                    .accessibilityHint("Abre la tienda")
+                                }
+                                .onDelete { indices in
+                                    for indice in indices { contexto.delete(prendas[indice]) }
+                                }
+                            }
                         }
                     }
                     .listStyle(.plain)
@@ -71,6 +87,41 @@ private struct FilaGuardada: View {
         }
         .padding(.vertical, 4)
         .contentShape(.rect)
+        .accessibilityElement(children: .combine)
+    }
+}
+
+/// Miniaturas de las piezas, título, estilo y precio total.
+private struct FilaOutfitGuardado: View {
+    let outfit: OutfitGuardado
+
+    private var piezas: [PiezaGuardada] {
+        outfit.piezas.sorted { $0.orden < $1.orden }
+    }
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: Espacio.s) {
+            HStack(spacing: 6) {
+                ForEach(piezas.prefix(4)) { pieza in
+                    ImagenRemota(url: pieza.imagenUrl)
+                        .frame(width: 64, height: 64)
+                        .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
+                }
+            }
+            HStack(alignment: .firstTextBaseline) {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(outfit.titulo.isEmpty ? "Outfit" : outfit.titulo)
+                        .font(.headline)
+                    Text(outfit.estilo.conMayuscula)
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
+                Spacer()
+                Text(Precio(centimos: outfit.precioTotalCentimos).formateado)
+                    .font(.subheadline.weight(.semibold))
+            }
+        }
+        .padding(.vertical, 6)
         .accessibilityElement(children: .combine)
     }
 }

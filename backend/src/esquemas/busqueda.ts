@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { ausentesComoNull } from "./entrada";
 import { FichaPrenda } from "./ficha";
 import { Producto, RangoPrecio } from "./producto";
 
@@ -6,7 +7,7 @@ export const PeticionBusqueda = z.object({
   /** Imagen pública para Google Lens (la de /v1/analizar). Si no hay, solo se busca por texto. */
   imagen_url: z.url().nullish(),
   /** La ficha tal como la ha revisado el usuario. */
-  ficha: FichaPrenda,
+  ficha: ausentesComoNull(FichaPrenda),
 });
 export type PeticionBusqueda = z.infer<typeof PeticionBusqueda>;
 

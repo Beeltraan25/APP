@@ -28,6 +28,21 @@ public enum DatosSimulados {
         try! cargar("busqueda")
     }
 
+    /// Outfits "old money" reales (60 € por prenda) para los vaqueros de la foto.
+    public static var outfits: RespuestaOutfits {
+        // swiftlint:disable:next force_try
+        try! cargar("outfits")
+    }
+
+    /// Prenda base de ejemplo: los vaqueros de la foto.
+    public static var prendaBase: PrendaBase {
+        let analisis = analisisFoto
+        return PrendaBase(
+            ficha: analisis.ficha,
+            imagenUrl: URL(string: "https://raw.githubusercontent.com/Beeltraan25/APP/main/prenda.jpg")
+        )
+    }
+
     /// Respuesta del backend para el enlace de una sudadera de Zara.
     public static var analisisEnlace: RespuestaAnalisis {
         // swiftlint:disable:next force_try

@@ -18,6 +18,31 @@ enum Almacen {
     }
 
     private static func sembrarEjemplos(en contexto: ModelContext) {
+        if let outfit = DatosSimulados.outfits.outfits.first {
+            let guardado = OutfitGuardado(
+                outfitId: outfit.id,
+                titulo: outfit.titulo,
+                estilo: "old money",
+                porQueEncaja: outfit.porQueEncaja,
+                precioTotalCentimos: outfit.precioTotal.centimos
+            )
+            contexto.insert(guardado)
+            for (orden, pieza) in outfit.piezas.enumerated() {
+                let guardada = PiezaGuardada(
+                    orden: orden,
+                    rol: pieza.rol.rawValue,
+                    esPrendaBase: pieza.esPrendaBase,
+                    productoId: pieza.producto?.id ?? "base",
+                    titulo: pieza.producto?.titulo ?? pieza.descripcion,
+                    tiendaNombre: pieza.producto?.tienda.nombre ?? "",
+                    url: pieza.producto?.url,
+                    imagenUrl: pieza.imagenUrl,
+                    precioCentimos: pieza.producto?.precio?.centimos ?? 0
+                )
+                guardada.outfit = guardado
+                contexto.insert(guardada)
+            }
+        }
         for (indice, alternativa) in DatosSimulados.busqueda.alternativas.prefix(3).enumerated() {
             let producto = alternativa.producto
             contexto.insert(

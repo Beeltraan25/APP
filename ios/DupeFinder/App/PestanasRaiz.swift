@@ -7,10 +7,11 @@ enum Pestana: Hashable {
 /// Las tres pestañas de la app. TabView nativo: adopta Liquid Glass automáticamente.
 struct PestanasRaiz: View {
     @Environment(Dependencias.self) private var dependencias
-    @State private var seleccion: Pestana = PestanasRaiz.pestanaInicial
+    @Environment(EstadoCompartido.self) private var estado
 
     var body: some View {
-        TabView(selection: $seleccion) {
+        @Bindable var estado = estado
+        TabView(selection: $estado.pestana) {
             Tab("Buscar", systemImage: "magnifyingglass", value: .buscar) {
                 BuscarView(
                     servicio: dependencias.analisis,
@@ -19,19 +20,11 @@ struct PestanasRaiz: View {
                 )
             }
             Tab("Outfits", systemImage: "tshirt", value: .outfits) {
-                OutfitsView { seleccion = .buscar }
+                OutfitsView(servicio: dependencias.outfits)
             }
             Tab("Guardados", systemImage: "bookmark", value: .guardados) {
-                GuardadosView { seleccion = .buscar }
+                GuardadosView { estado.pestana = .buscar }
             }
-        }
-    }
-
-    private static var pestanaInicial: Pestana {
-        switch ModoCaptura.actual {
-        case .outfits: .outfits
-        case .guardados: .guardados
-        default: .buscar
         }
     }
 }
@@ -39,5 +32,6 @@ struct PestanasRaiz: View {
 #Preview {
     PestanasRaiz()
         .environment(Dependencias.simuladas())
+        .environment(EstadoCompartido())
         .modelContainer(for: [PrendaGuardada.self, OutfitGuardado.self], inMemory: true)
 }

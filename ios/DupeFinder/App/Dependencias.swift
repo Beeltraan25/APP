@@ -8,12 +8,14 @@ import Observation
 final class Dependencias {
     let analisis: any ServicioAnalisis
     let busqueda: any ServicioBusqueda
+    let outfits: any ServicioOutfits
     /// true si la app usa datos de prueba porque no hay servidor configurado.
     let modoPrueba: Bool
 
-    init(analisis: any ServicioAnalisis, busqueda: any ServicioBusqueda, modoPrueba: Bool) {
+    init(analisis: any ServicioAnalisis, busqueda: any ServicioBusqueda, outfits: any ServicioOutfits, modoPrueba: Bool) {
         self.analisis = analisis
         self.busqueda = busqueda
+        self.outfits = outfits
         self.modoPrueba = modoPrueba
     }
 
@@ -26,6 +28,7 @@ final class Dependencias {
         return Dependencias(
             analisis: ServicioAnalisisRemoto(cliente: cliente, lector: LectorPaginasCompleto()),
             busqueda: ServicioBusquedaRemoto(cliente: cliente),
+            outfits: ServicioOutfitsRemoto(cliente: cliente),
             modoPrueba: false
         )
     }
@@ -36,6 +39,7 @@ final class Dependencias {
         return Dependencias(
             analisis: ServicioAnalisisSimulado(retraso: sinEspera ? .zero : .milliseconds(1200)),
             busqueda: ServicioBusquedaSimulado(retraso: sinEspera ? .zero : .milliseconds(1500)),
+            outfits: ServicioOutfitsSimulado(retraso: sinEspera ? .zero : .milliseconds(900)),
             modoPrueba: true
         )
     }

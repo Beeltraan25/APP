@@ -48,6 +48,9 @@ final class PrendaGuardada {
 
 @Model
 final class OutfitGuardado {
+    /// Id del outfit en la respuesta del backend ("out_1").
+    var outfitId: String = ""
+    var titulo: String = ""
     var estilo: String
     var porQueEncaja: String
     var precioTotalCentimos: Int
@@ -55,7 +58,16 @@ final class OutfitGuardado {
     @Relationship(deleteRule: .cascade, inverse: \PiezaGuardada.outfit)
     var piezas: [PiezaGuardada] = []
 
-    init(estilo: String, porQueEncaja: String, precioTotalCentimos: Int, fechaGuardado: Date = .now) {
+    init(
+        outfitId: String,
+        titulo: String,
+        estilo: String,
+        porQueEncaja: String,
+        precioTotalCentimos: Int,
+        fechaGuardado: Date = .now
+    ) {
+        self.outfitId = outfitId
+        self.titulo = titulo
         self.estilo = estilo
         self.porQueEncaja = porQueEncaja
         self.precioTotalCentimos = precioTotalCentimos
@@ -71,7 +83,8 @@ final class PiezaGuardada {
     var productoId: String
     var titulo: String
     var tiendaNombre: String
-    var url: URL
+    /// Nil en la prenda base si es una foto propia.
+    var url: URL?
     var imagenUrl: URL?
     var precioCentimos: Int
     var outfit: OutfitGuardado?
@@ -83,7 +96,7 @@ final class PiezaGuardada {
         productoId: String,
         titulo: String,
         tiendaNombre: String,
-        url: URL,
+        url: URL?,
         imagenUrl: URL? = nil,
         precioCentimos: Int
     ) {

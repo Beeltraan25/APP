@@ -14,10 +14,17 @@ struct FichaSheet: View {
     @State private var textoEditado = ""
     /// Se llama con la ficha revisada al pulsar "Buscar alternativas".
     private let alBuscar: (FichaPrenda) -> Void
+    /// Se llama con la ficha revisada al pulsar "Crear outfits".
+    private let alCrearOutfits: (FichaPrenda) -> Void
 
-    init(analisis: AnalisisPresentado, alBuscar: @escaping (FichaPrenda) -> Void = { _ in }) {
+    init(
+        analisis: AnalisisPresentado,
+        alBuscar: @escaping (FichaPrenda) -> Void = { _ in },
+        alCrearOutfits: @escaping (FichaPrenda) -> Void = { _ in }
+    ) {
         _vm = State(initialValue: FichaViewModel(analisis: analisis))
         self.alBuscar = alBuscar
+        self.alCrearOutfits = alCrearOutfits
         _tamano = State(initialValue: ModoCaptura.actual == .ficha ? .large : .medium)
     }
 
@@ -213,17 +220,31 @@ struct FichaSheet: View {
     }
 
     private var botonBuscar: some View {
-        Button {
-            let ficha = vm.ficha
-            cerrar()
-            alBuscar(ficha)
-        } label: {
-            Label("Buscar alternativas", systemImage: "magnifyingglass")
-                .font(.headline)
-                .frame(maxWidth: .infinity)
-                .padding(.vertical, 6)
+        HStack(spacing: Espacio.s) {
+            Button {
+                let ficha = vm.ficha
+                cerrar()
+                alBuscar(ficha)
+            } label: {
+                Label("Buscar alternativas", systemImage: "magnifyingglass")
+                    .font(.headline)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 6)
+            }
+            .buttonStyle(.glassProminent)
+
+            Button {
+                let ficha = vm.ficha
+                cerrar()
+                alCrearOutfits(ficha)
+            } label: {
+                Image(systemName: "tshirt")
+                    .font(.headline)
+                    .padding(.vertical, 6)
+            }
+            .buttonStyle(.glass)
+            .accessibilityLabel("Crear outfits con esta prenda")
         }
-        .buttonStyle(.glassProminent)
         .controlSize(.large)
         .padding(.horizontal, 20)
         .padding(.bottom, Espacio.s)

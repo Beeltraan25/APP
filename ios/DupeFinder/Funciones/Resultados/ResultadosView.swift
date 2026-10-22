@@ -151,4 +151,5 @@ private struct TarjetaCargando: View {
     NavigationStack {
         ResultadosView(peticion: .ejemplo, servicio: ServicioBusquedaSimulado())
     }
+    .environment(EstadoCompartido())
 }

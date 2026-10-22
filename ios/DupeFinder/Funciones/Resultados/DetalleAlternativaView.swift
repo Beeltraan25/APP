@@ -8,6 +8,7 @@ struct DetalleAlternativaView: View {
     let alternativa: Alternativa
 
     @Environment(\.modelContext) private var contexto
+    @Environment(EstadoCompartido.self) private var estado
     @Query private var guardadas: [PrendaGuardada]
     @State private var mostrandoTienda = false
 
@@ -79,6 +80,22 @@ struct DetalleAlternativaView: View {
             .padding(.bottom, Espacio.xl)
         }
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            // Crear outfits con esta alternativa (con la ficha de la prenda buscada).
+            if let base = estado.prendaBase {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("Crear outfits", systemImage: "tshirt") {
+                        estado.crearOutfits(
+                            con: PrendaBase(
+                                ficha: base.ficha,
+                                producto: ProductoOrigen(alternativa.producto),
+                                imagenUrl: alternativa.producto.imagenUrl
+                            )
+                        )
+                    }
+                }
+            }
+        }
         .safeAreaBar(edge: .bottom) { botones }
         .sheet(isPresented: $mostrandoTienda) {
             NavegadorTienda(url: producto.url)
@@ -137,5 +154,6 @@ struct DetalleAlternativaView: View {
     NavigationStack {
         DetalleAlternativaView(alternativa: DatosSimulados.busqueda.alternativas[2])
     }
+    .environment(EstadoCompartido())
     .modelContainer(for: [PrendaGuardada.self, OutfitGuardado.self], inMemory: true)
 }

@@ -19,6 +19,7 @@ struct BuscarView: View {
     @State private var textoEnlace = ""
     @State private var hayEnlaceCopiado = false
     @Environment(\.scenePhase) private var fase
+    @Environment(EstadoCompartido.self) private var estado
     private let modoPrueba: Bool
 
     init(servicio: any ServicioAnalisis, busqueda: any ServicioBusqueda, modoPrueba: Bool = false) {
@@ -61,8 +62,20 @@ struct BuscarView: View {
             }
         }
         .sheet(item: $vm.analisis) { analisis in
-            FichaSheet(analisis: analisis) { ficha in
-                ruta = [.resultados(PeticionResultados(ficha: ficha, imagenUrl: analisis.respuesta.imagenUrl))]
+            FichaSheet(
+                analisis: analisis,
+                alBuscar: { ficha in
+                    ruta = [.resultados(PeticionResultados(ficha: ficha, imagenUrl: analisis.respuesta.imagenUrl))]
+                },
+                alCrearOutfits: { ficha in
+                    estado.crearOutfits(con: prendaBase(de: analisis, ficha: ficha))
+                }
+            )
+        }
+        // La última prenda analizada es la que se usa por defecto en Outfits.
+        .onChange(of: vm.analisis?.id) {
+            if let analisis = vm.analisis {
+                estado.prendaBase = prendaBase(de: analisis, ficha: analisis.respuesta.ficha)
             }
         }
         .fullScreenCover(isPresented: $mostrandoCamara) {
@@ -216,6 +229,15 @@ struct BuscarView: View {
 
     // MARK: - Acciones
 
+    private func prendaBase(de analisis: AnalisisPresentado, ficha: FichaPrenda) -> PrendaBase {
+        PrendaBase(
+            ficha: ficha,
+            producto: analisis.respuesta.productoOrigen,
+            imagenUrl: analisis.respuesta.imagenUrl,
+            fotoLocal: analisis.foto
+        )
+    }
+
     private func cambiarMenu(abierto: Bool) {
         withAnimation(.bouncy) { menuAbierto = abierto }
     }
@@ -258,4 +280,5 @@ struct BuscarView: View {
 
 #Preview {
     BuscarView(servicio: ServicioAnalisisSimulado(), busqueda: ServicioBusquedaSimulado())
+        .environment(EstadoCompartido())
 }

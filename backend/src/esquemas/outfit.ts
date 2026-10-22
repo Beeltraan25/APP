@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { ausentesComoNull } from "./entrada";
 import { FichaPrenda } from "./ficha";
 import { Precio, ProductoOrigen } from "./producto";
 
@@ -49,9 +50,9 @@ export const Presupuesto = z.object({
 
 export const PeticionOutfits = z.object({
   prenda_base: z.object({
-    ficha: FichaPrenda,
+    ficha: ausentesComoNull(FichaPrenda),
     /** La alternativa elegida o la prenda original de un enlace. */
-    producto: ProductoOrigen.nullable().optional(),
+    producto: ausentesComoNull(ProductoOrigen).nullable().optional(),
     /** Foto de la prenda (la de /v1/analizar o la de la tienda). */
     imagen_url: z.url().nullish(),
   }),
