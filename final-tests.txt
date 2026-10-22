@@ -1,0 +1,120 @@
+2026-10-22 22:13:32.997663+0000 DupeFinder[11382:39434] [error] CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application/326A16DD-2365-4311-ADCD-1337FA61F4E0/Library
+CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application/326A16DD-2365-4311-ADCD-1337FA61F4E0/Library
+2026-10-22 22:13:33.080042+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Device ID: 	0
+CoreData: error:   File Device ID: 	0
+2026-10-22 22:13:33.080222+0000 DupeFinder[11382:39434] [error] CoreData: error:   Device ID: 		16777231
+CoreData: error:   Device ID: 		16777231
+2026-10-22 22:13:33.080305+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Size: 		160 bytes
+CoreData: error:   File Size: 		160 bytes
+2026-10-22 22:13:33.080382+0000 DupeFinder[11382:39434] [error] CoreData: error:   File inode: 		3004380
+CoreData: error:   File inode: 		3004380
+2026-10-22 22:13:33.080464+0000 DupeFinder[11382:39434] [error] CoreData: error:   File user ID: 		501
+CoreData: error:   File user ID: 		501
+2026-10-22 22:13:33.080534+0000 DupeFinder[11382:39434] [error] CoreData: error:   File group ID: 		20
+CoreData: error:   File group ID: 		20
+2026-10-22 22:13:33.080592+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Permissions:
+CoreData: error:   File Permissions: 	
+2026-10-22 22:13:33.080676+0000 DupeFinder[11382:39434] [error] CoreData: error: d
+CoreData: error: d
+2026-10-22 22:13:33.081276+0000 DupeFinder[11382:39434] [error] CoreData: error:   755
+CoreData: error:   755
+2026-10-22 22:13:33.081402+0000 DupeFinder[11382:39434] [error] CoreData: error:   component is not a symbolic link
+CoreData: error:   component is not a symbolic link
+2026-10-22 22:13:33.081580+0000 DupeFinder[11382:39434] [error] CoreData: error:   component is readable
+CoreData: error:   component is readable
+2026-10-22 22:13:33.081722+0000 DupeFinder[11382:39434] [error] CoreData: error:   component is writeable
+CoreData: error:   component is writeable
+2026-10-22 22:13:33.081855+0000 DupeFinder[11382:39434] [error] CoreData: error: Failed to stat path '/Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application/326A16DD-2365-4311-ADCD-1337FA61F4E0/Library/Application Support', errno 2 / No such file or directory.
+CoreData: error: Failed to stat path '/Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application/326A16DD-2365-4311-ADCD-1337FA61F4E0/Library/Application Support', errno 2 / No such file or directory.
+2026-10-22 22:13:33.082718+0000 DupeFinder[11382:39434] [error] CoreData: error:   Sandbox access to file-write-create denied
+CoreData: error:   Sandbox access to file-write-create denied
+2026-10-22 22:13:33.083618+0000 DupeFinder[11382:39434] [error] CoreData: error: addPersistentStoreWithType:configuration:URL:options:error: returned error NSCocoaErrorDomain (512)
+CoreData: error: addPersistentStoreWithType:configuration:URL:options:error: returned error NSCocoaErrorDomain (512)
+2026-10-22 22:13:33.083710+0000 DupeFinder[11382:39434] [error] CoreData: error: userInfo:
+CoreData: error: userInfo:
+2026-10-22 22:13:33.083786+0000 DupeFinder[11382:39434] [error] CoreData: error: 	reason : Failed to create file; code = 2
+CoreData: error: 	reason : Failed to create file; code = 2
+2026-10-22 22:13:33.219444+0000 DupeFinder[11382:39434] [error] CoreData: error: storeType: SQLite
+CoreData: error: storeType: SQLite
+2026-10-22 22:13:33.219598+0000 DupeFinder[11382:39434] [error] CoreData: error: configuration: default
+CoreData: error: configuration: default
+2026-10-22 22:13:33.219735+0000 DupeFinder[11382:39434] [error] CoreData: error: URL: file:///Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application/326A16DD-2365-4311-ADCD-1337FA61F4E0/Library/Application%20Support/default.store
+CoreData: error: URL: file:///Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application/326A16DD-2365-4311-ADCD-1337FA61F4E0/Library/Application%20Support/default.store
+CoreData: annotation: options:
+CoreData: annotation: 	NSMigratePersistentStoresAutomaticallyOption : 1
+CoreData: annotation: 	NSInferMappingModelAutomaticallyOption : 1
+CoreData: annotation: 	NSPersistentStoreRemoteChangeNotificationOptionKey : 1
+CoreData: annotation: 	NSPersistentHistoryTrackingKey : 1
+2026-10-22 22:13:33.226329+0000 DupeFinder[11382:39434] [error] CoreData: error: <NSPersistentStoreCoordinator: 0x1075dc100>: Attempting recovery from error encountered during addPersistentStore: 0x107478300 Error Domain=NSCocoaErrorDomain Code=512 "El archivo no ha podido guardarse." UserInfo={reason=Failed to create file; code = 2}
+CoreData: error: <NSPersistentStoreCoordinator: 0x1075dc100>: Attempting recovery from error encountered during addPersistentStore: 0x107478300 Error Domain=NSCocoaErrorDomain Code=512 "El archivo no ha podido guardarse." UserInfo={reason=Failed to create file; code = 2}
+2026-10-22 22:13:33.226579+0000 DupeFinder[11382:39434] [error] CoreData: error: During recovery, parent directory path reported as missing
+CoreData: error: During recovery, parent directory path reported as missing
+2026-10-22 22:13:33.235491+0000 DupeFinder[11382:39434] [error] CoreData: error: Recovery attempt while adding <NSPersistentStoreDescription: 0x107478300> (type: SQLite, url: file:///Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application/326A16DD-2365-4311-ADCD-1337FA61F4E0/Library/Application%20Support/default.store) was successful!
+CoreData: error: Recovery attempt while adding <NSPersistentStoreDescription: 0x107478300> (type: SQLite, url: file:///Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application/326A16DD-2365-4311-ADCD-1337FA61F4E0/Library/Application%20Support/default.store) was successful!
+Test Suite 'All tests' started at 2026-10-22 22:13:39.995.
+Test Suite 'All tests' passed at 2026-10-22 22:13:39.997.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64-apple-ios13.0-simulator
+◇ Suite "Buscar" started.
+◇ Test "Una foto abre la ficha" started.
+✔ Test "Una foto abre la ficha" passed after 0.024 seconds.
+◇ Test "Un enlace dentro de un texto también funciona" started.
+✔ Test "Un enlace dentro de un texto también funciona" passed after 0.040 seconds.
+◇ Test "Un texto sin enlace muestra un aviso amable" started.
+✔ Test "Un texto sin enlace muestra un aviso amable" passed after 0.021 seconds.
+◇ Test "Los errores del servidor se muestran con su mensaje" started.
+✔ Test "Los errores del servidor se muestran con su mensaje" passed after 0.001 seconds.
+✔ Suite "Buscar" passed after 0.122 seconds.
+◇ Suite "Ficha" started.
+◇ Test "Corregir un dato deja de marcarlo como estimado" started.
+✔ Test "Corregir un dato deja de marcarlo como estimado" passed after 0.001 seconds.
+◇ Test "La prenda no se puede dejar vacía" started.
+✔ Test "La prenda no se puede dejar vacía" passed after 0.001 seconds.
+◇ Test "Elegir el gramaje borra los g/m² estimados" started.
+✔ Test "Elegir el gramaje borra los g/m² estimados" passed after 0.001 seconds.
+◇ Test "Añadir y quitar detalles" started.
+✔ Test "Añadir y quitar detalles" passed after 0.001 seconds.
+✔ Suite "Ficha" passed after 0.003 seconds.
+◇ Suite "Fotos" started.
+◇ Test "Reduce las fotos grandes a 1024 px como máximo" started.
+✔ Test "Reduce las fotos grandes a 1024 px como máximo" passed after 1.029 seconds.
+◇ Test "Rechaza datos que no son una imagen" started.
+✔ Test "Rechaza datos que no son una imagen" passed after 0.013 seconds.
+✔ Suite "Fotos" passed after 1.044 seconds.
+◇ Suite "Dependencias" started.
+◇ Test "Sin servidor configurado, la app usa datos de prueba" started.
+✔ Test "Sin servidor configurado, la app usa datos de prueba" passed after 0.001 seconds.
+◇ Test "Con servidor configurado, la app usa el backend" started.
+✔ Test "Con servidor configurado, la app usa el backend" passed after 0.009 seconds.
+✔ Suite "Dependencias" passed after 0.010 seconds.
+◇ Suite "Outfits" started.
+◇ Test "Sin estilo elegido no genera nada" started.
+✔ Test "Sin estilo elegido no genera nada" passed after 0.593 seconds.
+◇ Test "Genera 3 outfits y muestra el progreso" started.
+✔ Test "Genera 3 outfits y muestra el progreso" passed after 0.025 seconds.
+◇ Test "Cambiar una pieza actualiza el outfit y su precio total" started.
+✔ Test "Cambiar una pieza actualiza el outfit y su precio total" passed after 0.026 seconds.
+◇ Test "Al cambiar de prenda base se olvidan los outfits anteriores" started.
+✔ Test "Al cambiar de prenda base se olvidan los outfits anteriores" passed after 0.001 seconds.
+✔ Suite "Outfits" passed after 0.647 seconds.
+◇ Suite "Resultados" started.
+◇ Test "Carga todas las alternativas" started.
+✔ Test "Carga todas las alternativas" passed after 0.002 seconds.
+◇ Test "Filtra por rango sin volver a buscar" started.
+✔ Test "Filtra por rango sin volver a buscar" passed after 7.632 seconds.
+◇ Test "Si la búsqueda falla, guarda el error para mostrarlo" started.
+✔ Test "Si la búsqueda falla, guarda el error para mostrarlo" passed after 0.001 seconds.
+✔ Suite "Resultados" passed after 7.635 seconds.
+✔ Test run with 19 tests in 6 suites passed after 9.464 seconds.
+2026-10-22 22:13:57.037 xcodebuild[8927:31580] [MT] IDETestOperationsObserverDebug: 157.672 elapsed -- Testing started completed.
+2026-10-22 22:13:57.037 xcodebuild[8927:31580] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-22 22:13:57.037 xcodebuild[8927:31580] [MT] IDETestOperationsObserverDebug: 157.672 sec, +157.672 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/runner/work/APP/APP/ios/build/Logs/Test/Test-DupeFinder-2026.10.22_22-11-17-+0000.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started

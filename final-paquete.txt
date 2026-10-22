@@ -1,0 +1,120 @@
+    /usr/bin/codesign --force --sign - --timestamp\=none --generate-entitlement-der /Users/runner/Library/Developer/Xcode/DerivedData/DupeKit-erdwqnuwydaszxflhlapksnxairb/Build/Products/Debug-iphonesimulator/DupeNucleoTests.xctest
+
+RegisterExecutionPolicyException /Users/runner/Library/Developer/Xcode/DerivedData/DupeKit-erdwqnuwydaszxflhlapksnxairb/Build/Products/Debug-iphonesimulator/DupeNucleoTests.xctest (in target 'DupeNucleoTests' from project 'DupeKit')
+    cd /Users/runner/work/APP/APP/ios/Paquetes/DupeKit
+    builtin-RegisterExecutionPolicyException /Users/runner/Library/Developer/Xcode/DerivedData/DupeKit-erdwqnuwydaszxflhlapksnxairb/Build/Products/Debug-iphonesimulator/DupeNucleoTests.xctest
+
+Touch /Users/runner/Library/Developer/Xcode/DerivedData/DupeKit-erdwqnuwydaszxflhlapksnxairb/Build/Products/Debug-iphonesimulator/DupeNucleoTests.xctest (in target 'DupeNucleoTests' from project 'DupeKit')
+    cd /Users/runner/work/APP/APP/ios/Paquetes/DupeKit
+    /usr/bin/touch -c /Users/runner/Library/Developer/Xcode/DerivedData/DupeKit-erdwqnuwydaszxflhlapksnxairb/Build/Products/Debug-iphonesimulator/DupeNucleoTests.xctest
+
+Test Suite 'All tests' started at 2026-10-22 22:10:08.461.
+Test Suite 'All tests' passed at 2026-10-22 22:10:08.462.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64-apple-ios13.0-simulator
+◇ Suite "Enlaces" started.
+◇ Suite "Respuestas del backend" started.
+◇ Suite "Configuración del servidor" started.
+◇ Suite "Outfits" started.
+◇ Suite "Cliente de la API" started.
+◇ Suite "Precios" started.
+◇ Suite "Lectura de páginas de producto" started.
+◇ Suite "Share Extension" started.
+◇ Test "Sin URL o sin clave, no hay configuración (datos de prueba)" started.
+◇ Test "Con URL y clave, se usa el backend" started.
+◇ Test "Reemplazar una pieza recalcula el total" started.
+◇ Test "Lee los outfits reales: 3, con la prenda base y precio total" started.
+◇ Test "Las opciones simuladas respetan el presupuesto y no repiten" started.
+◇ Test "Presupuestos por prenda" started.
+◇ Test "Encuentra el enlace dentro de un texto compartido" started.
+◇ Test "Sin enlace devuelve nil" started.
+◇ Test "Formato español" started.
+◇ Test "Lee título, imagen, precio, descripción y JSON-LD" started.
+◇ Test "Envía la foto en multipart con la clave y el id de instalación" started.
+◇ Test "Al enviarla, el JSON-LD conserva sus claves originales" started.
+◇ Test "Sin og:title usa el <title> de la página" started.
+◇ Test "Rangos de precio" started.
+◇ Test "Las imágenes http pasan a https y las relativas se completan" started.
+◇ Test "Sin nada útil muestra un error amable" started.
+◇ Test "Un texto con enlace se analiza; sin enlace no" started.
+◇ Test "Desde Safari se usa la página ya cargada si tiene datos de producto" started.
+◇ Test "Una página de verificación anti-bots no se considera útil" started.
+◇ Test "Si la página de Safari no sirve, se lee el enlace" started.
+◇ Test "Analiza, busca y se queda con las mejores alternativas" started.
+◇ Test case passing 2 arguments centimos → 2499, esperado → .economico to "Rangos de precio" started.
+​◇ Test case passing 2 arguments centimos → 6000, esperado → .medio to "Rangos de precio" started.
+​◇ Test case passing 2 arguments centimos → 6001, esperado → .alto to "Rangos de precio" started.
+​◇ Test case passing 2 arguments centimos → 15000, esperado → .alto to "Rangos de precio" started.
+​◇ Test case passing 2 arguments centimos → 15001, esperado → .premium to "Rangos de precio" started.
+​◇ Test case passing 2 arguments centimos → 2500, esperado → .medio to "Rangos de precio" started.
+​✔ Test "Sin URL o sin clave, no hay configuración (datos de prueba)" passed after 0.816 seconds.
+✔ Test "Lee los outfits reales: 3, con la prenda base y precio total" passed after 0.816 seconds.
+✔ Test "Con URL y clave, se usa el backend" passed after 0.816 seconds.
+◇ Test "Un fit desconocido se lee como «otro»" started.
+◇ Test "Textos de composición y gramaje" started.
+◇ Test "Lee la prenda original de un enlace" started.
+◇ Test "Lee la respuesta real de una foto" started.
+✔ Test "Presupuestos por prenda" passed after 1.030 seconds.
+✔ Test "Reemplazar una pieza recalcula el total" passed after 1.031 seconds.
+✔ Test "Las opciones simuladas respetan el presupuesto y no repiten" passed after 1.031 seconds.
+✔ Test "Formato español" passed after 0.337 seconds.
+✔ Test "Lee título, imagen, precio, descripción y JSON-LD" passed after 0.337 seconds.
+✔ Test "Al enviarla, el JSON-LD conserva sus claves originales" passed after 0.337 seconds.
+◇ Test "Lee una búsqueda real, puntuada y ordenada por parecido" started.
+✔ Test "Sin enlace devuelve nil" passed after 0.342 seconds.
+✔ Test "Sin og:title usa el <title> de la página" passed after 0.346 seconds.
+✔ Test "Encuentra el enlace dentro de un texto compartido" passed after 0.346 seconds.
+✔ Test "Las imágenes http pasan a https y las relativas se completan" passed after 0.346 seconds.
+✔ Test "Rangos de precio" with 6 test cases passed after 0.346 seconds.
+✔ Test "Una página de verificación anti-bots no se considera útil" passed after 0.310 seconds.
+✔ Suite "Configuración del servidor" passed after 1.042 seconds.
+✔ Test "Sin nada útil muestra un error amable" passed after 0.347 seconds.
+✔ Test "Un fit desconocido se lee como «otro»" passed after 0.011 seconds.
+✔ Suite "Outfits" passed after 1.042 seconds.
+✔ Test "Envía la foto en multipart con la clave y el id de instalación" passed after 0.351 seconds.
+✔ Test "Lee la respuesta real de una foto" passed after 0.014 seconds.
+✔ Suite "Precios" passed after 1.045 seconds.
+✔ Test "Lee la prenda original de un enlace" passed after 0.014 seconds.
+✔ Suite "Lectura de páginas de producto" passed after 1.045 seconds.
+✔ Suite "Enlaces" passed after 1.047 seconds.
+✔ Test "Textos de composición y gramaje" passed after 0.015 seconds.
+✔ Test "Lee una búsqueda real, puntuada y ordenada por parecido" passed after 0.014 seconds.
+✔ Suite "Respuestas del backend" passed after 1.048 seconds.
+◇ Test "Envía los datos de la página como JSON" started.
+✔ Test "Desde Safari se usa la página ya cargada si tiene datos de producto" passed after 0.352 seconds.
+✔ Test "Analiza, busca y se queda con las mejores alternativas" passed after 2.280 seconds.
+✔ Test "Si la página de Safari no sirve, se lee el enlace" passed after 0.318 seconds.
+✔ Test "Un texto con enlace se analiza; sin enlace no" passed after 0.354 seconds.
+✔ Suite "Share Extension" passed after 3.011 seconds.
+✔ Test "Envía los datos de la página como JSON" passed after 1.965 seconds.
+◇ Test "Envía la ficha para buscar en snake_case, como espera el backend" started.
+✔ Test "Envía la ficha para buscar en snake_case, como espera el backend" passed after 0.029 seconds.
+◇ Test "Los errores del backend llegan con su mensaje en español" started.
+✔ Test "Los errores del backend llegan con su mensaje en español" passed after 0.041 seconds.
+◇ Test "Sin conexión da un mensaje claro" started.
+2026-10-22 22:10:12.832495+0000 xctest[6719:24967] [Default] Task <59D5E519-66C9-48B7-9495-96E14E66B98E>.<1> finished with error [-1009] Error Domain=NSURLErrorDomain Code=-1009 "(null)" UserInfo={_NSURLErrorRelatedURLSessionTaskErrorKey=(
+    "LocalDataTask <59D5E519-66C9-48B7-9495-96E14E66B98E>.<1>"
+), _NSURLErrorFailingURLSessionTaskErrorKey=LocalDataTask <59D5E519-66C9-48B7-9495-96E14E66B98E>.<1>}
+✔ Test "Sin conexión da un mensaje claro" passed after 0.025 seconds.
+◇ Test "Una respuesta que no es JSON se trata como respuesta no válida" started.
+✔ Test "Una respuesta que no es JSON se trata como respuesta no válida" passed after 0.009 seconds.
+◇ Test "Lee el progreso y el resultado; envía el presupuesto con null si no hay límite" started.
+✔ Test "Lee el progreso y el resultado; envía el presupuesto con null si no hay límite" passed after 0.099 seconds.
+◇ Test "Un error a mitad del stream llega como ErrorApp con su mensaje" started.
+✔ Test "Un error a mitad del stream llega como ErrorApp con su mensaje" passed after 0.001 seconds.
+◇ Test "Un error antes de empezar llega como JSON normal" started.
+✔ Test "Un error antes de empezar llega como JSON normal" passed after 0.001 seconds.
+✔ Suite "Cliente de la API" passed after 4.967 seconds.
+✔ Test run with 34 tests in 8 suites passed after 4.969 seconds.
+2026-10-22 22:10:19.009 xcodebuild[4912:18282] [MT] IDETestOperationsObserverDebug: 55.742 elapsed -- Testing started completed.
+2026-10-22 22:10:19.009 xcodebuild[4912:18282] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-22 22:10:19.009 xcodebuild[4912:18282] [MT] IDETestOperationsObserverDebug: 55.742 sec, +55.742 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/runner/Library/Developer/Xcode/DerivedData/DupeKit-erdwqnuwydaszxflhlapksnxairb/Logs/Test/Test-DupeKit-Package-2026.10.22_22-08-58-+0000.xcresult
+
+** TEST SUCCEEDED **
+
+Testing started

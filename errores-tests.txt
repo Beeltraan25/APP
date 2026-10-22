@@ -1,0 +1,300 @@
+2026-10-22 22:13:19.910709+0000 DupeFinder[11382:39434] [error] CoreData: error: Failed to stat path '/Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application/326A16DD-2365-4311-ADCD-1337FA61F4E0/Library/Application Support/default.store', errno 2 / No such file or directory.
+2026-10-22 22:13:19.910891+0000 DupeFinder[11382:39434] [error] CoreData: error: Executing as effective user 501
+2026-10-22 22:13:19.910974+0000 DupeFinder[11382:39434] [error] CoreData: error:   Sandbox access to file-write-create denied
+2026-10-22 22:13:19.911035+0000 DupeFinder[11382:39434] [error] CoreData: error: Failed to statfs file; errno 2 / No such file or directory.
+2026-10-22 22:13:20.738250+0000 DupeFinder[11382:39434] [error] CoreData: error: Information for file system
+2026-10-22 22:13:20.738474+0000 DupeFinder[11382:39434] [error] CoreData: error: ---------------------------
+2026-10-22 22:13:20.738561+0000 DupeFinder[11382:39434] [error] CoreData: error:   File system type: 		0
+2026-10-22 22:13:20.738652+0000 DupeFinder[11382:39434] [error] CoreData: error:   File system flags: 		0
+2026-10-22 22:13:20.738747+0000 DupeFinder[11382:39434] [error] CoreData: error:   Total data blocks: 		0
+2026-10-22 22:13:20.738818+0000 DupeFinder[11382:39434] [error] CoreData: error:   Free data blocks: 		0
+2026-10-22 22:13:26.423061+0000 DupeFinder[11382:39434] [error] CoreData: error:   Free blocks for nonsuperuser:	0
+2026-10-22 22:13:26.424457+0000 DupeFinder[11382:39434] [error] CoreData: error:   Total i-nodes: 			0
+2026-10-22 22:13:26.424600+0000 DupeFinder[11382:39434] [error] CoreData: error:   File system ID: 		0, 0
+2026-10-22 22:13:26.424714+0000 DupeFinder[11382:39434] [error] CoreData: error:   Free i-nodes: 			0
+2026-10-22 22:13:26.424795+0000 DupeFinder[11382:39434] [error] CoreData: error:   Owner UID: 			0
+2026-10-22 22:13:26.424871+0000 DupeFinder[11382:39434] [error] CoreData: error:   Filesystem type name:
+2026-10-22 22:13:26.424945+0000 DupeFinder[11382:39434] [error] CoreData: error:   Mount on name:
+2026-10-22 22:13:27.166934+0000 DupeFinder[11382:39434] [error] CoreData: error:   Mount from name: 		\M-D\M-|\^C\M^@\^A
+2026-10-22 22:13:27.167602+0000 DupeFinder[11382:39434] [error] CoreData: error: Failed to stat path '/Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application/326A16DD-2365-4311-ADCD-1337FA61F4E0/Library/Application Support', errno 2 / No such file or directory.
+2026-10-22 22:13:27.167723+0000 DupeFinder[11382:39434] [error] CoreData: error: Executing as effective user 501
+2026-10-22 22:13:27.167825+0000 DupeFinder[11382:39434] [error] CoreData: error:   Sandbox access to file-write-create denied
+2026-10-22 22:13:27.409987+0000 DupeFinder[11382:39434] [error] CoreData: error: Failed to statfs file; errno 2 / No such file or directory.
+2026-10-22 22:13:27.410097+0000 DupeFinder[11382:39434] [error] CoreData: error: Information for file system
+2026-10-22 22:13:27.410186+0000 DupeFinder[11382:39434] [error] CoreData: error: ---------------------------
+2026-10-22 22:13:27.410247+0000 DupeFinder[11382:39434] [error] CoreData: error:   File system type: 		0
+2026-10-22 22:13:27.410300+0000 DupeFinder[11382:39434] [error] CoreData: error:   File system flags: 		0
+2026-10-22 22:13:27.410348+0000 DupeFinder[11382:39434] [error] CoreData: error:   Total data blocks: 		0
+2026-10-22 22:13:27.890335+0000 DupeFinder[11382:39434] [error] CoreData: error:   Free data blocks: 		0
+2026-10-22 22:13:27.890426+0000 DupeFinder[11382:39434] [error] CoreData: error:   Free blocks for nonsuperuser:	0
+2026-10-22 22:13:27.890500+0000 DupeFinder[11382:39434] [error] CoreData: error:   Total i-nodes: 			0
+2026-10-22 22:13:27.890550+0000 DupeFinder[11382:39434] [error] CoreData: error:   File system ID: 		0, 0
+2026-10-22 22:13:27.890598+0000 DupeFinder[11382:39434] [error] CoreData: error:   Free i-nodes: 			0
+2026-10-22 22:13:27.890644+0000 DupeFinder[11382:39434] [error] CoreData: error:   Owner UID: 			0
+2026-10-22 22:13:27.890712+0000 DupeFinder[11382:39434] [error] CoreData: error:   Filesystem type name:
+2026-10-22 22:13:27.891062+0000 DupeFinder[11382:39434] [error] CoreData: error:   Mount on name:
+2026-10-22 22:13:27.891164+0000 DupeFinder[11382:39434] [error] CoreData: error:   Mount from name: 		\M-D\M-|\^C\M^@\^A
+2026-10-22 22:13:27.891316+0000 DupeFinder[11382:39434] [error] CoreData: error: Executing as effective user 501
+2026-10-22 22:13:27.891406+0000 DupeFinder[11382:39434] [error] CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application/326A16DD-2365-4311-ADCD-1337FA61F4E0/Library
+2026-10-22 22:13:27.891528+0000 DupeFinder[11382:39434] [error] CoreData: error: ---------------------------
+2026-10-22 22:13:27.891865+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Device ID: 	0
+2026-10-22 22:13:27.891997+0000 DupeFinder[11382:39434] [error] CoreData: error:   Device ID: 		16777231
+2026-10-22 22:13:27.892105+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Size: 		160 bytes
+2026-10-22 22:13:27.892213+0000 DupeFinder[11382:39434] [error] CoreData: error:   File inode: 		3004380
+2026-10-22 22:13:27.892316+0000 DupeFinder[11382:39434] [error] CoreData: error:   File user ID: 		501
+2026-10-22 22:13:27.892545+0000 DupeFinder[11382:39434] [error] CoreData: error:   File group ID: 		20
+2026-10-22 22:13:27.892654+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Permissions:
+2026-10-22 22:13:27.973762+0000 DupeFinder[11382:39434] [error] CoreData: error: d
+2026-10-22 22:13:27.973909+0000 DupeFinder[11382:39434] [error] CoreData: error:   755
+2026-10-22 22:13:27.973974+0000 DupeFinder[11382:39434] [error] CoreData: error:   file is not a symbolic link
+2026-10-22 22:13:27.974082+0000 DupeFinder[11382:39434] [error] CoreData: error:   Sandbox access to file-write-create allowed
+2026-10-22 22:13:27.974149+0000 DupeFinder[11382:39434] [error] CoreData: error: Information for file system
+2026-10-22 22:13:27.974193+0000 DupeFinder[11382:39434] [error] CoreData: error: ---------------------------
+2026-10-22 22:13:27.974263+0000 DupeFinder[11382:39434] [error] CoreData: error:   File system type: 		0x1a
+2026-10-22 22:13:27.975350+0000 DupeFinder[11382:39434] [error] CoreData: error:   File system flags: 		0x4909000
+2026-10-22 22:13:27.975499+0000 DupeFinder[11382:39434] [error] CoreData: error:   MNT_JOURNALED
+2026-10-22 22:13:27.975624+0000 DupeFinder[11382:39434] [error] CoreData: error:   Total data blocks: 		83758080
+2026-10-22 22:13:27.975752+0000 DupeFinder[11382:39434] [error] CoreData: error:   Free data blocks: 		24697861
+2026-10-22 22:13:27.975864+0000 DupeFinder[11382:39434] [error] CoreData: error:   Free blocks for nonsuperuser:	24697861
+2026-10-22 22:13:27.975966+0000 DupeFinder[11382:39434] [error] CoreData: error:   Total i-nodes: 			989826674
+2026-10-22 22:13:27.976070+0000 DupeFinder[11382:39434] [error] CoreData: error:   File system ID: 		0x100000f, 0x1a
+2026-10-22 22:13:27.976155+0000 DupeFinder[11382:39434] [error] CoreData: error:   Free i-nodes: 			987914440
+2026-10-22 22:13:27.976234+0000 DupeFinder[11382:39434] [error] CoreData: error:   Owner UID: 			0
+2026-10-22 22:13:28.055925+0000 DupeFinder[11382:39434] [error] CoreData: error:   Filesystem type name: 		apfs
+2026-10-22 22:13:28.056037+0000 DupeFinder[11382:39434] [error] CoreData: error:   Mount on name: 			/System/Volumes/Data
+2026-10-22 22:13:28.056099+0000 DupeFinder[11382:39434] [error] CoreData: error:   Mount from name: 		/dev/disk2s5
+2026-10-22 22:13:28.056220+0000 DupeFinder[11382:39434] [error] CoreData: error: Executing as effective user 501
+2026-10-22 22:13:28.056279+0000 DupeFinder[11382:39434] [error] CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application/326A16DD-2365-4311-ADCD-1337FA61F4E0
+2026-10-22 22:13:28.056678+0000 DupeFinder[11382:39434] [error] CoreData: error: ---------------------------
+2026-10-22 22:13:28.056775+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Device ID: 	0
+2026-10-22 22:13:28.056933+0000 DupeFinder[11382:39434] [error] CoreData: error:   Device ID: 		16777231
+2026-10-22 22:13:28.057062+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Size: 		224 bytes
+2026-10-22 22:13:28.057172+0000 DupeFinder[11382:39434] [error] CoreData: error:   File inode: 		3004378
+2026-10-22 22:13:28.057273+0000 DupeFinder[11382:39434] [error] CoreData: error:   File user ID: 		501
+2026-10-22 22:13:28.219181+0000 DupeFinder[11382:39434] [error] CoreData: error:   File group ID: 		20
+2026-10-22 22:13:28.219305+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Permissions:
+2026-10-22 22:13:28.219381+0000 DupeFinder[11382:39434] [error] CoreData: error: d
+2026-10-22 22:13:28.219466+0000 DupeFinder[11382:39434] [error] CoreData: error:   755
+2026-10-22 22:13:28.219552+0000 DupeFinder[11382:39434] [error] CoreData: error:   file is not a symbolic link
+2026-10-22 22:13:28.219681+0000 DupeFinder[11382:39434] [error] CoreData: error:   Sandbox access to file-write-create allowed
+2026-10-22 22:13:28.219913+0000 DupeFinder[11382:39434] [error] CoreData: error: Executing as effective user 501
+2026-10-22 22:13:28.380106+0000 DupeFinder[11382:39434] [error] CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application
+2026-10-22 22:13:28.380216+0000 DupeFinder[11382:39434] [error] CoreData: error: ---------------------------
+2026-10-22 22:13:28.380282+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Device ID: 	0
+2026-10-22 22:13:28.380330+0000 DupeFinder[11382:39434] [error] CoreData: error:   Device ID: 		16777231
+2026-10-22 22:13:28.380375+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Size: 		4768 bytes
+2026-10-22 22:13:28.382494+0000 DupeFinder[11382:39434] [error] CoreData: error:   File inode: 		2985925
+2026-10-22 22:13:28.382636+0000 DupeFinder[11382:39434] [error] CoreData: error:   File user ID: 		501
+2026-10-22 22:13:28.382848+0000 DupeFinder[11382:39434] [error] CoreData: error:   File group ID: 		20
+2026-10-22 22:13:28.382968+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Permissions:
+2026-10-22 22:13:28.383076+0000 DupeFinder[11382:39434] [error] CoreData: error: d
+2026-10-22 22:13:28.383210+0000 DupeFinder[11382:39434] [error] CoreData: error:   755
+2026-10-22 22:13:28.383339+0000 DupeFinder[11382:39434] [error] CoreData: error:   file is not a symbolic link
+2026-10-22 22:13:28.383510+0000 DupeFinder[11382:39434] [error] CoreData: error:   Sandbox access to file-write-create allowed
+2026-10-22 22:13:28.462524+0000 DupeFinder[11382:39434] [error] CoreData: error: Executing as effective user 501
+2026-10-22 22:13:28.462609+0000 DupeFinder[11382:39434] [error] CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data
+2026-10-22 22:13:28.462669+0000 DupeFinder[11382:39434] [error] CoreData: error: ---------------------------
+2026-10-22 22:13:28.462714+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Device ID: 	0
+2026-10-22 22:13:28.462760+0000 DupeFinder[11382:39434] [error] CoreData: error:   Device ID: 		16777231
+2026-10-22 22:13:28.463186+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Size: 		192 bytes
+2026-10-22 22:13:28.463286+0000 DupeFinder[11382:39434] [error] CoreData: error:   File inode: 		2985751
+2026-10-22 22:13:28.463457+0000 DupeFinder[11382:39434] [error] CoreData: error:   File user ID: 		501
+2026-10-22 22:13:28.463559+0000 DupeFinder[11382:39434] [error] CoreData: error:   File group ID: 		20
+2026-10-22 22:13:28.463671+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Permissions:
+2026-10-22 22:13:28.463758+0000 DupeFinder[11382:39434] [error] CoreData: error: d
+2026-10-22 22:13:28.463849+0000 DupeFinder[11382:39434] [error] CoreData: error:   755
+2026-10-22 22:13:28.463932+0000 DupeFinder[11382:39434] [error] CoreData: error:   file is not a symbolic link
+2026-10-22 22:13:28.543271+0000 DupeFinder[11382:39434] [error] CoreData: error:   Sandbox access to file-write-create allowed
+2026-10-22 22:13:28.543412+0000 DupeFinder[11382:39434] [error] CoreData: error: Executing as effective user 501
+2026-10-22 22:13:28.543488+0000 DupeFinder[11382:39434] [error] CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers
+2026-10-22 22:13:28.543549+0000 DupeFinder[11382:39434] [error] CoreData: error: ---------------------------
+2026-10-22 22:13:28.543607+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Device ID: 	0
+2026-10-22 22:13:28.705309+0000 DupeFinder[11382:39434] [error] CoreData: error:   Device ID: 		16777231
+2026-10-22 22:13:28.705429+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Size: 		224 bytes
+2026-10-22 22:13:28.705503+0000 DupeFinder[11382:39434] [error] CoreData: error:   File inode: 		2985732
+2026-10-22 22:13:28.705575+0000 DupeFinder[11382:39434] [error] CoreData: error:   File user ID: 		501
+2026-10-22 22:13:28.705631+0000 DupeFinder[11382:39434] [error] CoreData: error:   File group ID: 		20
+2026-10-22 22:13:28.705687+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Permissions:
+2026-10-22 22:13:28.705771+0000 DupeFinder[11382:39434] [error] CoreData: error: d
+2026-10-22 22:13:28.708211+0000 DupeFinder[11382:39434] [error] CoreData: error:   755
+2026-10-22 22:13:28.708435+0000 DupeFinder[11382:39434] [error] CoreData: error:   file is not a symbolic link
+2026-10-22 22:13:28.708644+0000 DupeFinder[11382:39434] [error] CoreData: error:   Sandbox access to file-write-create allowed
+2026-10-22 22:13:28.708783+0000 DupeFinder[11382:39434] [error] CoreData: error: Executing as effective user 501
+2026-10-22 22:13:28.708907+0000 DupeFinder[11382:39434] [error] CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data
+2026-10-22 22:13:28.709037+0000 DupeFinder[11382:39434] [error] CoreData: error: ---------------------------
+2026-10-22 22:13:28.787424+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Device ID: 	0
+2026-10-22 22:13:28.787527+0000 DupeFinder[11382:39434] [error] CoreData: error:   Device ID: 		16777231
+2026-10-22 22:13:28.787593+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Size: 		384 bytes
+2026-10-22 22:13:28.787645+0000 DupeFinder[11382:39434] [error] CoreData: error:   File inode: 		2324552
+2026-10-22 22:13:28.787691+0000 DupeFinder[11382:39434] [error] CoreData: error:   File user ID: 		501
+2026-10-22 22:13:28.787735+0000 DupeFinder[11382:39434] [error] CoreData: error:   File group ID: 		20
+2026-10-22 22:13:28.787828+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Permissions:
+2026-10-22 22:13:28.788063+0000 DupeFinder[11382:39434] [error] CoreData: error: d
+2026-10-22 22:13:28.788186+0000 DupeFinder[11382:39434] [error] CoreData: error:   775
+2026-10-22 22:13:28.788280+0000 DupeFinder[11382:39434] [error] CoreData: error:   file is not a symbolic link
+2026-10-22 22:13:28.788427+0000 DupeFinder[11382:39434] [error] CoreData: error:   Sandbox access to file-write-create allowed
+2026-10-22 22:13:28.788559+0000 DupeFinder[11382:39434] [error] CoreData: error: Executing as effective user 501
+2026-10-22 22:13:28.788681+0000 DupeFinder[11382:39434] [error] CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957
+2026-10-22 22:13:28.788807+0000 DupeFinder[11382:39434] [error] CoreData: error: ---------------------------
+2026-10-22 22:13:28.788911+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Device ID: 	0
+2026-10-22 22:13:28.789011+0000 DupeFinder[11382:39434] [error] CoreData: error:   Device ID: 		16777231
+2026-10-22 22:13:28.789106+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Size: 		160 bytes
+2026-10-22 22:13:28.789213+0000 DupeFinder[11382:39434] [error] CoreData: error:   File inode: 		2324551
+2026-10-22 22:13:28.789314+0000 DupeFinder[11382:39434] [error] CoreData: error:   File user ID: 		501
+2026-10-22 22:13:28.789421+0000 DupeFinder[11382:39434] [error] CoreData: error:   File group ID: 		20
+2026-10-22 22:13:28.789537+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Permissions:
+2026-10-22 22:13:28.789639+0000 DupeFinder[11382:39434] [error] CoreData: error: d
+2026-10-22 22:13:28.789736+0000 DupeFinder[11382:39434] [error] CoreData: error:   755
+2026-10-22 22:13:28.789831+0000 DupeFinder[11382:39434] [error] CoreData: error:   file is not a symbolic link
+2026-10-22 22:13:28.789955+0000 DupeFinder[11382:39434] [error] CoreData: error:   Sandbox access to file-write-create allowed
+2026-10-22 22:13:28.867995+0000 DupeFinder[11382:39434] [error] CoreData: error: Executing as effective user 501
+2026-10-22 22:13:28.868181+0000 DupeFinder[11382:39434] [error] CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator/Devices
+2026-10-22 22:13:28.868294+0000 DupeFinder[11382:39434] [error] CoreData: error: ---------------------------
+2026-10-22 22:13:28.868358+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Device ID: 	0
+2026-10-22 22:13:28.868433+0000 DupeFinder[11382:39434] [error] CoreData: error:   Device ID: 		16777231
+2026-10-22 22:13:28.868495+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Size: 		2016 bytes
+2026-10-22 22:13:28.868557+0000 DupeFinder[11382:39434] [error] CoreData: error:   File inode: 		2302267
+2026-10-22 22:13:29.037932+0000 DupeFinder[11382:39434] [error] CoreData: error:   File user ID: 		501
+2026-10-22 22:13:29.038024+0000 DupeFinder[11382:39434] [error] CoreData: error:   File group ID: 		20
+2026-10-22 22:13:29.038088+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Permissions:
+2026-10-22 22:13:29.038140+0000 DupeFinder[11382:39434] [error] CoreData: error: d
+2026-10-22 22:13:29.038185+0000 DupeFinder[11382:39434] [error] CoreData: error:   755
+2026-10-22 22:13:29.038229+0000 DupeFinder[11382:39434] [error] CoreData: error:   file is not a symbolic link
+2026-10-22 22:13:29.038366+0000 DupeFinder[11382:39434] [error] CoreData: error:   Sandbox access to file-write-create allowed
+2026-10-22 22:13:29.038605+0000 DupeFinder[11382:39434] [error] CoreData: error: Executing as effective user 501
+2026-10-22 22:13:29.038714+0000 DupeFinder[11382:39434] [error] CoreData: error: Information for /Users/runner/Library/Developer/CoreSimulator
+2026-10-22 22:13:29.038834+0000 DupeFinder[11382:39434] [error] CoreData: error: ---------------------------
+2026-10-22 22:13:29.038930+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Device ID: 	0
+2026-10-22 22:13:29.039032+0000 DupeFinder[11382:39434] [error] CoreData: error:   Device ID: 		16777231
+2026-10-22 22:13:29.039132+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Size: 		160 bytes
+2026-10-22 22:13:29.039216+0000 DupeFinder[11382:39434] [error] CoreData: error:   File inode: 		2302205
+2026-10-22 22:13:29.039316+0000 DupeFinder[11382:39434] [error] CoreData: error:   File user ID: 		501
+2026-10-22 22:13:29.039400+0000 DupeFinder[11382:39434] [error] CoreData: error:   File group ID: 		20
+2026-10-22 22:13:29.039498+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Permissions:
+2026-10-22 22:13:29.039583+0000 DupeFinder[11382:39434] [error] CoreData: error: d
+2026-10-22 22:13:29.039673+0000 DupeFinder[11382:39434] [error] CoreData: error:   755
+2026-10-22 22:13:29.039798+0000 DupeFinder[11382:39434] [error] CoreData: error:   file is not a symbolic link
+2026-10-22 22:13:29.039942+0000 DupeFinder[11382:39434] [error] CoreData: error:   Sandbox access to file-write-create allowed
+2026-10-22 22:13:29.040112+0000 DupeFinder[11382:39434] [error] CoreData: error: Executing as effective user 501
+2026-10-22 22:13:29.040232+0000 DupeFinder[11382:39434] [error] CoreData: error: Information for /Users/runner/Library/Developer
+2026-10-22 22:13:29.040326+0000 DupeFinder[11382:39434] [error] CoreData: error: ---------------------------
+2026-10-22 22:13:29.040425+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Device ID: 	0
+2026-10-22 22:13:29.040526+0000 DupeFinder[11382:39434] [error] CoreData: error:   Device ID: 		16777231
+2026-10-22 22:13:29.040619+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Size: 		160 bytes
+2026-10-22 22:13:29.040708+0000 DupeFinder[11382:39434] [error] CoreData: error:   File inode: 		2302196
+2026-10-22 22:13:29.040791+0000 DupeFinder[11382:39434] [error] CoreData: error:   File user ID: 		501
+2026-10-22 22:13:29.040874+0000 DupeFinder[11382:39434] [error] CoreData: error:   File group ID: 		20
+2026-10-22 22:13:29.040957+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Permissions:
+2026-10-22 22:13:29.041038+0000 DupeFinder[11382:39434] [error] CoreData: error: d
+2026-10-22 22:13:29.118694+0000 DupeFinder[11382:39434] [error] CoreData: error:   755
+2026-10-22 22:13:29.118790+0000 DupeFinder[11382:39434] [error] CoreData: error:   file is not a symbolic link
+2026-10-22 22:13:29.118908+0000 DupeFinder[11382:39434] [error] CoreData: error:   Sandbox access to file-write-create allowed
+2026-10-22 22:13:29.118992+0000 DupeFinder[11382:39434] [error] CoreData: error: Executing as effective user 501
+2026-10-22 22:13:29.119052+0000 DupeFinder[11382:39434] [error] CoreData: error: Information for /Users/runner/Library
+2026-10-22 22:13:29.119124+0000 DupeFinder[11382:39434] [error] CoreData: error: ---------------------------
+2026-10-22 22:13:29.119751+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Device ID: 	0
+2026-10-22 22:13:29.119979+0000 DupeFinder[11382:39434] [error] CoreData: error:   Device ID: 		16777231
+2026-10-22 22:13:29.120103+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Size: 		2688 bytes
+2026-10-22 22:13:29.120222+0000 DupeFinder[11382:39434] [error] CoreData: error:   File inode: 		36534
+2026-10-22 22:13:29.120379+0000 DupeFinder[11382:39434] [error] CoreData: error:   File user ID: 		501
+2026-10-22 22:13:29.120490+0000 DupeFinder[11382:39434] [error] CoreData: error:   File group ID: 		20
+2026-10-22 22:13:29.120601+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Permissions:
+2026-10-22 22:13:29.120712+0000 DupeFinder[11382:39434] [error] CoreData: error: d
+2026-10-22 22:13:29.121517+0000 DupeFinder[11382:39434] [error] CoreData: error:   700
+2026-10-22 22:13:29.121635+0000 DupeFinder[11382:39434] [error] CoreData: error:   file is not a symbolic link
+2026-10-22 22:13:29.121803+0000 DupeFinder[11382:39434] [error] CoreData: error:   Sandbox access to file-write-create allowed
+2026-10-22 22:13:29.121886+0000 DupeFinder[11382:39434] [error] CoreData: error: Executing as effective user 501
+2026-10-22 22:13:29.122009+0000 DupeFinder[11382:39434] [error] CoreData: error: Information for /Users/runner
+2026-10-22 22:13:29.122126+0000 DupeFinder[11382:39434] [error] CoreData: error: ---------------------------
+2026-10-22 22:13:29.122229+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Device ID: 	0
+2026-10-22 22:13:29.278692+0000 DupeFinder[11382:39434] [error] CoreData: error:   Device ID: 		16777231
+2026-10-22 22:13:29.278799+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Size: 		1312 bytes
+2026-10-22 22:13:29.278866+0000 DupeFinder[11382:39434] [error] CoreData: error:   File inode: 		36527
+2026-10-22 22:13:29.278960+0000 DupeFinder[11382:39434] [error] CoreData: error:   File user ID: 		501
+2026-10-22 22:13:29.279014+0000 DupeFinder[11382:39434] [error] CoreData: error:   File group ID: 		20
+2026-10-22 22:13:29.279063+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Permissions:
+2026-10-22 22:13:29.279144+0000 DupeFinder[11382:39434] [error] CoreData: error: d
+2026-10-22 22:13:29.279601+0000 DupeFinder[11382:39434] [error] CoreData: error:   750
+2026-10-22 22:13:29.279737+0000 DupeFinder[11382:39434] [error] CoreData: error:   file is not a symbolic link
+2026-10-22 22:13:29.279891+0000 DupeFinder[11382:39434] [error] CoreData: error:   Sandbox access to file-write-create allowed
+2026-10-22 22:13:29.280015+0000 DupeFinder[11382:39434] [error] CoreData: error: Executing as effective user 501
+2026-10-22 22:13:29.280115+0000 DupeFinder[11382:39434] [error] CoreData: error: Information for /Users
+2026-10-22 22:13:29.280214+0000 DupeFinder[11382:39434] [error] CoreData: error: ---------------------------
+2026-10-22 22:13:29.280335+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Device ID: 	0
+2026-10-22 22:13:29.280496+0000 DupeFinder[11382:39434] [error] CoreData: error:   Device ID: 		16777231
+2026-10-22 22:13:29.280587+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Size: 		160 bytes
+2026-10-22 22:13:29.280700+0000 DupeFinder[11382:39434] [error] CoreData: error:   File inode: 		18483
+2026-10-22 22:13:29.280800+0000 DupeFinder[11382:39434] [error] CoreData: error:   File user ID: 		0
+2026-10-22 22:13:29.280893+0000 DupeFinder[11382:39434] [error] CoreData: error:   File group ID: 		80
+2026-10-22 22:13:29.280981+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Permissions:
+2026-10-22 22:13:29.281069+0000 DupeFinder[11382:39434] [error] CoreData: error: d
+2026-10-22 22:13:29.281252+0000 DupeFinder[11382:39434] [error] CoreData: error:   755
+2026-10-22 22:13:29.281361+0000 DupeFinder[11382:39434] [error] CoreData: error:   file is not a symbolic link
+2026-10-22 22:13:29.281578+0000 DupeFinder[11382:39434] [error] CoreData: error:   Sandbox access to file-write-create allowed
+2026-10-22 22:13:29.281719+0000 DupeFinder[11382:39434] [error] CoreData: error: Executing as effective user 501
+2026-10-22 22:13:29.281824+0000 DupeFinder[11382:39434] [error] CoreData: error: Information for /
+2026-10-22 22:13:29.281917+0000 DupeFinder[11382:39434] [error] CoreData: error: ---------------------------
+2026-10-22 22:13:29.282037+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Device ID: 	0
+2026-10-22 22:13:29.387237+0000 DupeFinder[11382:39434] [error] CoreData: error:   Device ID: 		16777231
+2026-10-22 22:13:29.387345+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Size: 		704 bytes
+2026-10-22 22:13:29.387459+0000 DupeFinder[11382:39434] [error] CoreData: error:   File inode: 		2
+2026-10-22 22:13:29.387524+0000 DupeFinder[11382:39434] [error] CoreData: error:   File user ID: 		0
+2026-10-22 22:13:29.387586+0000 DupeFinder[11382:39434] [error] CoreData: error:   File group ID: 		0
+2026-10-22 22:13:29.387643+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Permissions:
+2026-10-22 22:13:29.387720+0000 DupeFinder[11382:39434] [error] CoreData: error: d
+2026-10-22 22:13:29.387895+0000 DupeFinder[11382:39434] [error] CoreData: error:   755
+2026-10-22 22:13:29.388500+0000 DupeFinder[11382:39434] [error] CoreData: error:   file is not a symbolic link
+2026-10-22 22:13:29.388702+0000 DupeFinder[11382:39434] [error] CoreData: error:   Sandbox access to file-write-create allowed
+2026-10-22 22:13:29.388989+0000 DupeFinder[11382:39434] [error] CoreData: error: Logging status information for directory path: /Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application/326A16DD-2365-4311-ADCD-1337FA61F4E0/Library/Application Support
+2026-10-22 22:13:29.389187+0000 DupeFinder[11382:39434] [error] CoreData: error: Executing as effective user 501
+2026-10-22 22:13:29.389332+0000 DupeFinder[11382:39434] [error] CoreData: error: Information for /
+2026-10-22 22:13:29.389460+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Device ID: 	0
+2026-10-22 22:13:29.389572+0000 DupeFinder[11382:39434] [error] CoreData: error:   Device ID: 		16777231
+2026-10-22 22:13:29.389700+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Size: 		704 bytes
+2026-10-22 22:13:29.389840+0000 DupeFinder[11382:39434] [error] CoreData: error:   File inode: 		2
+2026-10-22 22:13:29.389938+0000 DupeFinder[11382:39434] [error] CoreData: error:   File user ID: 		0
+2026-10-22 22:13:29.390053+0000 DupeFinder[11382:39434] [error] CoreData: error:   File group ID: 		0
+2026-10-22 22:13:29.390157+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Permissions:
+2026-10-22 22:13:29.390263+0000 DupeFinder[11382:39434] [error] CoreData: error: d
+2026-10-22 22:13:29.468770+0000 DupeFinder[11382:39434] [error] CoreData: error:   755
+2026-10-22 22:13:29.468869+0000 DupeFinder[11382:39434] [error] CoreData: error:   component is not a symbolic link
+2026-10-22 22:13:29.468944+0000 DupeFinder[11382:39434] [error] CoreData: error:   component is readable
+2026-10-22 22:13:29.469011+0000 DupeFinder[11382:39434] [error] CoreData: error:   component is not writeable with errno 30
+2026-10-22 22:13:29.469073+0000 DupeFinder[11382:39434] [error] CoreData: error: Information for /Users
+2026-10-22 22:13:29.469117+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Device ID: 	0
+2026-10-22 22:13:29.469192+0000 DupeFinder[11382:39434] [error] CoreData: error:   Device ID: 		16777231
+2026-10-22 22:13:29.550488+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Size: 		160 bytes
+2026-10-22 22:13:29.550578+0000 DupeFinder[11382:39434] [error] CoreData: error:   File inode: 		18483
+2026-10-22 22:13:29.550636+0000 DupeFinder[11382:39434] [error] CoreData: error:   File user ID: 		0
+2026-10-22 22:13:29.550684+0000 DupeFinder[11382:39434] [error] CoreData: error:   File group ID: 		80
+2026-10-22 22:13:29.550728+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Permissions:
+2026-10-22 22:13:29.550771+0000 DupeFinder[11382:39434] [error] CoreData: error: d
+2026-10-22 22:13:29.550847+0000 DupeFinder[11382:39434] [error] CoreData: error:   755
+2026-10-22 22:13:29.550998+0000 DupeFinder[11382:39434] [error] CoreData: error:   component is not a symbolic link
+2026-10-22 22:13:29.551587+0000 DupeFinder[11382:39434] [error] CoreData: error:   component is readable
+2026-10-22 22:13:29.551709+0000 DupeFinder[11382:39434] [error] CoreData: error:   component is not writeable with errno 13
+2026-10-22 22:13:29.551834+0000 DupeFinder[11382:39434] [error] CoreData: error: Information for /Users/runner
+2026-10-22 22:13:29.551944+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Device ID: 	0
+2026-10-22 22:13:29.552059+0000 DupeFinder[11382:39434] [error] CoreData: error:   Device ID: 		16777231
+2026-10-22 22:13:29.552169+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Size: 		1312 bytes
+2026-10-22 22:13:29.632957+0000 DupeFinder[11382:39434] [error] CoreData: error:   File inode: 		36527
+2026-10-22 22:13:29.633046+0000 DupeFinder[11382:39434] [error] CoreData: error:   File user ID: 		501
+2026-10-22 22:13:29.633103+0000 DupeFinder[11382:39434] [error] CoreData: error:   File group ID: 		20
+2026-10-22 22:13:29.633151+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Permissions:
+2026-10-22 22:13:29.633194+0000 DupeFinder[11382:39434] [error] CoreData: error: d
+2026-10-22 22:13:29.633273+0000 DupeFinder[11382:39434] [error] CoreData: error:   750
+2026-10-22 22:13:29.633357+0000 DupeFinder[11382:39434] [error] CoreData: error:   component is not a symbolic link
+2026-10-22 22:13:29.633611+0000 DupeFinder[11382:39434] [error] CoreData: error:   component is readable
+2026-10-22 22:13:29.793153+0000 DupeFinder[11382:39434] [error] CoreData: error:   component is writeable
+2026-10-22 22:13:29.793284+0000 DupeFinder[11382:39434] [error] CoreData: error: Information for /Users/runner/Library
+2026-10-22 22:13:29.793360+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Device ID: 	0
+2026-10-22 22:13:29.793424+0000 DupeFinder[11382:39434] [error] CoreData: error:   Device ID: 		16777231
+2026-10-22 22:13:29.793477+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Size: 		2688 bytes
+2026-10-22 22:13:29.793526+0000 DupeFinder[11382:39434] [error] CoreData: error:   File inode: 		36534
+2026-10-22 22:13:29.793601+0000 DupeFinder[11382:39434] [error] CoreData: error:   File user ID: 		501
+2026-10-22 22:13:29.875717+0000 DupeFinder[11382:39434] [error] CoreData: error:   File group ID: 		20
+2026-10-22 22:13:29.875815+0000 DupeFinder[11382:39434] [error] CoreData: error:   File Permissions:
+2026-10-22 22:13:29.875871+0000 DupeFinder[11382:39434] [error] CoreData: error: d
+2026-10-22 22:13:29.875920+0000 DupeFinder[11382:39434] [error] CoreData: error:   700
+2026-10-22 22:13:29.875966+0000 DupeFinder[11382:39434] [error] CoreData: error:   component is not a symbolic link
+2026-10-22 22:13:29.876053+0000 DupeFinder[11382:39434] [error] CoreData: error:   component is readable
