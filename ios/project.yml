@@ -51,6 +51,12 @@ targets:
         UISupportedInterfaceOrientations:
           - UIInterfaceOrientationPortrait
         NSCameraUsageDescription: Para hacer una foto de la prenda que quieres buscar.
+        # Vienen de Config/Secretos.xcconfig. Vacíos = la app usa datos de prueba.
+        URL_BACKEND: "$(URL_BACKEND)"
+        CLAVE_APP: "$(CLAVE_APP)"
+        # Permite hablar con el backend local (http://127.0.0.1) desde el simulador.
+        NSAppTransportSecurity:
+          NSAllowsLocalNetworking: true
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.beeltraan25.dupefinder

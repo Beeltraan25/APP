@@ -1,4 +1,7 @@
 // Ajustes comunes de compilación.
-// Las claves privadas (URL del backend y clave de la app) van en Secretos.xcconfig,
-// que no se sube a git. Copia Secretos.xcconfig.example para crearlo (fase 2).
+// Las claves privadas van en Secretos.xcconfig, que no se sube a git.
+// Copia Secretos.xcconfig.example como Secretos.xcconfig y rellénalo.
+// Si no existe, la app funciona con datos de prueba.
+URL_BACKEND =
+CLAVE_APP =
 #include? "Secretos.xcconfig"

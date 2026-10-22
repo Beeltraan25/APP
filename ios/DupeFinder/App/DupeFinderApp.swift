@@ -3,8 +3,8 @@ import SwiftUI
 
 @main
 struct DupeFinderApp: App {
-    /// Fase 1: todo con datos de prueba. En la fase 2 se conectará el backend.
-    @State private var dependencias = Dependencias.simuladas()
+    /// Backend real si está configurado (Secretos.xcconfig); si no, datos de prueba.
+    @State private var dependencias = Dependencias.crear()
 
     var body: some Scene {
         WindowGroup {

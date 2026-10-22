@@ -17,9 +17,11 @@ struct BuscarView: View {
     @State private var textoEnlace = ""
     @State private var hayEnlaceCopiado = false
     @Environment(\.scenePhase) private var fase
+    private let modoPrueba: Bool
 
-    init(servicio: any ServicioAnalisis) {
+    init(servicio: any ServicioAnalisis, modoPrueba: Bool = false) {
         _vm = State(initialValue: BuscarViewModel(servicio: servicio))
+        self.modoPrueba = modoPrueba
     }
 
     var body: some View {
@@ -32,6 +34,12 @@ struct BuscarView: View {
                 sugerenciaPortapapeles
                     .frame(minHeight: 110, alignment: .top)
                 Spacer()
+                if modoPrueba && ModoCaptura.actual == nil {
+                    Label("Modo de prueba: no hay servidor configurado", systemImage: "testtube.2")
+                        .font(.footnote)
+                        .foregroundStyle(.tertiary)
+                        .padding(.bottom, Espacio.s)
+                }
             }
             .padding(.horizontal, Espacio.l)
             .frame(maxWidth: .infinity)
