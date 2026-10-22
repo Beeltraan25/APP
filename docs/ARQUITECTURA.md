@@ -180,9 +180,16 @@ ios/
 **Estado tras la fase 1** (lo construido difiere un poco del árbol de arriba):
 - Los JSON de prueba están en el paquete (`DupeNucleo/Simulados/`), no en la app: así los comparten la app, las previews y los tests. `analisis-foto.json` es la respuesta real de Gemini con la foto de prueba.
 - `DupeDiseno` contiene `Tema` (espaciados, `Color(hex:)`), `Chip`, `FlujoChips` (chips que saltan de línea) y `EtiquetaOpcion`. El botón principal con morph vive en `BuscarView`.
-- Todavía no existen `ClienteAPI`, `ExtractorPagina`, `IdentificadorInstalacion`, `ImagenRemota` ni `CacheImagenes`: llegan al conectar el backend (fase 2) y con los resultados (fase 3).
+- `ImagenRemota` y `CacheImagenes` llegan con los resultados (fase 3).
 - La app usa aislamiento por defecto en el hilo principal (`SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor`); el paquete no.
 - La app acepta `-captura inicio|menu|ficha|outfits|guardados` al arrancar: lo usa la CI para hacer capturas.
+
+**Estado tras la fase 2 (conexión con el backend):**
+- `DupeNucleo/Red/`: `ClienteAPI` (foto en multipart, página en JSON, errores traducidos a `ErrorApp`), `ConfiguracionAPI` (lee `URL_BACKEND` y `CLAVE_APP` del Info.plist) e `IdentificadorInstalacion` (UUID en el Llavero).
+- `DupeNucleo/Paginas/`: `ExtractorPagina` (JSON-LD Product y etiquetas og/product) y `LectorPaginasHTTP`.
+- En la app, `LectorPaginasCompleto`: primero descarga normal; si la tienda responde con una verificación anti-bots, abre la página en un `WKWebView` invisible y lee el HTML cuando aparecen los datos del producto. **Comprobado:** Zara (Akamai) y Mango (Vercel) bloquean las descargas directas incluso desde una conexión doméstica.
+- `ServicioAnalisisRemoto` une las dos piezas. Si no hay `Secretos.xcconfig`, la app usa `ServicioAnalisisSimulado` y muestra "Modo de prueba".
+- Sin verificar todavía en un iPhone real: que el navegador invisible supere las verificaciones de Zara y Mango.
 
 **Notas de diseño que afectan a la estructura**
 
@@ -603,7 +610,7 @@ Se guarda una **copia** de los datos (no una referencia), para que los guardados
 ## 9. Riesgos y ajustes sobre la especificación
 
 1. **Google Lens necesita una URL de imagen.** La foto de la cámara se guarda en KV con un id aleatorio y el backend la sirve en `/v1/imagenes/:id` durante 24 h.
-2. **Las tiendas bloquean a los servidores** (es probable en Inditex). Por eso la página la lee el iPhone, o la Share Extension directamente desde Safari. Si aun así no hay datos, se analiza la `og:image` como una foto. Si tampoco funciona, la app pide amablemente una captura de pantalla.
+2. **Las tiendas bloquean las descargas automáticas** (comprobado con Zara y Mango, incluso desde una conexión doméstica). Por eso la página la lee el iPhone con un navegador invisible, o la Share Extension directamente desde Safari, donde la página ya está cargada. Si aun así no hay datos, se analiza la `og:image` como una foto. Si tampoco funciona, la app pide amablemente una captura de pantalla.
 3. **Pinterest:** la API oficial solo permite buscar en los pines del propio usuario, salvo acceso de partner. Usamos Google Images vía SerpAPI y dejamos Pinterest como proveedor opcional.
 4. **Tienda ≠ marca:** Zalando, ASOS y El Corte Inglés venden otras marcas; la tarjeta muestra las dos.
 5. **Similitud visual:** `gemini-embedding-2` compara la foto original con las de los candidatos. Para no pasar del límite de 10 ms de CPU, solo se calcula para los ~20 mejores candidatos. Si en la fase 4 vemos que no cabe, el plan B también es gratis: calcularla en el iPhone con el framework Vision de Apple (`GenerateImageFeaturePrintRequest`).

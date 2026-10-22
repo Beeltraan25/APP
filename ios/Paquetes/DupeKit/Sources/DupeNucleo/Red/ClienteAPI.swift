@@ -88,7 +88,6 @@ public final class ClienteAPI: Sendable {
         let decodificador = DatosSimulados.decodificador()
 
         guard (200..<300).contains(http.statusCode) else {
-            struct CuerpoError: Decodable { let error: ErrorAPI }
             if let cuerpo = try? decodificador.decode(CuerpoError.self, from: datos) {
                 throw ErrorApp.servidor(cuerpo.error)
             }
@@ -111,6 +110,11 @@ public final class ClienteAPI: Sendable {
             .desconocido
         }
     }
+}
+
+/// Cuerpo de error del backend: { "error": { "codigo", "mensaje" } }
+private struct CuerpoError: Decodable {
+    let error: ErrorAPI
 }
 
 extension Data {

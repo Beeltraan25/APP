@@ -19,6 +19,15 @@ Cada vez que se sube un cambio en `ios/`, GitHub Actions (en un Mac de GitHub):
 
 Con un Mac: `brew install xcodegen`, `cd ios && xcodegen generate` y abrir `DupeFinder.xcodeproj`.
 
+### Conectar la app al backend
+
+Sin configuración, la app funciona con datos de prueba (lo indica en la pantalla de inicio). Para usar el backend:
+
+1. Copia `ios/Config/Secretos.xcconfig.example` como `ios/Config/Secretos.xcconfig` (no se sube a git).
+2. Pon en `URL_BACKEND` la dirección del backend (`http://127.0.0.1:8787` en el simulador con `npm run dev`, o la de Cloudflare para un iPhone real).
+3. Pon en `CLAVE_APP` la misma clave que en `backend/.dev.vars`.
+4. Vuelve a generar el proyecto (`xcodegen generate`) y compila.
+
 ## Backend en local
 
 Requisitos: Node.js 24.
