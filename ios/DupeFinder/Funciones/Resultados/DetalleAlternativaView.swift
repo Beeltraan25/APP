@@ -49,9 +49,17 @@ struct DetalleAlternativaView: View {
                                 .foregroundStyle(.secondary)
                         }
                     }
-                    Text("\(producto.rango.titulo) · \(producto.rango.descripcion)")
-                        .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                    HStack(spacing: Espacio.s) {
+                        if let similitud = alternativa.similitud {
+                            Text("\(similitud.total) % de parecido")
+                                .fontWeight(.semibold)
+                                .foregroundStyle(.tint)
+                            Text("·").foregroundStyle(.tertiary)
+                        }
+                        Text("\(producto.rango.titulo) · \(producto.rango.descripcion)")
+                            .foregroundStyle(.secondary)
+                    }
+                    .font(.subheadline)
                 }
 
                 if let similitud = alternativa.similitud {

@@ -10,7 +10,7 @@ import {
   puntuacionMaterial,
 } from "../src/similitud/atributos";
 import { deltaE2000, hexALab, puntuacionColor } from "../src/similitud/color";
-import { coseno, evaluarAlternativas, puntuacionVisual } from "../src/similitud/evaluarAlternativas";
+import { coseno, dichoDeHombre, evaluarAlternativas, puntuacionVisual } from "../src/similitud/evaluarAlternativas";
 import { combinar, crearEtiquetas, PESOS } from "../src/similitud/puntuar";
 import { fichaIAEjemplo, JPEG_MINIMO, KVSimulado } from "./ayudas";
 
@@ -209,8 +209,8 @@ describe("evaluarAlternativas", () => {
 
   const atributos = {
     prendas: [
-      { indice: 0, misma_prenda: true, color: { nombre: "rojo", hex: "#C8102E" }, fibras: ["algodón"], gramaje_estimado: "medio", fit: "regular", detalles_presentes: [] },
-      { indice: 1, misma_prenda: true, color: { nombre: "gris", hex: "#4A4A4A" }, fibras: ["algodón"], gramaje_estimado: "pesado", fit: "oversize", detalles_presentes: ["hombros caídos", "bolsillo canguro"] },
+      { indice: 0, misma_prenda: true, publico: "hombre", color: { nombre: "rojo", hex: "#C8102E" }, fibras: ["algodón"], gramaje_estimado: "medio", fit: "regular", detalles_presentes: [] },
+      { indice: 1, misma_prenda: true, publico: "hombre", color: { nombre: "gris", hex: "#4A4A4A" }, fibras: ["algodón"], gramaje_estimado: "pesado", fit: "oversize", detalles_presentes: ["hombros caídos", "bolsillo canguro"] },
     ],
   };
 
@@ -230,6 +230,21 @@ describe("evaluarAlternativas", () => {
     const partes = ia.peticionAtributos!.partes;
     expect(partes.filter((p) => p.tipo === "imagen")).toHaveLength(3);
     expect(partes.some((p) => p.tipo === "texto" && p.texto.includes("Candidata 1: Sudadera gris oversize (Zara)"))).toBe(true);
+  });
+
+  it("si la tienda dice que es de hombre, no se descarta aunque la IA diga lo contrario", () => {
+    expect(dichoDeHombre("Calvin Klein Hombres Baggy Jeans", "https://www.google.es/search?prds=1")).toBe(true);
+    expect(dichoDeHombre("Baggy Jeans", "https://www2.hm.com/es_es/productpage.men.123.html")).toBe(true);
+    expect(dichoDeHombre("Jeans barrel tiro bajo", "https://www.pullandbear.com/es/jeans-barrel-tiro-bajo-l1")).toBe(false);
+    expect(dichoDeHombre("Vaqueros mangas", "https://www.tienda.com/x")).toBe(false);
+  });
+
+  it("descarta lo que la IA ve claramente de mujer", async () => {
+    const conMujer = {
+      prendas: [{ ...atributos.prendas[0]!, publico: "mujer" }, atributos.prendas[1]!],
+    };
+    const resultado = await preparar(new IAFalsa([[1, 0], [0, 1], [1, 0]], conMujer));
+    expect(resultado.map((a) => a.producto.id)).toEqual(["b"]);
   });
 
   it("si fallan los atributos, puntúa solo con lo visual", async () => {

@@ -122,8 +122,21 @@ export async function evaluarAlternativas(entrada: EntradaEvaluacion): Promise<A
 
   return evaluadas
     .map((alternativa, posicion) => ({ alternativa, posicion }))
+    // Por ahora la app es solo de hombre: fuera lo que la IA ve de mujer (la URL y el título no
+    // siempre lo dicen). Pero si la tienda dice que es de hombre, manda la tienda: la IA se equivoca a veces.
+    .filter(({ alternativa, posicion }) => {
+      if (atributos?.get(posicion)?.publico !== "mujer") return true;
+      return dichoDeHombre(alternativa.producto.titulo, alternativa.producto.url);
+    })
     .sort((a, b) => (b.alternativa.similitud?.total ?? -1) - (a.alternativa.similitud?.total ?? -1) || a.posicion - b.posicion)
     .map(({ alternativa }) => alternativa);
+}
+
+const MARCA_HOMBRE = /\b(hombres?|men|mens|man|caballero)\b/i;
+
+/** El título o la URL de la tienda dicen explícitamente que es de hombre. */
+export function dichoDeHombre(titulo: string, url: string): boolean {
+  return MARCA_HOMBRE.test(titulo) || MARCA_HOMBRE.test(url.replace(/[/_.-]/g, " "));
 }
 
 /** La foto original: si es una de este backend se lee de KV; si no (imagen de la tienda), se descarga. */

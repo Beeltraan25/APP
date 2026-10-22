@@ -200,6 +200,17 @@ ios/
 - `similitud` y `etiquetas` llegan vacías hasta la fase 4.
 - App: `ResultadosView` (2 columnas, selector de rango segmentado nativo en una `safeAreaBar`), `TarjetaAlternativa`, `DetalleAlternativaView` (Ver en tienda con `SFSafariViewController` y Guardar en SwiftData), `ImagenRemota` + `CacheImagenes` en `DupeDiseno`. El selector incluye "Todo" además de los cuatro rangos.
 
+**Estado tras la fase 4 (similitud y etiquetas):**
+- Tras buscar, `evaluarAlternativas` descarga la foto original y las miniaturas (3–16 KB), y lanza a la vez dos peticiones a Gemini:
+  1. **Embeddings** (`gemini-embedding-2`, 256 dimensiones, todas las imágenes en una petición) → coseno → 0–100. Calibrado con fotos reales: casi iguales ≈ 0,85; misma prenda en otro color ≈ 0,70; otra prenda ≈ 0,60 (`COSENO_MINIMO` 0,55, `COSENO_MAXIMO` 0,90).
+  2. **Atributos** de cada candidata (color, fibras, gramaje, fit, detalles de la original que tiene y si es el mismo tipo de prenda), con un esquema JSON cuyos detalles son la lista de la ficha original.
+- Puntuación en código: color con CIEDE2000 (ΔE 2 → 100, ΔE 12 → 70, ΔE 35 → 0), gramaje y fit por cercanía, material por fibra principal, detalles por proporción. Pesos 35/20/15/10/10/10; los que faltan se reparten. Otro tipo de prenda puntúa la mitad.
+- Etiquetas (máx. 3): otro tipo de prenda › color › gramaje › corte › detalle compartido › material.
+- **Comprobado con datos reales:** 17 alternativas puntuadas en ~9 s; los vaqueros oscuros y anchos quedan arriba (83–91 %), los de otro color en medio (≈ 50 %) y una bermuda vaquera al final (25 %, "Otro tipo de prenda").
+- La IA puede variar un poco entre ejecuciones (p. ej. si estima o no el gramaje); como la búsqueda se guarda 24 h, el usuario ve siempre lo mismo.
+- Si la IA falla, la búsqueda se devuelve igualmente (con lo que haya, o sin similitud).
+- **Solo hombre, también por la foto:** la IA indica para quién es cada candidata y se descartan las de mujer que la URL y el título no delatan (p. ej. unos "Jeans barrel tiro bajo" de Pull&Bear con modelo femenina). Salvaguarda: si el título o la URL dicen "hombre"/"men", la prenda se queda aunque la IA diga lo contrario (con datos reales la IA marcó por error unos "Calvin Klein Hombres Baggy Jeans").
+
 **Notas de diseño que afectan a la estructura**
 
 - **Servicios con versión simulada:** cada servicio es un protocolo con dos implementaciones (`…Remoto` y `…Simulado`). La fase 1 funciona entera con los JSON de `Simulados/` y, en la fase 2, basta con cambiar a la versión remota. Además, las pruebas de diseño no gastan cuota gratuita.
@@ -622,7 +633,7 @@ Se guarda una **copia** de los datos (no una referencia), para que los guardados
 2. **Las tiendas bloquean las descargas automáticas** (comprobado con Zara y Mango, incluso desde una conexión doméstica). Por eso la página la lee el iPhone con un navegador invisible, o la Share Extension directamente desde Safari, donde la página ya está cargada. Si aun así no hay datos, se analiza la `og:image` como una foto. Si tampoco funciona, la app pide amablemente una captura de pantalla.
 3. **Pinterest:** la API oficial solo permite buscar en los pines del propio usuario, salvo acceso de partner. Usamos Google Images vía SerpAPI y dejamos Pinterest como proveedor opcional.
 4. **Tienda ≠ marca:** Zalando, ASOS y El Corte Inglés venden otras marcas; la tarjeta muestra las dos.
-5. **Similitud visual:** `gemini-embedding-2` compara la foto original con las de los candidatos. Para no pasar del límite de 10 ms de CPU, solo se calcula para los ~20 mejores candidatos. Si en la fase 4 vemos que no cabe, el plan B también es gratis: calcularla en el iPhone con el framework Vision de Apple (`GenerateImageFeaturePrintRequest`).
+5. **Similitud visual:** `gemini-embedding-2` compara la foto original con las miniaturas de las candidatas (como mucho 24 por búsqueda). Las miniaturas son pequeñas, así que el gasto de CPU es bajo. Plan B gratuito si hiciera falta: calcularla en el iPhone con el framework Vision de Apple (`GenerateImageFeaturePrintRequest`).
 6. **Outfits tardan** (de 20 a 60 s, y el plan gratuito de Gemini a veces es lento). La respuesta irá en streaming con pasos de progreso ("Analizando el estilo…", "Buscando calzado…").
 7. **Share Extension sin cuenta de pago:** la extensión llama ella misma al backend y muestra la ficha y las mejores alternativas. Solo "Guardar" depende de App Groups.
 8. **Repositorio público:** las claves nunca se suben. La `X-Clave-App` y el límite por instalación protegen las cuotas gratuitas.

@@ -84,6 +84,87 @@
     },
     {
       "producto": {
+        "id": "prd_c56ceb0c9c46ae31",
+        "titulo": "Baggy Jeans - Azul denim oscuro - HOMBRE",
+        "tienda": {
+          "id": "hm",
+          "nombre": "H&M"
+        },
+        "marca": "H&M",
+        "url": "https://www2.hm.com/es_es/productpage.1285734002.html",
+        "imagen_url": "https://image.hm.com/assets/hm/82/2f/822f130f12e7c6bcd7067a12207ac47372aca0b2.jpg",
+        "precio": {
+          "centimos": 4300,
+          "moneda": "EUR"
+        },
+        "precio_anterior": null,
+        "rango": "medio"
+      },
+      "similitud": {
+        "total": 80,
+        "criterios": [
+          {
+            "criterio": "visual",
+            "peso_base": 0.35,
+            "peso_aplicado": 0.412,
+            "puntuacion": 74,
+            "disponible": true
+          },
+          {
+            "criterio": "color",
+            "peso_base": 0.2,
+            "peso_aplicado": 0.235,
+            "puntuacion": 96,
+            "disponible": true
+          },
+          {
+            "criterio": "gramaje",
+            "peso_base": 0.15,
+            "peso_aplicado": 0,
+            "puntuacion": null,
+            "disponible": false
+          },
+          {
+            "criterio": "material",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 100,
+            "disponible": true
+          },
+          {
+            "criterio": "fit",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 100,
+            "disponible": true
+          },
+          {
+            "criterio": "detalles",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 25,
+            "disponible": true
+          }
+        ]
+      },
+      "etiquetas": [
+        {
+          "texto": "Mismo color",
+          "tipo": "coincide"
+        },
+        {
+          "texto": "Mismo corte",
+          "tipo": "coincide"
+        },
+        {
+          "texto": "Con pernera ancha",
+          "tipo": "coincide"
+        }
+      ],
+      "fuente": "lens"
+    },
+    {
+      "producto": {
         "id": "prd_c74ab6006f5b48c9",
         "titulo": "WE Fashion BLUE RIDGE - Vaqueros holgados - dark blue/azul ...",
         "tienda": {
@@ -101,63 +182,63 @@
         "rango": "medio"
       },
       "similitud": {
-        "total": 86,
+        "total": 80,
         "criterios": [
           {
             "criterio": "visual",
             "peso_base": 0.35,
-            "peso_aplicado": 0.35,
+            "peso_aplicado": 0.412,
             "puntuacion": 76,
             "disponible": true
           },
           {
             "criterio": "color",
             "peso_base": 0.2,
-            "peso_aplicado": 0.2,
-            "puntuacion": 83,
+            "peso_aplicado": 0.235,
+            "puntuacion": 80,
             "disponible": true
           },
           {
             "criterio": "gramaje",
             "peso_base": 0.15,
-            "peso_aplicado": 0.15,
-            "puntuacion": 100,
-            "disponible": true
+            "peso_aplicado": 0,
+            "puntuacion": null,
+            "disponible": false
           },
           {
             "criterio": "material",
             "peso_base": 0.1,
-            "peso_aplicado": 0.1,
+            "peso_aplicado": 0.118,
             "puntuacion": 100,
             "disponible": true
           },
           {
             "criterio": "fit",
             "peso_base": 0.1,
-            "peso_aplicado": 0.1,
+            "peso_aplicado": 0.118,
             "puntuacion": 100,
             "disponible": true
           },
           {
             "criterio": "detalles",
             "peso_base": 0.1,
-            "peso_aplicado": 0.1,
-            "puntuacion": 75,
+            "peso_aplicado": 0.118,
+            "puntuacion": 50,
             "disponible": true
           }
         ]
       },
       "etiquetas": [
         {
-          "texto": "Mismo color",
-          "tipo": "coincide"
-        },
-        {
-          "texto": "Mismo gramaje",
-          "tipo": "coincide"
-        },
-        {
           "texto": "Mismo corte",
+          "tipo": "coincide"
+        },
+        {
+          "texto": "Con bolsillos tipo carpintero",
+          "tipo": "coincide"
+        },
+        {
+          "texto": "Mismo material",
           "tipo": "coincide"
         }
       ],
@@ -182,20 +263,101 @@
         "rango": "alto"
       },
       "similitud": {
-        "total": 83,
+        "total": 78,
         "criterios": [
           {
             "criterio": "visual",
             "peso_base": 0.35,
-            "peso_aplicado": 0.35,
+            "peso_aplicado": 0.412,
             "puntuacion": 85,
             "disponible": true
           },
           {
             "criterio": "color",
             "peso_base": 0.2,
-            "peso_aplicado": 0.2,
+            "peso_aplicado": 0.235,
+            "puntuacion": 89,
+            "disponible": true
+          },
+          {
+            "criterio": "gramaje",
+            "peso_base": 0.15,
+            "peso_aplicado": 0,
+            "puntuacion": null,
+            "disponible": false
+          },
+          {
+            "criterio": "material",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
             "puntuacion": 100,
+            "disponible": true
+          },
+          {
+            "criterio": "fit",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 60,
+            "disponible": true
+          },
+          {
+            "criterio": "detalles",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 25,
+            "disponible": true
+          }
+        ]
+      },
+      "etiquetas": [
+        {
+          "texto": "Mismo color",
+          "tipo": "coincide"
+        },
+        {
+          "texto": "Corte más ajustado",
+          "tipo": "diferencia"
+        },
+        {
+          "texto": "Con pernera ancha",
+          "tipo": "coincide"
+        }
+      ],
+      "fuente": "lens"
+    },
+    {
+      "producto": {
+        "id": "prd_68a87f090463e98d",
+        "titulo": "CARHARTT WIP Hombre Brandon Pant",
+        "tienda": {
+          "id": "asos",
+          "nombre": "ASOS"
+        },
+        "marca": null,
+        "url": "https://www.google.es/search?ibp=oshop&q=vaqueros anchos hombre&prds=catalogid:1848874790054452753,productid:8088798206432586776,headlineOfferDocid:16282316868787649458,imageDocid:15550337775745156175,rds:PC_14742979037728760040|PROD_PC_14742979037728760040,gpcid:14736783103503761050,mid:576462913453907253,pvt:a&hl=es&gl=es&udm=28",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSuFUMFL1kIL1JLslGxPPfayeN9UXBySN2HQ_092E3mOyCMUTpeApAH4_xK-_6BZH278J29qrm9eA",
+        "precio": {
+          "centimos": 9900,
+          "moneda": "EUR"
+        },
+        "precio_anterior": null,
+        "rango": "alto"
+      },
+      "similitud": {
+        "total": 66,
+        "criterios": [
+          {
+            "criterio": "visual",
+            "peso_base": 0.35,
+            "peso_aplicado": 0.35,
+            "puntuacion": 42,
+            "disponible": true
+          },
+          {
+            "criterio": "color",
+            "peso_base": 0.2,
+            "peso_aplicado": 0.2,
+            "puntuacion": 55,
             "disponible": true
           },
           {
@@ -216,195 +378,33 @@
             "criterio": "fit",
             "peso_base": 0.1,
             "peso_aplicado": 0.1,
-            "puntuacion": 60,
+            "puntuacion": 100,
             "disponible": true
           },
           {
             "criterio": "detalles",
             "peso_base": 0.1,
             "peso_aplicado": 0.1,
-            "puntuacion": 25,
+            "puntuacion": 50,
             "disponible": true
           }
         ]
       },
       "etiquetas": [
-        {
-          "texto": "Mismo color",
-          "tipo": "coincide"
-        },
         {
           "texto": "Mismo gramaje",
           "tipo": "coincide"
         },
         {
-          "texto": "Corte más ajustado",
-          "tipo": "diferencia"
-        }
-      ],
-      "fuente": "lens"
-    },
-    {
-      "producto": {
-        "id": "prd_c2f73a3cc77a8c0e",
-        "titulo": "Jeans barrel tiro bajo",
-        "tienda": {
-          "id": "pull-and-bear",
-          "nombre": "Pull&Bear"
-        },
-        "marca": "Pull&Bear",
-        "url": "https://www.pullandbear.com/es/jeans-barrel-tiro-bajo-l07670310",
-        "imagen_url": "https://static.pullandbear.net/assets/public/b4fb/fd6f/652c4c75aef0/02431565dde3/07670310401-M/07670310401-M.jpg?ts=1785227077055&w=1082&f=auto",
-        "precio": {
-          "centimos": 3000,
-          "moneda": "EUR"
-        },
-        "precio_anterior": null,
-        "rango": "medio"
-      },
-      "similitud": {
-        "total": 77,
-        "criterios": [
-          {
-            "criterio": "visual",
-            "peso_base": 0.35,
-            "peso_aplicado": 0.35,
-            "puntuacion": 70,
-            "disponible": true
-          },
-          {
-            "criterio": "color",
-            "peso_base": 0.2,
-            "peso_aplicado": 0.2,
-            "puntuacion": 100,
-            "disponible": true
-          },
-          {
-            "criterio": "gramaje",
-            "peso_base": 0.15,
-            "peso_aplicado": 0.15,
-            "puntuacion": 50,
-            "disponible": true
-          },
-          {
-            "criterio": "material",
-            "peso_base": 0.1,
-            "peso_aplicado": 0.1,
-            "puntuacion": 100,
-            "disponible": true
-          },
-          {
-            "criterio": "fit",
-            "peso_base": 0.1,
-            "peso_aplicado": 0.1,
-            "puntuacion": 100,
-            "disponible": true
-          },
-          {
-            "criterio": "detalles",
-            "peso_base": 0.1,
-            "peso_aplicado": 0.1,
-            "puntuacion": 50,
-            "disponible": true
-          }
-        ]
-      },
-      "etiquetas": [
-        {
-          "texto": "Mismo color",
-          "tipo": "coincide"
-        },
-        {
-          "texto": "Tejido más ligero",
-          "tipo": "diferencia"
-        },
-        {
           "texto": "Mismo corte",
           "tipo": "coincide"
-        }
-      ],
-      "fuente": "lens"
-    },
-    {
-      "producto": {
-        "id": "prd_c56ceb0c9c46ae31",
-        "titulo": "Baggy Jeans - Azul denim oscuro - HOMBRE",
-        "tienda": {
-          "id": "hm",
-          "nombre": "H&M"
         },
-        "marca": "H&M",
-        "url": "https://www2.hm.com/es_es/productpage.1285734002.html",
-        "imagen_url": "https://image.hm.com/assets/hm/82/2f/822f130f12e7c6bcd7067a12207ac47372aca0b2.jpg",
-        "precio": {
-          "centimos": 4300,
-          "moneda": "EUR"
-        },
-        "precio_anterior": null,
-        "rango": "medio"
-      },
-      "similitud": {
-        "total": 72,
-        "criterios": [
-          {
-            "criterio": "visual",
-            "peso_base": 0.35,
-            "peso_aplicado": 0.35,
-            "puntuacion": 74,
-            "disponible": true
-          },
-          {
-            "criterio": "color",
-            "peso_base": 0.2,
-            "peso_aplicado": 0.2,
-            "puntuacion": 100,
-            "disponible": true
-          },
-          {
-            "criterio": "gramaje",
-            "peso_base": 0.15,
-            "peso_aplicado": 0.15,
-            "puntuacion": 50,
-            "disponible": true
-          },
-          {
-            "criterio": "material",
-            "peso_base": 0.1,
-            "peso_aplicado": 0.1,
-            "puntuacion": 100,
-            "disponible": true
-          },
-          {
-            "criterio": "fit",
-            "peso_base": 0.1,
-            "peso_aplicado": 0.1,
-            "puntuacion": 60,
-            "disponible": true
-          },
-          {
-            "criterio": "detalles",
-            "peso_base": 0.1,
-            "peso_aplicado": 0.1,
-            "puntuacion": 25,
-            "disponible": true
-          }
-        ]
-      },
-      "etiquetas": [
         {
-          "texto": "Mismo color",
+          "texto": "Con bolsillos tipo carpintero",
           "tipo": "coincide"
-        },
-        {
-          "texto": "Tejido más ligero",
-          "tipo": "diferencia"
-        },
-        {
-          "texto": "Corte más ajustado",
-          "tipo": "diferencia"
         }
       ],
-      "fuente": "lens"
+      "fuente": "shopping"
     },
     {
       "producto": {
@@ -428,7 +428,7 @@
         "rango": "medio"
       },
       "similitud": {
-        "total": 65,
+        "total": 64,
         "criterios": [
           {
             "criterio": "visual",
@@ -441,7 +441,7 @@
             "criterio": "color",
             "peso_base": 0.2,
             "peso_aplicado": 0.2,
-            "puntuacion": 90,
+            "puntuacion": 86,
             "disponible": true
           },
           {
@@ -492,87 +492,6 @@
     },
     {
       "producto": {
-        "id": "prd_68a87f090463e98d",
-        "titulo": "CARHARTT WIP Hombre Brandon Pant",
-        "tienda": {
-          "id": "asos",
-          "nombre": "ASOS"
-        },
-        "marca": null,
-        "url": "https://www.google.es/search?ibp=oshop&q=vaqueros anchos hombre&prds=catalogid:1848874790054452753,productid:8088798206432586776,headlineOfferDocid:16282316868787649458,imageDocid:15550337775745156175,rds:PC_14742979037728760040|PROD_PC_14742979037728760040,gpcid:14736783103503761050,mid:576462913453907253,pvt:a&hl=es&gl=es&udm=28",
-        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSuFUMFL1kIL1JLslGxPPfayeN9UXBySN2HQ_092E3mOyCMUTpeApAH4_xK-_6BZH278J29qrm9eA",
-        "precio": {
-          "centimos": 9900,
-          "moneda": "EUR"
-        },
-        "precio_anterior": null,
-        "rango": "alto"
-      },
-      "similitud": {
-        "total": 63,
-        "criterios": [
-          {
-            "criterio": "visual",
-            "peso_base": 0.35,
-            "peso_aplicado": 0.35,
-            "puntuacion": 42,
-            "disponible": true
-          },
-          {
-            "criterio": "color",
-            "peso_base": 0.2,
-            "peso_aplicado": 0.2,
-            "puntuacion": 55,
-            "disponible": true
-          },
-          {
-            "criterio": "gramaje",
-            "peso_base": 0.15,
-            "peso_aplicado": 0.15,
-            "puntuacion": 100,
-            "disponible": true
-          },
-          {
-            "criterio": "material",
-            "peso_base": 0.1,
-            "peso_aplicado": 0.1,
-            "puntuacion": 100,
-            "disponible": true
-          },
-          {
-            "criterio": "fit",
-            "peso_base": 0.1,
-            "peso_aplicado": 0.1,
-            "puntuacion": 100,
-            "disponible": true
-          },
-          {
-            "criterio": "detalles",
-            "peso_base": 0.1,
-            "peso_aplicado": 0.1,
-            "puntuacion": 25,
-            "disponible": true
-          }
-        ]
-      },
-      "etiquetas": [
-        {
-          "texto": "Mismo gramaje",
-          "tipo": "coincide"
-        },
-        {
-          "texto": "Mismo corte",
-          "tipo": "coincide"
-        },
-        {
-          "texto": "Con pernera ancha",
-          "tipo": "coincide"
-        }
-      ],
-      "fuente": "shopping"
-    },
-    {
-      "producto": {
         "id": "prd_58484a9a502f6489",
         "titulo": "Calvin Klein Hombres Baggy Jeans",
         "tienda": {
@@ -593,228 +512,63 @@
         "rango": "alto"
       },
       "similitud": {
-        "total": 62,
+        "total": 58,
         "criterios": [
           {
             "criterio": "visual",
             "peso_base": 0.35,
-            "peso_aplicado": 0.35,
+            "peso_aplicado": 0.412,
             "puntuacion": 42,
             "disponible": true
           },
           {
             "criterio": "color",
             "peso_base": 0.2,
-            "peso_aplicado": 0.2,
-            "puntuacion": 75,
+            "peso_aplicado": 0.235,
+            "puntuacion": 62,
             "disponible": true
           },
           {
             "criterio": "gramaje",
             "peso_base": 0.15,
-            "peso_aplicado": 0.15,
-            "puntuacion": 50,
-            "disponible": true
+            "peso_aplicado": 0,
+            "puntuacion": null,
+            "disponible": false
           },
           {
             "criterio": "material",
             "peso_base": 0.1,
-            "peso_aplicado": 0.1,
+            "peso_aplicado": 0.118,
             "puntuacion": 100,
             "disponible": true
           },
           {
             "criterio": "fit",
             "peso_base": 0.1,
-            "peso_aplicado": 0.1,
+            "peso_aplicado": 0.118,
             "puntuacion": 100,
             "disponible": true
           },
           {
             "criterio": "detalles",
             "peso_base": 0.1,
-            "peso_aplicado": 0.1,
-            "puntuacion": 50,
+            "peso_aplicado": 0.118,
+            "puntuacion": 25,
             "disponible": true
           }
         ]
       },
       "etiquetas": [
-        {
-          "texto": "Tejido más ligero",
-          "tipo": "diferencia"
-        },
         {
           "texto": "Mismo corte",
           "tipo": "coincide"
         },
         {
-          "texto": "Con remaches metálicos",
-          "tipo": "coincide"
-        }
-      ],
-      "fuente": "shopping"
-    },
-    {
-      "producto": {
-        "id": "prd_744e96d68ab36450",
-        "titulo": "Hombre Balmohk Vaqueros Paco carpenter relaxed Fit",
-        "tienda": {
-          "id": "zalando",
-          "nombre": "Zalando"
-        },
-        "marca": null,
-        "url": "https://www.google.es/search?ibp=oshop&q=vaqueros anchos hombre&prds=catalogid:9377146722227229289,productid:15508533732901179008,headlineOfferDocid:15769644459419551006,imageDocid:10156813377344707679,gpcid:6801149663311296298,mid:576462891337043645,pvt:a&hl=es&gl=es&udm=28",
-        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRl16mE-wLLKCMnvN8Xds67Y7YdebXub2c0LZ1MqIOZTaym0zQ6Iq7dFscJj2pwOmQTAP3BZRU",
-        "precio": {
-          "centimos": 3599,
-          "moneda": "EUR"
-        },
-        "precio_anterior": null,
-        "rango": "medio"
-      },
-      "similitud": {
-        "total": 60,
-        "criterios": [
-          {
-            "criterio": "visual",
-            "peso_base": 0.35,
-            "peso_aplicado": 0.35,
-            "puntuacion": 42,
-            "disponible": true
-          },
-          {
-            "criterio": "color",
-            "peso_base": 0.2,
-            "peso_aplicado": 0.2,
-            "puntuacion": 44,
-            "disponible": true
-          },
-          {
-            "criterio": "gramaje",
-            "peso_base": 0.15,
-            "peso_aplicado": 0.15,
-            "puntuacion": 100,
-            "disponible": true
-          },
-          {
-            "criterio": "material",
-            "peso_base": 0.1,
-            "peso_aplicado": 0.1,
-            "puntuacion": 100,
-            "disponible": true
-          },
-          {
-            "criterio": "fit",
-            "peso_base": 0.1,
-            "peso_aplicado": 0.1,
-            "puntuacion": 60,
-            "disponible": true
-          },
-          {
-            "criterio": "detalles",
-            "peso_base": 0.1,
-            "peso_aplicado": 0.1,
-            "puntuacion": 50,
-            "disponible": true
-          }
-        ]
-      },
-      "etiquetas": [
-        {
-          "texto": "Mismo gramaje",
+          "texto": "Con pernera ancha",
           "tipo": "coincide"
         },
         {
-          "texto": "Corte más ajustado",
-          "tipo": "diferencia"
-        },
-        {
-          "texto": "Con bolsillos tipo carpintero",
-          "tipo": "coincide"
-        }
-      ],
-      "fuente": "shopping"
-    },
-    {
-      "producto": {
-        "id": "prd_37de158d6c22b920",
-        "titulo": "Won Hundred Genoa Unisex Vaqueros boyfriend, Original black",
-        "tienda": {
-          "id": "zalando",
-          "nombre": "Zalando"
-        },
-        "marca": null,
-        "url": "https://www.google.es/search?ibp=oshop&q=vaqueros anchos hombre&prds=productid:5248282903742926091,headlineOfferDocid:5248282903742926091,imageDocid:16505589417057330018,pvt:a&hl=es&gl=es&udm=28",
-        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTlj91bdqwWLEf5ETq_uiCKV5-gTcWFoJxIiw5W2pRSg5rgFRk22YUxu-zVqTVy2JqStNou7Ae2",
-        "precio": {
-          "centimos": 14000,
-          "moneda": "EUR"
-        },
-        "precio_anterior": {
-          "centimos": 16000,
-          "moneda": "EUR"
-        },
-        "rango": "alto"
-      },
-      "similitud": {
-        "total": 57,
-        "criterios": [
-          {
-            "criterio": "visual",
-            "peso_base": 0.35,
-            "peso_aplicado": 0.35,
-            "puntuacion": 38,
-            "disponible": true
-          },
-          {
-            "criterio": "color",
-            "peso_base": 0.2,
-            "peso_aplicado": 0.2,
-            "puntuacion": 58,
-            "disponible": true
-          },
-          {
-            "criterio": "gramaje",
-            "peso_base": 0.15,
-            "peso_aplicado": 0.15,
-            "puntuacion": 50,
-            "disponible": true
-          },
-          {
-            "criterio": "material",
-            "peso_base": 0.1,
-            "peso_aplicado": 0.1,
-            "puntuacion": 100,
-            "disponible": true
-          },
-          {
-            "criterio": "fit",
-            "peso_base": 0.1,
-            "peso_aplicado": 0.1,
-            "puntuacion": 100,
-            "disponible": true
-          },
-          {
-            "criterio": "detalles",
-            "peso_base": 0.1,
-            "peso_aplicado": 0.1,
-            "puntuacion": 50,
-            "disponible": true
-          }
-        ]
-      },
-      "etiquetas": [
-        {
-          "texto": "Tejido más ligero",
-          "tipo": "diferencia"
-        },
-        {
-          "texto": "Mismo corte",
-          "tipo": "coincide"
-        },
-        {
-          "texto": "Con remaches metálicos",
+          "texto": "Mismo material",
           "tipo": "coincide"
         }
       ],
@@ -844,42 +598,42 @@
           {
             "criterio": "visual",
             "peso_base": 0.35,
-            "peso_aplicado": 0.35,
+            "peso_aplicado": 0.412,
             "puntuacion": 36,
             "disponible": true
           },
           {
             "criterio": "color",
             "peso_base": 0.2,
-            "peso_aplicado": 0.2,
-            "puntuacion": 69,
+            "peso_aplicado": 0.235,
+            "puntuacion": 64,
             "disponible": true
           },
           {
             "criterio": "gramaje",
             "peso_base": 0.15,
-            "peso_aplicado": 0.15,
-            "puntuacion": 50,
-            "disponible": true
+            "peso_aplicado": 0,
+            "puntuacion": null,
+            "disponible": false
           },
           {
             "criterio": "material",
             "peso_base": 0.1,
-            "peso_aplicado": 0.1,
+            "peso_aplicado": 0.118,
             "puntuacion": 100,
             "disponible": true
           },
           {
             "criterio": "fit",
             "peso_base": 0.1,
-            "peso_aplicado": 0.1,
+            "peso_aplicado": 0.118,
             "puntuacion": 100,
             "disponible": true
           },
           {
             "criterio": "detalles",
             "peso_base": 0.1,
-            "peso_aplicado": 0.1,
+            "peso_aplicado": 0.118,
             "puntuacion": 25,
             "disponible": true
           }
@@ -887,15 +641,15 @@
       },
       "etiquetas": [
         {
-          "texto": "Tejido más ligero",
-          "tipo": "diferencia"
-        },
-        {
           "texto": "Mismo corte",
           "tipo": "coincide"
         },
         {
           "texto": "Con pernera ancha",
+          "tipo": "coincide"
+        },
+        {
+          "texto": "Mismo material",
           "tipo": "coincide"
         }
       ],
@@ -903,21 +657,21 @@
     },
     {
       "producto": {
-        "id": "prd_90f6bf5ef172bf74",
-        "titulo": "Calvin Klein Hombres baggy Jeans",
+        "id": "prd_744e96d68ab36450",
+        "titulo": "Hombre Balmohk Vaqueros Paco carpenter relaxed Fit",
         "tienda": {
           "id": "zalando",
           "nombre": "Zalando"
         },
         "marca": null,
-        "url": "https://www.google.es/search?ibp=oshop&q=vaqueros anchos hombre&prds=catalogid:16217171798065945882,productid:17619190748435453100,headlineOfferDocid:4188098211946536900,imageDocid:18401719802745805364,rds:PC_16036120647602481171|PROD_PC_16036120647602481171,gpcid:16036120647602481171,mid:576462566999671358,pvt:a&hl=es&gl=es&udm=28",
-        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSNW4Jw2Fnyy9ZYr9p3DH67i5Xns3VcLnRCLBQS3HjR2MdX4yD5RNxwHFHR0rdCi76bb1stxVvr",
+        "url": "https://www.google.es/search?ibp=oshop&q=vaqueros anchos hombre&prds=catalogid:9377146722227229289,productid:15508533732901179008,headlineOfferDocid:15769644459419551006,imageDocid:10156813377344707679,gpcid:6801149663311296298,mid:576462891337043645,pvt:a&hl=es&gl=es&udm=28",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRl16mE-wLLKCMnvN8Xds67Y7YdebXub2c0LZ1MqIOZTaym0zQ6Iq7dFscJj2pwOmQTAP3BZRU",
         "precio": {
-          "centimos": 8995,
+          "centimos": 3599,
           "moneda": "EUR"
         },
         "precio_anterior": null,
-        "rango": "alto"
+        "rango": "medio"
       },
       "similitud": {
         "total": 53,
@@ -925,58 +679,142 @@
           {
             "criterio": "visual",
             "peso_base": 0.35,
-            "peso_aplicado": 0.35,
-            "puntuacion": 43,
+            "peso_aplicado": 0.412,
+            "puntuacion": 42,
             "disponible": true
           },
           {
             "criterio": "color",
             "peso_base": 0.2,
-            "peso_aplicado": 0.2,
-            "puntuacion": 28,
+            "peso_aplicado": 0.235,
+            "puntuacion": 34,
             "disponible": true
           },
           {
             "criterio": "gramaje",
             "peso_base": 0.15,
-            "peso_aplicado": 0.15,
-            "puntuacion": 50,
-            "disponible": true
+            "peso_aplicado": 0,
+            "puntuacion": null,
+            "disponible": false
           },
           {
             "criterio": "material",
             "peso_base": 0.1,
-            "peso_aplicado": 0.1,
+            "peso_aplicado": 0.118,
             "puntuacion": 100,
             "disponible": true
           },
           {
             "criterio": "fit",
             "peso_base": 0.1,
-            "peso_aplicado": 0.1,
-            "puntuacion": 100,
+            "peso_aplicado": 0.118,
+            "puntuacion": 60,
             "disponible": true
           },
           {
             "criterio": "detalles",
             "peso_base": 0.1,
-            "peso_aplicado": 0.1,
-            "puntuacion": 50,
+            "peso_aplicado": 0.118,
+            "puntuacion": 75,
             "disponible": true
           }
         ]
       },
       "etiquetas": [
         {
-          "texto": "Otro color",
+          "texto": "Corte más ajustado",
           "tipo": "diferencia"
         },
         {
-          "texto": "Tejido más ligero",
+          "texto": "Con bolsillos tipo carpintero",
+          "tipo": "coincide"
+        },
+        {
+          "texto": "Mismo material",
+          "tipo": "coincide"
+        }
+      ],
+      "fuente": "shopping"
+    },
+    {
+      "producto": {
+        "id": "prd_37de158d6c22b920",
+        "titulo": "Won Hundred Genoa Unisex Vaqueros boyfriend, Original black",
+        "tienda": {
+          "id": "zalando",
+          "nombre": "Zalando"
+        },
+        "marca": null,
+        "url": "https://www.google.es/search?ibp=oshop&q=vaqueros anchos hombre&prds=productid:5248282903742926091,headlineOfferDocid:5248282903742926091,imageDocid:16505589417057330018,pvt:a&hl=es&gl=es&udm=28",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTlj91bdqwWLEf5ETq_uiCKV5-gTcWFoJxIiw5W2pRSg5rgFRk22YUxu-zVqTVy2JqStNou7Ae2",
+        "precio": {
+          "centimos": 14000,
+          "moneda": "EUR"
+        },
+        "precio_anterior": {
+          "centimos": 16000,
+          "moneda": "EUR"
+        },
+        "rango": "alto"
+      },
+      "similitud": {
+        "total": 52,
+        "criterios": [
+          {
+            "criterio": "visual",
+            "peso_base": 0.35,
+            "peso_aplicado": 0.412,
+            "puntuacion": 38,
+            "disponible": true
+          },
+          {
+            "criterio": "color",
+            "peso_base": 0.2,
+            "peso_aplicado": 0.235,
+            "puntuacion": 60,
+            "disponible": true
+          },
+          {
+            "criterio": "gramaje",
+            "peso_base": 0.15,
+            "peso_aplicado": 0,
+            "puntuacion": null,
+            "disponible": false
+          },
+          {
+            "criterio": "material",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 100,
+            "disponible": true
+          },
+          {
+            "criterio": "fit",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 60,
+            "disponible": true
+          },
+          {
+            "criterio": "detalles",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 25,
+            "disponible": true
+          }
+        ]
+      },
+      "etiquetas": [
+        {
+          "texto": "Corte más ajustado",
           "tipo": "diferencia"
         },
         {
-          "texto": "Mismo corte",
+          "texto": "Con pernera ancha",
+          "tipo": "coincide"
+        },
+        {
+          "texto": "Mismo material",
           "tipo": "coincide"
         }
       ],
@@ -1001,47 +839,128 @@
         "rango": "medio"
       },
       "similitud": {
-        "total": 50,
+        "total": 51,
         "criterios": [
           {
             "criterio": "visual",
             "peso_base": 0.35,
-            "peso_aplicado": 0.35,
+            "peso_aplicado": 0.412,
             "puntuacion": 40,
             "disponible": true
           },
           {
             "criterio": "color",
             "peso_base": 0.2,
-            "peso_aplicado": 0.2,
-            "puntuacion": 29,
+            "peso_aplicado": 0.235,
+            "puntuacion": 35,
             "disponible": true
           },
           {
             "criterio": "gramaje",
             "peso_base": 0.15,
-            "peso_aplicado": 0.15,
-            "puntuacion": 50,
-            "disponible": true
+            "peso_aplicado": 0,
+            "puntuacion": null,
+            "disponible": false
           },
           {
             "criterio": "material",
             "peso_base": 0.1,
-            "peso_aplicado": 0.1,
+            "peso_aplicado": 0.118,
             "puntuacion": 100,
             "disponible": true
           },
           {
             "criterio": "fit",
             "peso_base": 0.1,
-            "peso_aplicado": 0.1,
+            "peso_aplicado": 0.118,
             "puntuacion": 100,
             "disponible": true
           },
           {
             "criterio": "detalles",
             "peso_base": 0.1,
-            "peso_aplicado": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 25,
+            "disponible": true
+          }
+        ]
+      },
+      "etiquetas": [
+        {
+          "texto": "Mismo corte",
+          "tipo": "coincide"
+        },
+        {
+          "texto": "Con pernera ancha",
+          "tipo": "coincide"
+        },
+        {
+          "texto": "Mismo material",
+          "tipo": "coincide"
+        }
+      ],
+      "fuente": "shopping"
+    },
+    {
+      "producto": {
+        "id": "prd_90f6bf5ef172bf74",
+        "titulo": "Calvin Klein Hombres baggy Jeans",
+        "tienda": {
+          "id": "zalando",
+          "nombre": "Zalando"
+        },
+        "marca": null,
+        "url": "https://www.google.es/search?ibp=oshop&q=vaqueros anchos hombre&prds=catalogid:16217171798065945882,productid:17619190748435453100,headlineOfferDocid:4188098211946536900,imageDocid:18401719802745805364,rds:PC_16036120647602481171|PROD_PC_16036120647602481171,gpcid:16036120647602481171,mid:576462566999671358,pvt:a&hl=es&gl=es&udm=28",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSNW4Jw2Fnyy9ZYr9p3DH67i5Xns3VcLnRCLBQS3HjR2MdX4yD5RNxwHFHR0rdCi76bb1stxVvr",
+        "precio": {
+          "centimos": 8995,
+          "moneda": "EUR"
+        },
+        "precio_anterior": null,
+        "rango": "alto"
+      },
+      "similitud": {
+        "total": 48,
+        "criterios": [
+          {
+            "criterio": "visual",
+            "peso_base": 0.35,
+            "peso_aplicado": 0.412,
+            "puntuacion": 43,
+            "disponible": true
+          },
+          {
+            "criterio": "color",
+            "peso_base": 0.2,
+            "peso_aplicado": 0.235,
+            "puntuacion": 17,
+            "disponible": true
+          },
+          {
+            "criterio": "gramaje",
+            "peso_base": 0.15,
+            "peso_aplicado": 0,
+            "puntuacion": null,
+            "disponible": false
+          },
+          {
+            "criterio": "material",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 100,
+            "disponible": true
+          },
+          {
+            "criterio": "fit",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 100,
+            "disponible": true
+          },
+          {
+            "criterio": "detalles",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
             "puntuacion": 25,
             "disponible": true
           }
@@ -1053,11 +972,11 @@
           "tipo": "diferencia"
         },
         {
-          "texto": "Tejido más ligero",
-          "tipo": "diferencia"
+          "texto": "Mismo corte",
+          "tipo": "coincide"
         },
         {
-          "texto": "Mismo corte",
+          "texto": "Con pernera ancha",
           "tipo": "coincide"
         }
       ],
@@ -1087,43 +1006,43 @@
           {
             "criterio": "visual",
             "peso_base": 0.35,
-            "peso_aplicado": 0.35,
+            "peso_aplicado": 0.412,
             "puntuacion": 42,
             "disponible": true
           },
           {
             "criterio": "color",
             "peso_base": 0.2,
-            "peso_aplicado": 0.2,
+            "peso_aplicado": 0.235,
             "puntuacion": 0,
             "disponible": true
           },
           {
             "criterio": "gramaje",
             "peso_base": 0.15,
-            "peso_aplicado": 0.15,
-            "puntuacion": 50,
-            "disponible": true
+            "peso_aplicado": 0,
+            "puntuacion": null,
+            "disponible": false
           },
           {
             "criterio": "material",
             "peso_base": 0.1,
-            "peso_aplicado": 0.1,
+            "peso_aplicado": 0.118,
             "puntuacion": 100,
             "disponible": true
           },
           {
             "criterio": "fit",
             "peso_base": 0.1,
-            "peso_aplicado": 0.1,
-            "puntuacion": 60,
+            "peso_aplicado": 0.118,
+            "puntuacion": 100,
             "disponible": true
           },
           {
             "criterio": "detalles",
             "peso_base": 0.1,
-            "peso_aplicado": 0.1,
-            "puntuacion": 25,
+            "peso_aplicado": 0.118,
+            "puntuacion": 0,
             "disponible": true
           }
         ]
@@ -1134,12 +1053,12 @@
           "tipo": "diferencia"
         },
         {
-          "texto": "Tejido más ligero",
-          "tipo": "diferencia"
+          "texto": "Mismo corte",
+          "tipo": "coincide"
         },
         {
-          "texto": "Corte más ajustado",
-          "tipo": "diferencia"
+          "texto": "Mismo material",
+          "tipo": "coincide"
         }
       ],
       "fuente": "shopping"
@@ -1168,58 +1087,54 @@
           {
             "criterio": "visual",
             "peso_base": 0.35,
-            "peso_aplicado": 0.35,
+            "peso_aplicado": 0.412,
             "puntuacion": 6,
             "disponible": true
           },
           {
             "criterio": "color",
             "peso_base": 0.2,
-            "peso_aplicado": 0.2,
+            "peso_aplicado": 0.235,
             "puntuacion": 55,
             "disponible": true
           },
           {
             "criterio": "gramaje",
             "peso_base": 0.15,
-            "peso_aplicado": 0.15,
-            "puntuacion": 50,
-            "disponible": true
+            "peso_aplicado": 0,
+            "puntuacion": null,
+            "disponible": false
           },
           {
             "criterio": "material",
             "peso_base": 0.1,
-            "peso_aplicado": 0.1,
+            "peso_aplicado": 0.118,
             "puntuacion": 100,
             "disponible": true
           },
           {
             "criterio": "fit",
             "peso_base": 0.1,
-            "peso_aplicado": 0.1,
-            "puntuacion": 60,
+            "peso_aplicado": 0.118,
+            "puntuacion": 100,
             "disponible": true
           },
           {
             "criterio": "detalles",
             "peso_base": 0.1,
-            "peso_aplicado": 0.1,
-            "puntuacion": 25,
+            "peso_aplicado": 0.118,
+            "puntuacion": 0,
             "disponible": true
           }
         ]
       },
       "etiquetas": [
         {
-          "texto": "Tejido más ligero",
-          "tipo": "diferencia"
+          "texto": "Mismo corte",
+          "tipo": "coincide"
         },
         {
-          "texto": "Corte más ajustado",
-          "tipo": "diferencia"
-        },
-        {
-          "texto": "Con remaches metálicos",
+          "texto": "Mismo material",
           "tipo": "coincide"
         }
       ],
@@ -1244,48 +1159,48 @@
         "rango": "alto"
       },
       "similitud": {
-        "total": 37,
+        "total": 32,
         "criterios": [
           {
             "criterio": "visual",
             "peso_base": 0.35,
-            "peso_aplicado": 0.35,
+            "peso_aplicado": 0.412,
             "puntuacion": 32,
             "disponible": true
           },
           {
             "criterio": "color",
             "peso_base": 0.2,
-            "peso_aplicado": 0.2,
+            "peso_aplicado": 0.235,
             "puntuacion": 0,
             "disponible": true
           },
           {
             "criterio": "gramaje",
             "peso_base": 0.15,
-            "peso_aplicado": 0.15,
-            "puntuacion": 50,
-            "disponible": true
+            "peso_aplicado": 0,
+            "puntuacion": null,
+            "disponible": false
           },
           {
             "criterio": "material",
             "peso_base": 0.1,
-            "peso_aplicado": 0.1,
+            "peso_aplicado": 0.118,
             "puntuacion": 100,
             "disponible": true
           },
           {
             "criterio": "fit",
             "peso_base": 0.1,
-            "peso_aplicado": 0.1,
+            "peso_aplicado": 0.118,
             "puntuacion": 60,
             "disponible": true
           },
           {
             "criterio": "detalles",
             "peso_base": 0.1,
-            "peso_aplicado": 0.1,
-            "puntuacion": 25,
+            "peso_aplicado": 0.118,
+            "puntuacion": 0,
             "disponible": true
           }
         ]
@@ -1296,12 +1211,12 @@
           "tipo": "diferencia"
         },
         {
-          "texto": "Tejido más ligero",
+          "texto": "Corte más ajustado",
           "tipo": "diferencia"
         },
         {
-          "texto": "Corte más ajustado",
-          "tipo": "diferencia"
+          "texto": "Mismo material",
+          "tipo": "coincide"
         }
       ],
       "fuente": "shopping"
@@ -1325,47 +1240,47 @@
         "rango": "economico"
       },
       "similitud": {
-        "total": 25,
+        "total": 27,
         "criterios": [
           {
             "criterio": "visual",
             "peso_base": 0.35,
-            "peso_aplicado": 0.35,
+            "peso_aplicado": 0.412,
             "puntuacion": 42,
             "disponible": true
           },
           {
             "criterio": "color",
             "peso_base": 0.2,
-            "peso_aplicado": 0.2,
-            "puntuacion": 55,
+            "peso_aplicado": 0.235,
+            "puntuacion": 53,
             "disponible": true
           },
           {
             "criterio": "gramaje",
             "peso_base": 0.15,
-            "peso_aplicado": 0.15,
-            "puntuacion": 50,
-            "disponible": true
+            "peso_aplicado": 0,
+            "puntuacion": null,
+            "disponible": false
           },
           {
             "criterio": "material",
             "peso_base": 0.1,
-            "peso_aplicado": 0.1,
+            "peso_aplicado": 0.118,
             "puntuacion": 100,
             "disponible": true
           },
           {
             "criterio": "fit",
             "peso_base": 0.1,
-            "peso_aplicado": 0.1,
-            "puntuacion": 60,
+            "peso_aplicado": 0.118,
+            "puntuacion": 100,
             "disponible": true
           },
           {
             "criterio": "detalles",
             "peso_base": 0.1,
-            "peso_aplicado": 0.1,
+            "peso_aplicado": 0.118,
             "puntuacion": 0,
             "disponible": true
           }
@@ -1377,12 +1292,12 @@
           "tipo": "diferencia"
         },
         {
-          "texto": "Tejido más ligero",
-          "tipo": "diferencia"
+          "texto": "Mismo corte",
+          "tipo": "coincide"
         },
         {
-          "texto": "Corte más ajustado",
-          "tipo": "diferencia"
+          "texto": "Mismo material",
+          "tipo": "coincide"
         }
       ],
       "fuente": "shopping"
@@ -1390,7 +1305,7 @@
   ],
   "conteo_por_rango": {
     "economico": 1,
-    "medio": 9,
+    "medio": 8,
     "alto": 7,
     "premium": 0
   },

@@ -30,17 +30,16 @@ struct DecodificacionTests {
     @Test("Lee una búsqueda real, puntuada y ordenada por parecido")
     func busqueda() throws {
         let busqueda = DatosSimulados.busqueda
-        #expect(busqueda.alternativas.count == 17)
+        #expect(busqueda.alternativas.count == 16)
         #expect(busqueda.conteoPorRango["economico"] == 1)
         #expect(busqueda.conteoPorRango["premium"] == 0)
         #expect(busqueda.alternativas.allSatisfy { RangoPrecio.para(centimos: $0.producto.precio.centimos) == $0.producto.rango })
 
         let totales = busqueda.alternativas.compactMap { $0.similitud?.total }
-        #expect(totales.count == 17)
+        #expect(totales.count == 16)
         #expect(totales == totales.sorted(by: >))
 
-        let cos = busqueda.alternativas[2]
-        #expect(cos.producto.tienda.id == "cos")
+        let cos = try #require(busqueda.alternativas.first { $0.producto.tienda.id == "cos" })
         #expect(cos.similitud?.criterios.count == 6)
         #expect(cos.similitud?.criterios.first?.titulo == "Aspecto")
         #expect(cos.etiquetas.count == 3)
