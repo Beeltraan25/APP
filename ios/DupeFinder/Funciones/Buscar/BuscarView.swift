@@ -102,21 +102,21 @@ struct BuscarView: View {
             VStack(spacing: 14) {
                 if menuAbierto {
                     Button { abrirCamara() } label: {
-                        etiquetaOrigen("Cámara", simbolo: "camera")
+                        EtiquetaOpcion("Cámara", simbolo: "camera")
                     }
                     .buttonStyle(.plain)
                     .glassEffect(.regular.interactive(), in: .capsule)
                     .glassEffectID("camara", in: cristal)
 
                     PhotosPicker(selection: $fotoElegida, matching: .images) {
-                        etiquetaOrigen("Fotos", simbolo: "photo.on.rectangle")
+                        EtiquetaOpcion("Fotos", simbolo: "photo.on.rectangle")
                     }
                     .buttonStyle(.plain)
                     .glassEffect(.regular.interactive(), in: .capsule)
                     .glassEffectID("fotos", in: cristal)
 
                     Button { pidiendoEnlace = true } label: {
-                        etiquetaOrigen("Pegar enlace", simbolo: "link")
+                        EtiquetaOpcion("Pegar enlace", simbolo: "link")
                     }
                     .buttonStyle(.plain)
                     .glassEffect(.regular.interactive(), in: .capsule)
@@ -150,15 +150,6 @@ struct BuscarView: View {
         }
         .sensoryFeedback(.impact(weight: .light), trigger: menuAbierto)
         .disabled(vm.analizando)
-    }
-
-    private func etiquetaOrigen(_ titulo: String, simbolo: String) -> some View {
-        Label(titulo, systemImage: simbolo)
-            .font(.headline)
-            .frame(minWidth: 220)
-            .padding(.horizontal, Espacio.l)
-            .padding(.vertical, 16)
-            .contentShape(.capsule)
     }
 
     /// Si hay un enlace copiado, se ofrece pegarlo con un toque. PasteButton no muestra el aviso de privacidad de iOS.
