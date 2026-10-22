@@ -80,7 +80,8 @@ export function leerLens(datos: Objeto): Candidato[] {
   return listas.filter(esObjeto).flatMap((item, indice) => {
     const titulo = texto(item.title);
     const url = texto(item.link);
-    if (!titulo || !url) return [];
+    // in_stock solo aparece a veces; si dice que está agotado, no sirve.
+    if (!titulo || !url || item.in_stock === false) return [];
     return [
       {
         fuente: "lens" as const,
@@ -101,8 +102,10 @@ export function leerShopping(datos: Objeto): Candidato[] {
   const lista = Array.isArray(datos.shopping_results) ? (datos.shopping_results as unknown[]) : [];
   return lista.filter(esObjeto).flatMap((item, indice) => {
     const titulo = texto(item.title);
+    // "link" llega como texto vacío: se usa product_link.
     const url = texto(item.link) ?? texto(item.product_link);
-    if (!titulo || !url) return [];
+    // Las prendas de segunda mano ("usado") no son alternativas que se puedan comprar nuevas.
+    if (!titulo || !url || item.second_hand_condition) return [];
     return [
       {
         fuente: "shopping" as const,

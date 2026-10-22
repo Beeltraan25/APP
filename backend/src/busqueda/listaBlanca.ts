@@ -60,6 +60,11 @@ const nombresPorTienda = new Map(
   ]),
 );
 
+/** Nombres normalizados con los que puede aparecer una tienda. */
+export function nombresDe(tienda: TiendaConfig): ReadonlySet<string> {
+  return nombresPorTienda.get(tienda) ?? new Set();
+}
+
 /**
  * Tienda a partir del nombre del vendedor ("source" de Google Shopping), que no da la URL de la tienda.
  * Coincidencia exacta tras normalizar: "Mango Outlet" no es "Mango".

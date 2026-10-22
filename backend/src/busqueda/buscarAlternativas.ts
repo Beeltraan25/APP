@@ -3,7 +3,7 @@ import type { FichaPrenda } from "../esquemas/ficha";
 import type { RangoPrecio } from "../esquemas/producto";
 import { ErrorApp } from "../infra/errores";
 import { limpiarUrl, sha256Hex } from "../infra/utilidades";
-import { normalizarNombre, tiendaDeNombre, tiendaDeUrl, type TiendaConfig } from "./listaBlanca";
+import { nombresDe, normalizarNombre, tiendaDeNombre, tiendaDeUrl, type TiendaConfig } from "./listaBlanca";
 import { rangoDePrecio } from "./precios";
 import type { Candidato, ClienteSerpapi } from "./serpapi";
 
@@ -130,7 +130,7 @@ async function aAlternativa({ candidato, tienda }: Valido): Promise<Alternativa>
   return {
     producto: {
       id: `prd_${(await sha256Hex(urlComparable(candidato.url))).slice(0, 16)}`,
-      titulo: candidato.titulo,
+      titulo: limpiarTitulo(candidato.titulo, tienda),
       tienda: { id: tienda.id, nombre: tienda.nombre },
       marca: tienda.multimarca ? null : tienda.nombre,
       url: candidato.url,
@@ -143,6 +143,19 @@ async function aAlternativa({ candidato, tienda }: Valido): Promise<Alternativa>
     etiquetas: [],
     fuente: candidato.fuente,
   };
+}
+
+/**
+ * Quita lo que sobra de los títulos reales: la tienda al final ("Jeans barrel | Pull&Bear España")
+ * y la talla de Google Shopping ("…, Talla: 34x30, Blue denim").
+ */
+export function limpiarTitulo(titulo: string, tienda: TiendaConfig): string {
+  const sinTalla = titulo.replace(/,?\s*Talla:\s*[^,]*/i, "");
+  const partes = sinTalla.split(/\s+\|\s+/);
+  const ultima = partes.length > 1 ? normalizarNombre(partes[partes.length - 1] ?? "") : "";
+  if (ultima && [...nombresDe(tienda)].some((nombre) => ultima.includes(nombre))) partes.pop();
+  const limpio = partes.join(" | ").replace(/\s{2,}/g, " ").trim();
+  return limpio || titulo;
 }
 
 export function contarPorRango(alternativas: Alternativa[]): Record<RangoPrecio, number> {

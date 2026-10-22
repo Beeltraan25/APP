@@ -12,7 +12,7 @@
   {"id": "arket", "nombre": "Arket", "grupo": "H&M", "dominios": ["arket.com"], "activa": true},
   {"id": "weekday", "nombre": "Weekday", "grupo": "H&M", "dominios": ["weekday.com"], "activa": true},
   {"id": "other-stories", "nombre": "& Other Stories", "grupo": "H&M", "dominios": ["stories.com"], "activa": false, "alias": ["& Other Stories", "and other stories"]},
-  {"id": "uniqlo", "nombre": "Uniqlo", "grupo": "Uniqlo", "dominios": ["uniqlo.com"], "activa": true, "alias": ["UNIQLO Europe"]},
+  {"id": "uniqlo", "nombre": "Uniqlo", "grupo": "Uniqlo", "dominios": ["uniqlo.com"], "activa": true, "alias": ["UNIQLO Europe", "Uniqlo Spain", "Uniqlo España"]},
   {"id": "el-corte-ingles", "nombre": "El Corte Inglés", "grupo": "El Corte Inglés", "dominios": ["elcorteingles.es"], "multimarca": true, "activa": true},
   {"id": "sfera", "nombre": "Sfera", "grupo": "El Corte Inglés", "dominios": ["sfera.com"], "activa": true},
   {"id": "springfield", "nombre": "Springfield", "grupo": "Tendam", "dominios": ["myspringfield.com"], "activa": true, "alias": ["Springfield Man"]},
