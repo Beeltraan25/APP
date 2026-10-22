@@ -83,6 +83,33 @@ jobs:
           bash .github/scripts/capturas.sh "${{ steps.simulador.outputs.udid }}" \
             ios/build/Build/Products/Debug-iphonesimulator/DupeFinder.app capturas
 
+      # Para instalar en un iPhone desde Windows (Sideloadly o AltStore firman el .ipa con tu Apple ID).
+      # Sin claves: la URL del backend y la clave se añaden en tu PC con ios/scripts/configurar-ipa.ps1.
+      - name: Compilar para iPhone (.ipa sin firmar)
+        id: ipa
+        if: steps.compilar.outcome == 'success'
+        continue-on-error: true
+        working-directory: ios
+        run: |
+          set -o pipefail
+          xcodebuild build -project DupeFinder.xcodeproj -scheme DupeFinder -configuration Release \
+            -destination "generic/platform=iOS" -derivedDataPath build-iphone \
+            CODE_SIGNING_ALLOWED=NO INFOPLIST_OUTPUT_FORMAT=XML \
+            2>&1 | tee "$GITHUB_WORKSPACE/registro-ipa.txt" | xcbeautify --renderer github-actions
+          mkdir -p Payload
+          cp -R build-iphone/Build/Products/Release-iphoneos/DupeFinder.app Payload/
+          zip -qry "$GITHUB_WORKSPACE/DupeFinder.ipa" Payload
+          ls -la "$GITHUB_WORKSPACE/DupeFinder.ipa"
+
+      - name: Guardar el .ipa
+        if: steps.ipa.outcome == 'success'
+        uses: actions/upload-artifact@v4
+        with:
+          name: DupeFinder-ipa
+          path: DupeFinder.ipa
+          retention-days: 30
+          compression-level: 0
+
       - name: Publicar capturas y registros en la rama "capturas"
         if: always()
         env:
@@ -92,10 +119,11 @@ jobs:
             compilar=${{ steps.compilar.outcome }}
             tests=${{ steps.tests.outcome }}
             capturas=${{ steps.capturas.outcome }}
+            ipa=${{ steps.ipa.outcome }}
         run: bash .github/scripts/publicar.sh
 
       - name: Resultado
         if: always()
         run: |
-          echo "Paquete: ${{ steps.paquete.outcome }} · Compilar: ${{ steps.compilar.outcome }} · Tests: ${{ steps.tests.outcome }} · Capturas: ${{ steps.capturas.outcome }}"
+          echo "Paquete: ${{ steps.paquete.outcome }} · Compilar: ${{ steps.compilar.outcome }} · Tests: ${{ steps.tests.outcome }} · Capturas: ${{ steps.capturas.outcome }} · IPA: ${{ steps.ipa.outcome }}"
           [ "${{ steps.paquete.outcome }}" = success ] && [ "${{ steps.compilar.outcome }}" = success ] && [ "${{ steps.tests.outcome }}" = success ]

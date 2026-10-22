@@ -11,7 +11,7 @@ if [ -d capturas ]; then
 fi
 
 # Para cada registro: errores y avisos de Swift, y las últimas líneas.
-for registro in registro-paquete.txt registro-app.txt registro-tests.txt; do
+for registro in registro-paquete.txt registro-app.txt registro-tests.txt registro-ipa.txt; do
   [ -f "$registro" ] || continue
   base="${registro#registro-}"
   grep -E "error:|warning:|✘|failed|Test .* recorded an issue|Fatal error" "$registro" | sort -u | head -300 \
