@@ -194,6 +194,7 @@ struct OutfitsView: View {
         }
         .buttonStyle(.glassProminent)
         .controlSize(.large)
+        .dynamicTypeSize(...DynamicTypeSize.accessibility1)
         .disabled(vm.estilo == nil || vm.generando)
     }
 

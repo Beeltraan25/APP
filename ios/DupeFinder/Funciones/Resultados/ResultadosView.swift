@@ -5,11 +5,13 @@ import SwiftUI
 /// Alternativas a la prenda, con un selector de rango de precio arriba (vidrio nativo de iOS 26).
 struct ResultadosView: View {
     @State private var vm: ResultadosViewModel
+    @Environment(\.dynamicTypeSize) private var tamanoTexto
 
-    private let columnas = [
-        GridItem(.flexible(), spacing: 12, alignment: .top),
-        GridItem(.flexible(), spacing: 12, alignment: .top),
-    ]
+    /// Dos columnas; con los tamaños de texto de accesibilidad, una (si no, los precios se parten).
+    private var columnas: [GridItem] {
+        let columna = GridItem(.flexible(), spacing: 12, alignment: .top)
+        return tamanoTexto.isAccessibilitySize ? [columna] : [columna, columna]
+    }
 
     init(peticion: PeticionResultados, servicio: any ServicioBusqueda) {
         _vm = State(initialValue: ResultadosViewModel(peticion: peticion, servicio: servicio))
@@ -53,16 +55,22 @@ struct ResultadosView: View {
     /// De qué prenda son las alternativas y cuántas hay.
     private var resumen: some View {
         let ficha = vm.peticion.ficha
-        return HStack(spacing: 10) {
-            Circle()
-                .fill(ficha.colorPrincipal.color ?? .gray)
-                .frame(width: 14, height: 14)
-                .overlay(Circle().strokeBorder(.primary.opacity(0.2), lineWidth: 0.5))
-                .accessibilityHidden(true)
-            Text((ficha.subcategoria ?? ficha.categoria).conMayuscula)
-                .font(.subheadline.weight(.medium))
-                .lineLimit(1)
-            Spacer()
+        let apilado = tamanoTexto.isAccessibilitySize
+        let disposicion = apilado
+            ? AnyLayout(VStackLayout(alignment: .leading, spacing: 4))
+            : AnyLayout(HStackLayout(spacing: 10))
+        return disposicion {
+            HStack(spacing: 10) {
+                Circle()
+                    .fill(ficha.colorPrincipal.color ?? .gray)
+                    .frame(width: 14, height: 14)
+                    .overlay(Circle().strokeBorder(.primary.opacity(0.2), lineWidth: 0.5))
+                    .accessibilityHidden(true)
+                Text((ficha.subcategoria ?? ficha.categoria).conMayuscula)
+                    .font(.subheadline.weight(.medium))
+                    .lineLimit(apilado ? 3 : 1)
+            }
+            if !apilado { Spacer() }
             if case .listo = vm.estado {
                 Text(vm.conteo(vm.rango) == 1 ? "1 alternativa" : "\(vm.conteo(vm.rango)) alternativas")
                     .font(.subheadline)

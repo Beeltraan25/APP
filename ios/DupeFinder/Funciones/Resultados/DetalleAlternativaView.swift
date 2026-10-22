@@ -124,6 +124,8 @@ struct DetalleAlternativaView: View {
             .accessibilityLabel(estaGuardada ? "Quitar de guardados" : "Guardar")
         }
         .controlSize(.large)
+        // Barra fija: con texto enorme taparía el contenido, así que su tamaño tiene un tope.
+        .dynamicTypeSize(...DynamicTypeSize.xxxLarge)
         .padding(.horizontal, 20)
         .padding(.bottom, Espacio.s)
     }

@@ -72,7 +72,7 @@ struct FichaSheet: View {
                 }
             }
             // safeAreaBar (iOS 26) difumina el contenido bajo el botón, como las barras del sistema.
-            .safeAreaBar(edge: .bottom) { botonBuscar }
+            .safeAreaBar(edge: .bottom) { botonBuscar.dynamicTypeSize(...DynamicTypeSize.xxxLarge) }
         }
         .presentationDetents([.medium, .large], selection: $tamano)
         .presentationDragIndicator(.visible)

@@ -23,8 +23,13 @@ struct DetalleOutfitGuardado: View {
                         Text(outfit.porQueEncaja)
                             .font(.body)
                     }
-                    LabeledContent("Total", value: Precio(centimos: outfit.precioTotalCentimos).formateado)
-                        .font(.headline)
+                    HStack(alignment: .firstTextBaseline) {
+                        Text("Total")
+                        Spacer()
+                        Text(Precio(centimos: outfit.precioTotalCentimos).formateado)
+                    }
+                    .font(.headline)
+                    .accessibilityElement(children: .combine)
                 }
                 .padding(.vertical, 4)
             }

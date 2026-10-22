@@ -70,11 +70,13 @@ public final class ModeloCompartir {
         case leyendo
         case analizando
         case buscando
-        case listo(ficha: FichaPrenda, origen: ProductoOrigen?, alternativas: [Alternativa])
+        case listo(ficha: FichaPrenda, imagenUrl: URL?, origen: ProductoOrigen?, alternativas: [Alternativa])
         case error(String)
     }
 
     public private(set) var fase: Fase = .leyendo
+    /// La foto compartida, para enseñarla sin descargarla otra vez.
+    public private(set) var fotoLocal: Data?
 
     /// Cuántas alternativas caben en la extensión.
     public static let maximoAlternativas = 8
@@ -92,6 +94,7 @@ public final class ModeloCompartir {
             fase = .error("No hemos encontrado ninguna prenda en lo que has compartido. Prueba con una foto o con el enlace de la prenda.")
             return
         }
+        if case .foto(let datos) = entrada { fotoLocal = datos }
         do {
             fase = .analizando
             let analisis = try await servicios.analisis.analizar(analizar)
@@ -99,6 +102,7 @@ public final class ModeloCompartir {
             let busqueda = try await servicios.busqueda.buscar(imagenUrl: analisis.imagenUrl, ficha: analisis.ficha)
             fase = .listo(
                 ficha: analisis.ficha,
+                imagenUrl: analisis.imagenUrl ?? analisis.productoOrigen?.imagenUrl,
                 origen: analisis.productoOrigen,
                 alternativas: Array(busqueda.alternativas.prefix(Self.maximoAlternativas))
             )

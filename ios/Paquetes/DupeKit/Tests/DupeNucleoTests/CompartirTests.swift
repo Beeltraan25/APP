@@ -37,11 +37,12 @@ struct CompartirTests {
     func procesarFoto() async {
         let modelo = ModeloCompartir(servicios: .simulados(retraso: .zero))
         await modelo.procesar(.foto(Data([0xFF, 0xD8])))
-        guard case .listo(_, _, let alternativas) = modelo.fase else {
+        guard case .listo(_, let imagenUrl, _, let alternativas) = modelo.fase else {
             Issue.record("Debería terminar con resultados")
             return
         }
         #expect(!alternativas.isEmpty)
+        #expect(imagenUrl != nil)
         #expect(alternativas.count <= ModeloCompartir.maximoAlternativas)
         #expect(modelo.modoPrueba)
     }

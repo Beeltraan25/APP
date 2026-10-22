@@ -1,6 +1,7 @@
 import DupeDiseno
 import DupeNucleo
 import SwiftUI
+import UIKit
 
 /// La pantalla de la Share Extension: lee lo compartido, analiza y muestra las mejores alternativas.
 public struct VistaCompartir: View {
@@ -25,8 +26,8 @@ public struct VistaCompartir: View {
                     progreso("Buscando alternativas…")
                 case .error(let mensaje):
                     ContentUnavailableView("No ha podido ser", systemImage: "exclamationmark.triangle", description: Text(mensaje))
-                case .listo(let ficha, let origen, let alternativas):
-                    resultado(ficha: ficha, origen: origen, alternativas: alternativas)
+                case .listo(let ficha, let imagenUrl, let origen, let alternativas):
+                    resultado(ficha: ficha, imagenUrl: imagenUrl, origen: origen, alternativas: alternativas)
                 }
             }
             .navigationTitle("Dupe Finder")
@@ -56,18 +57,34 @@ public struct VistaCompartir: View {
         .animation(.smooth, value: texto)
     }
 
-    private func resultado(ficha: FichaPrenda, origen: ProductoOrigen?, alternativas: [Alternativa]) -> some View {
+    private func resultado(ficha: FichaPrenda, imagenUrl: URL?, origen: ProductoOrigen?, alternativas: [Alternativa]) -> some View {
         List {
             Section {
-                HStack(spacing: Espacio.s) {
-                    Circle()
-                        .fill(ficha.colorPrincipal.color ?? .gray)
-                        .frame(width: 14, height: 14)
-                        .overlay(Circle().strokeBorder(.primary.opacity(0.2), lineWidth: 0.5))
-                        .accessibilityHidden(true)
+                HStack(spacing: Espacio.m) {
+                    Group {
+                        if let foto = modelo.fotoLocal, let imagen = UIImage(data: foto) {
+                            Image(uiImage: imagen).resizable().scaledToFill()
+                        } else {
+                            ImagenRemota(url: imagenUrl)
+                        }
+                    }
+                    .frame(width: 48, height: 60)
+                    .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+                    .accessibilityHidden(true)
                     VStack(alignment: .leading, spacing: 2) {
-                        Text((ficha.subcategoria ?? ficha.categoria).conMayuscula)
-                            .font(.headline)
+                        Text("Tu prenda")
+                            .font(.caption.weight(.semibold))
+                            .textCase(.uppercase)
+                            .foregroundStyle(.secondary)
+                        HStack(spacing: Espacio.s) {
+                            Circle()
+                                .fill(ficha.colorPrincipal.color ?? .gray)
+                                .frame(width: 12, height: 12)
+                                .overlay(Circle().strokeBorder(.primary.opacity(0.2), lineWidth: 0.5))
+                                .accessibilityHidden(true)
+                            Text((ficha.subcategoria ?? ficha.categoria).conMayuscula)
+                                .font(.headline)
+                        }
                         if let origen {
                             Text([origen.tienda.nombre, origen.precio?.formateado].compactMap { $0 }.joined(separator: " · "))
                                 .font(.subheadline)
@@ -75,6 +92,7 @@ public struct VistaCompartir: View {
                         }
                     }
                 }
+                .accessibilityElement(children: .combine)
             }
 
             Section {
@@ -105,12 +123,18 @@ public struct VistaCompartir: View {
 
 private struct FilaAlternativa: View {
     let alternativa: Alternativa
+    @Environment(\.dynamicTypeSize) private var tamanoTexto
 
     var body: some View {
         let producto = alternativa.producto
-        HStack(spacing: Espacio.m) {
+        // Con texto de accesibilidad, la foto va encima y el texto ocupa todo el ancho.
+        let apilado = tamanoTexto.isAccessibilitySize
+        let disposicion = apilado
+            ? AnyLayout(VStackLayout(alignment: .leading, spacing: Espacio.s))
+            : AnyLayout(HStackLayout(spacing: Espacio.m))
+        disposicion {
             ImagenRemota(url: producto.imagenUrl)
-                .frame(width: 56, height: 70)
+                .frame(width: apilado ? 96 : 56, height: apilado ? 120 : 70)
                 .clipShape(RoundedRectangle(cornerRadius: 10, style: .continuous))
             VStack(alignment: .leading, spacing: 2) {
                 Text(producto.marca ?? producto.tienda.nombre)
@@ -119,19 +143,30 @@ private struct FilaAlternativa: View {
                     .foregroundStyle(.secondary)
                 Text(producto.titulo)
                     .font(.subheadline)
-                    .lineLimit(2)
-                Text(producto.precio.formateado)
-                    .font(.subheadline.weight(.semibold))
+                    .lineLimit(apilado ? 4 : 2)
+                HStack(alignment: .firstTextBaseline, spacing: Espacio.s) {
+                    Text(producto.precio.formateado)
+                        .font(.subheadline.weight(.semibold))
+                    if apilado, let similitud = alternativa.similitud {
+                        porcentaje(similitud.total)
+                    }
+                }
             }
-            Spacer(minLength: 0)
-            if let similitud = alternativa.similitud {
-                Text("\(similitud.total) %")
-                    .font(.subheadline.weight(.semibold))
-                    .foregroundStyle(.tint)
-                    .accessibilityLabel("\(similitud.total) % de parecido")
+            if !apilado {
+                Spacer(minLength: 0)
+                if let similitud = alternativa.similitud {
+                    porcentaje(similitud.total)
+                }
             }
         }
         .contentShape(.rect)
         .accessibilityElement(children: .combine)
+    }
+
+    private func porcentaje(_ total: Int) -> some View {
+        Text("\(total) %")
+            .font(.subheadline.weight(.semibold))
+            .foregroundStyle(.tint)
+            .accessibilityLabel("\(total) % de parecido")
     }
 }

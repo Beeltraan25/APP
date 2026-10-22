@@ -182,6 +182,7 @@ struct BuscarView: View {
                     .accessibilityHint("Elige cámara, fotos o un enlace")
                 }
             }
+            .dynamicTypeSize(...DynamicTypeSize.accessibility1)
         }
         .sensoryFeedback(.impact(weight: .light), trigger: menuAbierto)
         .disabled(vm.analizando)

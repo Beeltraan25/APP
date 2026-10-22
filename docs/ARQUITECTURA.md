@@ -134,9 +134,9 @@ ios/
 │
 ├── DupeFinderShare/                    # ── Share Extension (fase 6) ──
 │   ├── ShareViewController.swift       # controlador UIKit mínimo que aloja la vista SwiftUI (obligatorio)
-│   ├── ShareView.swift
-│   ├── Preprocesado.js                 # desde Safari: lee JSON-LD / og:* de la página ya abierta
-│   └── Info.plist
+│   ├── LectorCompartido.swift          # lee los adjuntos: página de Safari, foto, enlace o texto
+│   ├── Preprocesado.js                 # desde Safari: envía la cabecera y el JSON-LD de la página ya abierta
+│   └── Info.plist                      # lo genera XcodeGen (no se sube)
 │
 ├── Paquetes/DupeKit/                   # ── Paquete Swift local, compartido por app y extensión ──
 │   ├── Package.swift
@@ -222,6 +222,14 @@ ios/
 - **Arreglo del contrato:** Swift omite las claves con valor nil al enviar JSON; las peticiones (`/v1/buscar`, `/v1/outfits`) ahora aceptan esas claves ausentes como null.
 - App: pestaña Outfits (tu prenda, chips de estilo o uno escrito, máximo por prenda, progreso en directo, carrusel de collages), "Cambiar esta prenda" al mantener pulsada una pieza, guardar outfits, "Crear outfits" desde la ficha y desde el detalle. `EstadoCompartido` guarda la pestaña activa y la prenda base.
 
+**Estado tras la fase 6 (extensión, guardados y pulido):**
+- **Share Extension "Dupe Finder"** (`DupeFinderShare`, bundle `com.beeltraan25.dupefinder.share`, va dentro de la app). Acepta una página de Safari, una foto, un enlace o un texto con enlace. Desde Safari, `Preprocesado.js` envía la cabecera y el JSON-LD de la página **ya cargada**, así que no hay bloqueos anti-bots; si la página no tiene datos de producto, se lee el enlace como en la app.
+- La extensión analiza y busca sin pasos intermedios (sin ficha editable) y muestra las **8 mejores alternativas**; al tocar una se abre la tienda. Sin App Groups (cuenta gratuita) no puede guardar en la app: lo dice en una nota.
+- Su lógica y su vista están en el módulo **`DupeCompartir`** del paquete (con tests), y la app la muestra en la captura `compartir`, porque el simulador no puede abrir la hoja de compartir desde un script. `NavegadorTienda` y `PreparadorFoto` pasan a `DupeDiseno`.
+- **Guardados:** al tocar un outfit se abre su detalle: estilo, por qué encaja, total y cada pieza con enlace a su tienda.
+- **Pulido:** icono propio (lupa con "≈" sobre el azul de la app), se respeta "Reducir movimiento" (el menú de origen usa un fundido en vez del rebote y el desplazamiento a los outfits no se anima) y CI hace capturas con el texto de accesibilidad más grande (`grande-*.png`).
+- **Sin probar en un iPhone real:** la hoja de compartir de Safari, Instagram y Fotos solo se puede comprobar en un dispositivo.
+
 **Notas de diseño que afectan a la estructura**
 
 - **Servicios con versión simulada:** cada servicio es un protocolo con dos implementaciones (`…Remoto` y `…Simulado`). La fase 1 funciona entera con los JSON de `Simulados/` y, en la fase 2, basta con cambiar a la versión remota. Además, las pruebas de diseño no gastan cuota gratuita.
@@ -229,7 +237,7 @@ ios/
 - **Portapapeles sin avisos molestos:** `UIPasteboard.detectPatterns(for: [.probableWebURL])` sabe si hay un enlace **sin** mostrar el aviso de privacidad de iOS; el contenido solo se lee cuando el usuario toca un `PasteButton`.
 - **UIKit solo donde es imprescindible:** cámara, `SFSafariViewController` y el controlador principal de la Share Extension.
 - **Hápticos:** con el modificador nativo `.sensoryFeedback` (sin código UIKit).
-- **Accesibilidad:** Dynamic Type en todo, etiquetas de VoiceOver en tarjetas y se respeta "Reducir transparencia" (`accessibilityReduceTransparency`).
+- **Accesibilidad:** Dynamic Type en todo (comprobado en CI con el tamaño más grande), etiquetas de VoiceOver en tarjetas y filas, "Reducir movimiento" respetado en las animaciones propias. "Reducir transparencia" lo aplica el sistema: el vidrio nativo se vuelve opaco solo.
 
 ---
 
