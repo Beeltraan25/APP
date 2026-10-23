@@ -101,7 +101,7 @@ describe("POST /v1/analizar con foto", () => {
     expect(ia.llamadas).toBe(0);
   });
 
-  it("si no hay prenda devuelve 422 y no guarda la foto", async () => {
+  it("si no hay prenda devuelve 422", async () => {
     const { app, entorno, imagenes } = preparar(new IASimulada({ prenda_detectada: false }));
     const respuesta = await app.request(
       "/v1/analizar",
@@ -110,7 +110,8 @@ describe("POST /v1/analizar con foto", () => {
     );
     expect(respuesta.status).toBe(422);
     expect((await leerError(respuesta)).codigo).toBe("PRENDA_NO_DETECTADA");
-    expect(imagenes.escrituras).toBe(0);
+    // La foto se guarda antes de analizarla: Google Lens necesita leerla.
+    expect(imagenes.escrituras).toBe(1);
   });
 
   it("rechaza ropa de mujer con un mensaje claro", async () => {
@@ -125,6 +126,65 @@ describe("POST /v1/analizar con foto", () => {
       codigo: "SOLO_HOMBRE",
       mensaje: "Por ahora Dupe Finder solo busca ropa de hombre.",
     });
+  });
+});
+
+describe("POST /v1/analizar con foto: identificar la prenda", () => {
+  const resultadoLens = (url: string, titulo: string) => ({
+    fuente: "lens" as const,
+    posicion: 1,
+    titulo,
+    url,
+    nombreTienda: null,
+    imagen: "https://img.example/x.jpg",
+    miniatura: null,
+    precio: { centimos: 3995, moneda: "EUR" },
+    precioAnterior: null,
+  });
+
+  function prepararConLens(coincidencia: number | null, lens = [resultadoLens("https://www.pullandbear.com/es/vaqueros-baggy-l1.html", "Vaqueros baggy - Pull&Bear")]) {
+    const serpapi = { lens: vi.fn(async () => lens), shopping: vi.fn(async () => []), imagenes: vi.fn(async () => []) };
+    const html = `<meta property="og:title" content="Vaqueros baggy"><script type="application/ld+json">{"@type":"Product","name":"Vaqueros baggy","material":"100% algodón"}</script>`;
+    const descargas = vi.fn<typeof fetch>(async () => new Response(html, { headers: { "Content-Type": "text/html" } }));
+    const ia = new IASimulada({ coincidencia } as never);
+    const app = crearApp({ crearIA: () => ia, crearSerpapi: () => serpapi, fetchImagenes: descargas });
+    const { entorno } = crearEntorno({ SERPAPI_KEY: "clave-serpapi-falsa" });
+    // Con una dirección pública, Google Lens puede leer la foto.
+    const pedir = () =>
+      app.request("https://dupe.example/v1/analizar", { method: "POST", body: formularioConFoto(), headers: cabeceras }, entorno);
+    return { serpapi, descargas, ia, pedir };
+  }
+
+  it("si la IA reconoce la prenda en una tienda, lee su página y la devuelve como producto", async () => {
+    const { serpapi, descargas, ia, pedir } = prepararConLens(0);
+    const datos = RespuestaAnalisis.parse(await (await pedir()).json());
+    expect(serpapi.lens).toHaveBeenCalledOnce();
+    expect(descargas).toHaveBeenCalledWith("https://www.pullandbear.com/es/vaqueros-baggy-l1.html", expect.anything());
+    expect(datos.producto_origen).toMatchObject({ tienda: { id: "pull-and-bear" }, titulo: "Vaqueros baggy", precio: { centimos: 3995 } });
+    // Dos pasadas de IA: la foto (con los resultados de Lens) y la página de la tienda.
+    expect(ia.llamadas).toBe(2);
+  });
+
+  it("enseña a la IA los resultados de Google Lens", async () => {
+    const { ia, pedir } = prepararConLens(null);
+    await pedir();
+    const textos = ia.ultimaPeticion!.partes.filter((p) => p.tipo === "texto").map((p) => (p as { texto: string }).texto);
+    expect(textos.some((t) => t.includes("0. «Vaqueros baggy - Pull&Bear»"))).toBe(true);
+  });
+
+  it("si ninguna coincide, se queda con la ficha de la foto y sin producto", async () => {
+    const { descargas, ia, pedir } = prepararConLens(null);
+    const datos = RespuestaAnalisis.parse(await (await pedir()).json());
+    expect(datos.producto_origen).toBeNull();
+    expect(descargas).not.toHaveBeenCalled();
+    expect(ia.llamadas).toBe(1);
+  });
+
+  it("no lee páginas de webs que no son tiendas conocidas", async () => {
+    const { descargas, pedir } = prepararConLens(0, [resultadoLens("https://www.pinterest.com/pin/123", "Outfit vaqueros")]);
+    const datos = RespuestaAnalisis.parse(await (await pedir()).json());
+    expect(datos.producto_origen).toBeNull();
+    expect(descargas).not.toHaveBeenCalled();
   });
 });
 

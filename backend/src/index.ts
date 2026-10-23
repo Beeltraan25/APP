@@ -36,7 +36,7 @@ export function crearApp(dependencias: Partial<Dependencias> = {}) {
     }),
   );
   app.route("/v1/imagenes", rutaImagenes);
-  app.route("/v1/analizar", crearRutaAnalizar(crearIA, dependencias.fetchImagenes));
+  app.route("/v1/analizar", crearRutaAnalizar(crearIA, dependencias.fetchImagenes, crearSerpapi));
   app.route("/v1/buscar", crearRutaBuscar({ crearSerpapi, crearIA, fetchImagenes: dependencias.fetchImagenes }));
   app.route("/v1/outfits", crearRutaOutfits({ crearSerpapi, crearIA, fetchImagenes: dependencias.fetchImagenes }));
   app.route("/v1/tiendas", rutaTiendas);

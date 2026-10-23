@@ -388,7 +388,15 @@ function vistaFicha() {
         origen && h("p", { class: "secundario" }, [origen.tienda.nombre, origen.precio && euros(origen.precio.centimos)].filter(Boolean).join(" · ")),
       ),
     ),
-    h("p", { class: "nota" }, "Revisa la ficha: la búsqueda usa estos datos. Puedes corregir lo que no esté bien."),
+    origen &&
+      estado.fotoLocal &&
+      h(
+        "a",
+        { class: "tarjeta identificada", href: origen.url, target: "_blank", rel: "noopener noreferrer" },
+        icono("check", 18),
+        h("span", {}, h("strong", {}, "La hemos reconocido: "), origen.titulo, h("span", { class: "secundario" }, ` · ${origen.tienda.nombre}`)),
+      ),
+    h("p", { class: "nota" }, "Revisa la ficha: la búsqueda usa estos datos y solo muestra prendas de este color. Puedes corregir lo que no esté bien."),
     h(
       "div",
       { class: "tarjeta lista" },
@@ -447,6 +455,7 @@ function vistaResultados() {
   const todas = busqueda.datos?.alternativas ?? [];
   const visibles = busqueda.rango ? todas.filter((a) => a.producto.rango === busqueda.rango) : todas;
   const conteo = (rango) => (rango ? todas.filter((a) => a.producto.rango === rango).length : todas.length);
+  const quitadas = busqueda.datos?.descartadas_por_color ?? 0;
 
   let cuerpo;
   if (busqueda.estado === "cargando") {
@@ -477,8 +486,14 @@ function vistaResultados() {
         : h(
             "div",
             { class: "vacio" },
-            h("h2", {}, "Sin alternativas"),
-            h("p", {}, "No hemos encontrado prendas parecidas en las tiendas de la lista. Prueba a ajustar la ficha."),
+            h("h2", {}, quitadas ? "Nada en este color" : "Sin alternativas"),
+            h(
+              "p",
+              {},
+              quitadas
+                ? `Había ${quitadas} parecidas, pero de otro color. Si el color de la ficha no es el correcto, corrígelo y busca otra vez.`
+                : "No hemos encontrado prendas parecidas en las tiendas de la lista. Prueba a ajustar la ficha.",
+            ),
           );
   } else {
     cuerpo = h("div", { class: "rejilla" }, visibles.map(tarjetaAlternativa));
@@ -509,6 +524,10 @@ function vistaResultados() {
       busqueda.estado === "listo" &&
         h("span", { class: "secundario" }, conteo(busqueda.rango) === 1 ? "1 alternativa" : `${conteo(busqueda.rango)} alternativas`),
     ),
+    busqueda.estado === "listo" &&
+      quitadas > 0 &&
+      todas.length > 0 &&
+      h("p", { class: "nota" }, `Solo prendas en ${ficha.color_principal.nombre}: hemos quitado ${quitadas} de otros colores.`),
     cuerpo,
   );
 }

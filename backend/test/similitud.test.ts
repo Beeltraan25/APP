@@ -193,6 +193,10 @@ describe("evaluarAlternativas", () => {
   }
 
   async function preparar(ia: ProveedorIA) {
+    return (await evaluar(ia)).alternativas;
+  }
+
+  async function evaluar(ia: ProveedorIA) {
     const kv = new KVSimulado();
     await kv.put(idImagen, JPEG_MINIMO, { metadata: { tipo: "image/jpeg" } });
     const fetchImagenes = vi.fn<typeof fetch>(async () => new Response(JPEG_MINIMO));
@@ -209,8 +213,8 @@ describe("evaluarAlternativas", () => {
 
   const atributos = {
     prendas: [
-      { indice: 0, misma_prenda: true, publico: "hombre", color: { nombre: "rojo", hex: "#C8102E" }, fibras: ["algodón"], gramaje_estimado: "medio", fit: "regular", detalles_presentes: [] },
-      { indice: 1, misma_prenda: true, publico: "hombre", color: { nombre: "gris", hex: "#4A4A4A" }, fibras: ["algodón"], gramaje_estimado: "pesado", fit: "oversize", detalles_presentes: ["hombros caídos", "bolsillo canguro"] },
+      { indice: 0, misma_prenda: true, mismo_color: true, publico: "hombre", color: { nombre: "rojo", hex: "#C8102E" }, fibras: ["algodón"], gramaje_estimado: "medio", fit: "regular", detalles_presentes: [] },
+      { indice: 1, misma_prenda: true, mismo_color: true, publico: "hombre", color: { nombre: "gris", hex: "#4A4A4A" }, fibras: ["algodón"], gramaje_estimado: "pesado", fit: "oversize", detalles_presentes: ["hombros caídos", "bolsillo canguro"] },
     ],
   };
 
@@ -245,6 +249,19 @@ describe("evaluarAlternativas", () => {
     };
     const resultado = await preparar(new IAFalsa([[1, 0], [0, 1], [1, 0]], conMujer));
     expect(resultado.map((a) => a.producto.id)).toEqual(["b"]);
+  });
+
+  it("solo deja las del mismo color y dice cuántas ha quitado", async () => {
+    const otroColor = { prendas: [{ ...atributos.prendas[0]!, mismo_color: false }, atributos.prendas[1]!] };
+    const resultado = await evaluar(new IAFalsa([[1, 0], [0, 1], [1, 0]], otroColor));
+    expect(resultado.alternativas.map((a) => a.producto.id)).toEqual(["b"]);
+    expect(resultado.descartadasPorColor).toBe(1);
+  });
+
+  it("pide a la IA que sea estricta con el color", async () => {
+    const ia = new IAFalsa([[1, 0], [0, 1], [1, 0]], atributos);
+    await preparar(ia);
+    expect(ia.peticionAtributos!.instrucciones).toContain("mismo_color: sé estricto");
   });
 
   it("si fallan los atributos, puntúa solo con lo visual", async () => {

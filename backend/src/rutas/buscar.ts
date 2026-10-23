@@ -41,6 +41,7 @@ export function crearRutaBuscar({ crearSerpapi, crearIA, fetchImagenes }: Depend
     if (enCache) return c.json({ ...enCache, desde_cache: true });
 
     const encontradas = await buscarAlternativas(crearSerpapi(c.env), {
+      cache: c.env.CACHE,
       imagenUrl: imagenUrl ?? null,
       ficha,
     });
@@ -48,8 +49,9 @@ export function crearRutaBuscar({ crearSerpapi, crearIA, fetchImagenes }: Depend
 
     // Similitud y etiquetas. Si la IA no está disponible, los resultados se devuelven sin ellas.
     let alternativas = encontradas.alternativas;
+    let descartadasPorColor = 0;
     try {
-      alternativas = await evaluarAlternativas({
+      ({ alternativas, descartadasPorColor } = await evaluarAlternativas({
         ia: crearIA(c.env),
         ficha,
         alternativas,
@@ -57,7 +59,7 @@ export function crearRutaBuscar({ crearSerpapi, crearIA, fetchImagenes }: Depend
         imagenUrl: imagenUrl ?? null,
         kvImagenes: c.env.IMAGENES,
         fetchImagenes,
-      });
+      }));
     } catch (error) {
       console.warn("No se ha podido puntuar la similitud", error);
     }
@@ -66,6 +68,7 @@ export function crearRutaBuscar({ crearSerpapi, crearIA, fetchImagenes }: Depend
       busqueda_id: `bs_${huella.slice(0, 24)}`,
       alternativas,
       conteo_por_rango: contarPorRango(alternativas),
+      descartadas_por_color: descartadasPorColor,
       desde_cache: false,
     };
     // Sin resultados se guarda menos tiempo, por si era algo puntual.

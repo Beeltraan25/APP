@@ -1,10 +1,13 @@
 import { Hono, type Context } from "hono";
 import { z } from "zod";
 import { fichaDesdeFoto } from "../analisis/fichaDesdeFoto";
+import { completarConTienda, esDeTiendaConocida, MAXIMO_COINCIDENCIAS } from "../analisis/identificarPrenda";
 import { fichaDesdePagina } from "../analisis/fichaDesdePagina";
 import { completarPaginaDesdeServidor, paginaVacia } from "../analisis/leerPaginaServidor";
 import { buscarProductoJsonLd, leerProductoJsonLd } from "../analisis/jsonLd";
 import { productoDesdePagina } from "../analisis/productoDesdePagina";
+import { esPublica, lensConCache } from "../busqueda/buscarAlternativas";
+import type { Candidato, ClienteSerpapi } from "../busqueda/serpapi";
 import type { ContextoApp, Entorno } from "../entorno";
 import type { RespuestaAnalisis } from "../esquemas/analisis";
 import { PeticionAnalisisPagina } from "../esquemas/pagina";
@@ -22,11 +25,15 @@ type Contexto = Context<ContextoApp>;
  * - Foto: multipart/form-data con el campo "imagen".
  * - Enlace: JSON { "pagina": DatosPagina } con lo que el iPhone ha leído de la página.
  */
-export function crearRutaAnalizar(crearIA: (entorno: Entorno) => ProveedorIA, fetchImagenes?: typeof fetch) {
+export function crearRutaAnalizar(
+  crearIA: (entorno: Entorno) => ProveedorIA,
+  fetchImagenes?: typeof fetch,
+  crearSerpapi?: (entorno: Entorno) => ClienteSerpapi,
+) {
   return new Hono<ContextoApp>().use(exigirClaveApp, limitarPeticiones).post("/", async (c) => {
     const tipo = c.req.header("Content-Type") ?? "";
     const obtenerIA = () => crearIA(c.env);
-    if (tipo.startsWith("multipart/form-data")) return c.json(await analizarFoto(c, obtenerIA));
+    if (tipo.startsWith("multipart/form-data")) return c.json(await analizarFoto(c, obtenerIA, crearSerpapi, fetchImagenes));
     if (tipo.startsWith("application/json")) return c.json(await analizarPagina(c, obtenerIA, fetchImagenes));
     throw Errores.peticionNoValida(
       "Envía una foto (multipart/form-data con el campo 'imagen') o un enlace (JSON con 'pagina').",
@@ -34,7 +41,12 @@ export function crearRutaAnalizar(crearIA: (entorno: Entorno) => ProveedorIA, fe
   });
 }
 
-async function analizarFoto(c: Contexto, obtenerIA: () => ProveedorIA): Promise<RespuestaAnalisis> {
+async function analizarFoto(
+  c: Contexto,
+  obtenerIA: () => ProveedorIA,
+  crearSerpapi?: (entorno: Entorno) => ClienteSerpapi,
+  fetchImagenes?: typeof fetch,
+): Promise<RespuestaAnalisis> {
   let formulario: FormData;
   try {
     formulario = await c.req.formData();
@@ -57,18 +69,52 @@ async function analizarFoto(c: Contexto, obtenerIA: () => ProveedorIA): Promise<
   const enCache = await leerCache<RespuestaAnalisis>(c.env.CACHE, claveCache);
   if (enCache) return enCache;
 
-  const ficha = await fichaDesdeFoto(obtenerIA(), { bytes, tipo });
-
-  // Se guarda la foto después de analizarla: si no hay prenda, no se gasta una escritura de KV.
+  // La foto se guarda antes de analizarla: Google Lens necesita leerla desde una URL pública.
   const guardada = await guardarImagen(c.env.IMAGENES, id, bytes, tipo);
+  const imagenUrl = guardada ? new URL(`/v1/imagenes/${id}`, c.req.url).toString() : null;
+
+  // Google Lens propone páginas con fotos parecidas; la IA dice si alguna es exactamente esta prenda.
+  const resultadosLens = imagenUrl ? await resultadosGoogleLens(c, imagenUrl, crearSerpapi) : [];
+  const ia = obtenerIA();
+  const foto = { bytes, tipo };
+  const { ficha: fichaFoto, coincidencia } = await fichaDesdeFoto(
+    ia,
+    foto,
+    resultadosLens.map((r) => ({ titulo: r.titulo, tienda: r.nombreTienda })),
+  );
+
+  // Si es de una tienda conocida, se leen sus datos reales (material, composición, precio…).
+  let ficha = fichaFoto;
+  let producto: RespuestaAnalisis["producto_origen"] = null;
+  const identificada = coincidencia !== null ? resultadosLens[coincidencia] : undefined;
+  if (identificada && esDeTiendaConocida(identificada)) {
+    ({ ficha, producto } = await completarConTienda(ia, identificada, fichaFoto, foto, fetchImagenes));
+  }
+
   const respuesta: RespuestaAnalisis = {
     analisis_id: id,
-    imagen_url: guardada ? new URL(`/v1/imagenes/${id}`, c.req.url).toString() : null,
-    producto_origen: null,
+    imagen_url: imagenUrl,
+    producto_origen: producto,
     ficha,
   };
   if (guardada) await guardarCache(c.env.CACHE, claveCache, respuesta);
   return respuesta;
+}
+
+/** Los primeros resultados de Google Lens (guardados 24 h: la búsqueda los reutiliza). Si falla, ninguno. */
+async function resultadosGoogleLens(
+  c: Contexto,
+  imagenUrl: string,
+  crearSerpapi?: (entorno: Entorno) => ClienteSerpapi,
+): Promise<Candidato[]> {
+  if (!crearSerpapi || !esPublica(imagenUrl) || !c.env.SERPAPI_KEY) return [];
+  try {
+    const { candidatos } = await lensConCache(crearSerpapi(c.env), imagenUrl, c.env.CACHE);
+    return candidatos.slice(0, MAXIMO_COINCIDENCIAS);
+  } catch (error) {
+    console.warn("Google Lens no disponible para identificar la prenda", error);
+    return [];
+  }
 }
 
 async function analizarPagina(

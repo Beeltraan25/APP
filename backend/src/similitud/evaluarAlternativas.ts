@@ -58,13 +58,20 @@ export interface EntradaEvaluacion {
   fetchImagenes?: typeof fetch;
 }
 
+export interface ResultadoEvaluacion {
+  alternativas: Alternativa[];
+  /** Cuántas se han quitado por ser de otro color (la IA es estricta con el color). */
+  descartadasPorColor: number;
+}
+
 /**
  * Puntúa cada alternativa (0–100) y le pone hasta 3 etiquetas. Se ordenan de más a menos parecida.
+ * Solo se quedan las del mismo color que la original (según la IA).
  * Si la IA falla, se devuelven igualmente: sin el dato que falte (o sin similitud si no hay ninguno).
  */
-export async function evaluarAlternativas(entrada: EntradaEvaluacion): Promise<Alternativa[]> {
+export async function evaluarAlternativas(entrada: EntradaEvaluacion): Promise<ResultadoEvaluacion> {
   const { ia, ficha, alternativas } = entrada;
-  if (!alternativas.length) return alternativas;
+  if (!alternativas.length) return { alternativas, descartadasPorColor: 0 };
 
   const [original, miniaturas] = await Promise.all([
     imagenOriginal(entrada),
@@ -120,8 +127,15 @@ export async function evaluarAlternativas(entrada: EntradaEvaluacion): Promise<A
     return { ...alternativa, similitud, etiquetas };
   });
 
-  return evaluadas
+  let descartadasPorColor = 0;
+  const ordenadas = evaluadas
     .map((alternativa, posicion) => ({ alternativa, posicion }))
+    // Solo el mismo color: es lo que más se nota al ver dos prendas juntas.
+    .filter(({ posicion }) => {
+      if (atributos?.get(posicion)?.mismo_color !== false) return true;
+      descartadasPorColor++;
+      return false;
+    })
     // Por ahora la app es solo de hombre: fuera lo que la IA ve de mujer (la URL y el título no
     // siempre lo dicen). Pero si la tienda dice que es de hombre, manda la tienda: la IA se equivoca a veces.
     .filter(({ alternativa, posicion }) => {
@@ -130,6 +144,7 @@ export async function evaluarAlternativas(entrada: EntradaEvaluacion): Promise<A
     })
     .sort((a, b) => (b.alternativa.similitud?.total ?? -1) - (a.alternativa.similitud?.total ?? -1) || a.posicion - b.posicion)
     .map(({ alternativa }) => alternativa);
+  return { alternativas: ordenadas, descartadasPorColor };
 }
 
 const MARCA_HOMBRE = /\b(hombres?|men|mens|man|caballero)\b/i;

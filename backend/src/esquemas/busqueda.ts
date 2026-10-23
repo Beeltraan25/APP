@@ -42,6 +42,8 @@ export const RespuestaBusqueda = z.object({
   busqueda_id: z.string(),
   alternativas: z.array(Alternativa),
   conteo_por_rango: z.record(RangoPrecio, z.number().int()),
+  /** Resultados quitados por ser de otro color (solo se muestran prendas del mismo color). */
+  descartadas_por_color: z.number().int().default(0),
   desde_cache: z.boolean(),
 });
 export type RespuestaBusqueda = z.infer<typeof RespuestaBusqueda>;

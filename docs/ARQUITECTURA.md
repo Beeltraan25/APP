@@ -237,6 +237,12 @@ ios/
 - Enlaces: la web no puede leer otras webs, así que `/v1/analizar` con solo `{url}` descarga la página en el servidor y, si la tienda lo bloquea, prueba con Jina Reader (gratis, sin clave). Comprobado: Zalando sí; Zara y H&M no (la web pide una captura).
 - Se añade a la pantalla de inicio (`manifest.webmanifest`, `apple-touch-icon`). Sin Share Extension ni diseño nativo.
 
+**Más precisión (color estricto e identificar la prenda de la foto):**
+- **Solo el mismo color:** la IA marca para cada candidata `mismo_color` (estricta: otro tono es otro color) y se quitan las demás. La respuesta de `/v1/buscar` lleva `descartadas_por_color`. Prueba real con tus vaqueros: 23 candidatas → 7 azul oscuro/índigo.
+- **Shopping siempre**, con el color en la consulta, y con hueco reservado (Lens como mucho 16 de 24): así hay más candidatas del color correcto. Una consulta más de SerpAPI por búsqueda.
+- **Identificar la prenda:** al analizar una foto se pasa por Google Lens (guardado 24 h; la búsqueda lo reutiliza, así que no cuesta una consulta extra). La IA ve los 10 primeros títulos: los usa para afinar la ficha y, si uno es exactamente esa prenda en una tienda conocida, se lee su página (directa o Jina Reader) y se completa la ficha con sus datos reales (material, composición, precio), manteniendo el color de la foto. La foto se guarda antes de analizarla porque Lens necesita leerla. Un resultado vacío de Lens no se guarda en caché (justo después de subir la foto, a veces aún no la ve).
+- Caché `v2`: los análisis y búsquedas antiguos se recalculan.
+
 **Notas de diseño que afectan a la estructura**
 
 - **Servicios con versión simulada:** cada servicio es un protocolo con dos implementaciones (`…Remoto` y `…Simulado`). La fase 1 funciona entera con los JSON de `Simulados/` y, en la fase 2, basta con cambiar a la versión remota. Además, las pruebas de diseño no gastan cuota gratuita.

@@ -15,6 +15,11 @@ export function esquemaAtributos(detallesOriginales: string[]) {
         publico: z
           .enum(["hombre", "mujer", "unisex"])
           .describe("Para quién está pensada la prenda (por su corte, el título y la sección de la tienda)"),
+        mismo_color: z
+          .boolean()
+          .describe(
+            "true solo si el color dominante es el mismo que el de la original o un tono casi igual (azul marino ≈ azul noche; gris marengo ≠ gris claro; negro ≠ gris oscuro; crudo ≠ blanco óptico)",
+          ),
         color: z
           .object({ nombre: z.string(), hex: z.string().describe("#RRGGBB") })
           .nullable()
@@ -34,6 +39,7 @@ export const INSTRUCCIONES_ATRIBUTOS = `Eres un experto en moda masculina. Compa
 Reglas:
 - Usa la foto (si la hay) y el título de cada candidata. Las fotos son pequeñas: no inventes lo que no se ve.
 - color: el color dominante de la prenda (no del fondo ni de otras prendas), en #RRGGBB.
+- mismo_color: sé estricto. El usuario quiere solo prendas del mismo color que la original: un tono distinto (más claro, más oscuro o de otra gama) es false. Lavados muy parecidos del mismo color sí cuentan (vaquero azul oscuro ≈ azul índigo). Si la candidata tiene varios colores, cuenta el dominante; si su estampado es distinto, false.
 - fibras: solo si el título o la foto lo dejan claro (p. ej. "denim" → algodón, "punto de lana" → lana). Si no, lista vacía.
 - gramaje_estimado y fit: null si no se puede deducir.
 - detalles_presentes: solo detalles de la lista de la prenda original que se ven o se mencionan en la candidata.

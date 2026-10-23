@@ -1,16 +1,33 @@
 import type { Alternativa } from "../esquemas/busqueda";
 import type { FichaPrenda } from "../esquemas/ficha";
 import type { Producto, RangoPrecio } from "../esquemas/producto";
+import { guardarCache, leerCache } from "../infra/cache";
 import { ErrorApp } from "../infra/errores";
 import { limpiarUrl, sha256Hex } from "../infra/utilidades";
 import { nombresDe, normalizarNombre, tiendaDeNombre, tiendaDeUrl, type TiendaConfig } from "./listaBlanca";
 import { rangoDePrecio } from "./precios";
 import type { Candidato, ClienteSerpapi } from "./serpapi";
 
-/** Si Google Lens ya da al menos estas alternativas válidas, no se gasta otra consulta en Shopping. */
-export const MINIMO_SIN_SHOPPING = 6;
 /** Máximo de alternativas: todas se puntúan, y cada una gasta una descarga de miniatura. */
 export const MAXIMO_ALTERNATIVAS = 24;
+/** Como mucho estas de Google Lens: el resto del hueco es para Shopping, que busca con el color. */
+export const MAXIMO_LENS = 16;
+
+/**
+ * Google Lens guardado 24 h por imagen: el análisis de la foto y la búsqueda posterior usan la
+ * misma imagen, así que la segunda vez no gasta otra consulta de SerpAPI.
+ */
+export async function lensConCache(serpapi: ClienteSerpapi, urlImagen: string, cache?: KVNamespace) {
+  const clave = `lens:${await sha256Hex(urlImagen)}`;
+  if (cache) {
+    const guardado = await leerCache<Candidato[]>(cache, clave);
+    if (guardado) return { candidatos: guardado, gastada: false };
+  }
+  const candidatos = await serpapi.lens(urlImagen);
+  // Vacío no se guarda: justo después de subir la foto, Lens a veces aún no puede leerla.
+  if (cache && candidatos.length) await guardarCache(cache, clave, candidatos);
+  return { candidatos, gastada: true };
+}
 
 export interface ResultadoBusqueda {
   alternativas: Alternativa[];
@@ -21,13 +38,14 @@ export interface ResultadoBusqueda {
 }
 
 /**
- * 1. Google Lens con la imagen (si es pública).
- * 2. Google Shopping con las palabras clave, solo si Lens da pocos resultados válidos.
+ * 1. Google Lens con la imagen (si es pública): lo más parecido a la vista, de cualquier color.
+ * 2. Google Shopping con las palabras clave y el color: más candidatas del color correcto.
  * 3. Solo tiendas activas de la lista blanca, ropa de hombre y precio en euros. Sin duplicados.
+ * (Después, la evaluación deja solo las del mismo color.)
  */
 export async function buscarAlternativas(
   serpapi: ClienteSerpapi,
-  { imagenUrl, ficha }: { imagenUrl: string | null; ficha: FichaPrenda },
+  { imagenUrl, ficha, cache }: { imagenUrl: string | null; ficha: FichaPrenda; cache?: KVNamespace },
 ): Promise<ResultadoBusqueda> {
   const candidatos: Candidato[] = [];
   let consultas = 0;
@@ -35,8 +53,9 @@ export async function buscarAlternativas(
 
   if (imagenUrl && esPublica(imagenUrl)) {
     try {
-      consultas++;
-      candidatos.push(...(await serpapi.lens(imagenUrl)));
+      const lens = await lensConCache(serpapi, imagenUrl, cache);
+      if (lens.gastada) consultas++;
+      candidatos.push(...lens.candidatos);
     } catch (error) {
       // Sin cuota no tiene sentido seguir; otros fallos se compensan con Shopping.
       if (!(error instanceof ErrorApp) || error.codigo === "CUOTA_BUSQUEDAS") throw error;
@@ -44,17 +63,15 @@ export async function buscarAlternativas(
     }
   }
 
-  if (filtrar(candidatos).length < MINIMO_SIN_SHOPPING) {
-    try {
-      consultas++;
-      candidatos.push(...(await serpapi.shopping(consultaTexto(ficha))));
-    } catch (error) {
-      // Si Lens sí funcionó, se devuelve lo que haya; si fallaron las dos, el error.
-      if (fallo || candidatos.length === 0) throw error;
-    }
+  try {
+    consultas++;
+    candidatos.push(...(await serpapi.shopping(consultaTexto(ficha))));
+  } catch (error) {
+    // Si Lens sí funcionó, se devuelve lo que haya; si fallaron las dos, el error.
+    if (fallo || candidatos.length === 0) throw error;
   }
 
-  const validos = deduplicar(filtrar(candidatos)).slice(0, MAXIMO_ALTERNATIVAS);
+  const validos = repartir(deduplicar(filtrar(candidatos)));
   return {
     alternativas: await Promise.all(validos.map(aAlternativa)),
     miniaturas: validos.map(({ candidato }) => candidato.miniatura),
@@ -62,10 +79,22 @@ export async function buscarAlternativas(
   };
 }
 
-/** Primera búsqueda propuesta por la IA, asegurando que pide ropa de hombre. */
+/** Primera búsqueda propuesta por la IA, asegurando que lleva el color y pide ropa de hombre. */
 export function consultaTexto(ficha: FichaPrenda): string {
-  const base = ficha.palabras_clave_busqueda[0] ?? `${ficha.categoria} ${ficha.color_principal.nombre}`;
-  return /\bhombre\b/i.test(base) ? base : `${base} hombre`;
+  let consulta = ficha.palabras_clave_busqueda[0] ?? ficha.categoria;
+  const color = ficha.color_principal.nombre.toLowerCase();
+  // Basta con la palabra principal del color ("gris" en "gris marengo").
+  const palabraColor = color.split(/\s+/)[0] ?? color;
+  if (palabraColor && !consulta.toLowerCase().includes(palabraColor)) consulta = `${consulta} ${color}`;
+  return /\bhombre\b/i.test(consulta) ? consulta : `${consulta} hombre`;
+}
+
+/** Hasta MAXIMO_LENS de Lens y el resto de Shopping (si hay), sin pasar de MAXIMO_ALTERNATIVAS. */
+export function repartir(validos: Valido[]): Valido[] {
+  const lens = validos.filter((v) => v.candidato.fuente === "lens");
+  const shopping = validos.filter((v) => v.candidato.fuente === "shopping");
+  const deLens = lens.slice(0, Math.max(MAXIMO_LENS, MAXIMO_ALTERNATIVAS - shopping.length));
+  return [...deLens, ...shopping].slice(0, MAXIMO_ALTERNATIVAS);
 }
 
 /** Google Lens no puede leer imágenes en localhost (backend en local): mejor no gastar la consulta. */

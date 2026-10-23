@@ -5,7 +5,9 @@ import {
   consultaTexto,
   esDeMujer,
   esPublica,
-  MINIMO_SIN_SHOPPING,
+  lensConCache,
+  MAXIMO_ALTERNATIVAS,
+  MAXIMO_LENS,
 } from "../src/busqueda/buscarAlternativas";
 import { tiendaDeNombre } from "../src/busqueda/listaBlanca";
 import {
@@ -19,7 +21,7 @@ import {
 } from "../src/busqueda/serpapi";
 import { RespuestaBusqueda } from "../src/esquemas/busqueda";
 import { crearApp } from "../src/index";
-import { CLAVE_PRUEBA, crearEntorno, fichaIAEjemplo, IASimulada, leerError } from "./ayudas";
+import { CLAVE_PRUEBA, crearEntorno, fichaIAEjemplo, IASimulada, KVSimulado, leerError } from "./ayudas";
 
 const ficha = normalizarFicha(fichaIAEjemplo(), "pagina");
 
@@ -147,7 +149,7 @@ describe("filtros", () => {
   it("la búsqueda de texto siempre pide ropa de hombre", () => {
     expect(consultaTexto(ficha)).toBe("sudadera oversize gris pesada hombre");
     expect(consultaTexto({ ...ficha, palabras_clave_busqueda: ["heavyweight hoodie grey"] })).toBe(
-      "heavyweight hoodie grey hombre",
+      `heavyweight hoodie grey ${ficha.color_principal.nombre} hombre`,
     );
   });
 });
@@ -188,15 +190,39 @@ describe("buscarAlternativas", () => {
     expect(alternativas[1]?.producto).toMatchObject({ tienda: { id: "zalando" }, marca: null, rango: "alto" });
   });
 
-  it("si Lens ya da bastantes, no gasta otra consulta en Shopping", async () => {
-    const tiendas = ["zara", "bershka", "pullandbear", "lefties", "massimodutti", "cos"];
-    const lens = tiendas.slice(0, MINIMO_SIN_SHOPPING).map((dominio, i) =>
-      candidato({ posicion: i + 1, url: `https://www.${dominio}.com/es/x${i}.html`, titulo: `Sudadera ${i}` }),
+  it("siempre busca también en Shopping (con el color) y le reserva hueco", async () => {
+    const lens = Array.from({ length: 30 }, (_, i) =>
+      candidato({ posicion: i + 1, url: `https://www.zara.com/es/x${i}.html`, titulo: `Sudadera ${i}` }),
     );
-    const serpapi = serpapiFalso(lens);
-    const { consultas } = await buscarAlternativas(serpapi, { imagenUrl: imagen, ficha });
-    expect(consultas).toBe(1);
-    expect(serpapi.shopping).not.toHaveBeenCalled();
+    const shopping = Array.from({ length: 12 }, (_, i) =>
+      candidato({
+        fuente: "shopping",
+        posicion: i + 1,
+        url: `https://www.google.es/search?prds=${i}`,
+        nombreTienda: "Zalando.es",
+        titulo: `Hoodie gris ${i}`,
+      }),
+    );
+    const serpapi = serpapiFalso(lens, shopping);
+    const { alternativas, consultas } = await buscarAlternativas(serpapi, { imagenUrl: imagen, ficha });
+    expect(consultas).toBe(2);
+    expect(alternativas).toHaveLength(MAXIMO_ALTERNATIVAS);
+    expect(alternativas.filter((a) => a.fuente === "lens")).toHaveLength(MAXIMO_LENS);
+    expect(alternativas.filter((a) => a.fuente === "shopping")).toHaveLength(MAXIMO_ALTERNATIVAS - MAXIMO_LENS);
+  });
+
+  it("Google Lens se guarda 24 h (salvo si no da nada)", async () => {
+    const kv = new KVSimulado() as unknown as KVNamespace;
+    const serpapi = serpapiFalso([candidato({})]);
+    expect((await lensConCache(serpapi, imagen, kv)).gastada).toBe(true);
+    expect((await lensConCache(serpapi, imagen, kv)).gastada).toBe(false);
+    expect(serpapi.lens).toHaveBeenCalledOnce();
+
+    const vacio = serpapiFalso([]);
+    await lensConCache(vacio, imagen, kv as never);
+    await lensConCache(vacio, "https://otra.test/foto.jpg", kv);
+    await lensConCache(vacio, "https://otra.test/foto.jpg", kv);
+    expect(vacio.lens).toHaveBeenCalledTimes(2);
   });
 
   it("con la imagen en localhost solo busca por texto", async () => {
