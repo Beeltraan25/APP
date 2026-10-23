@@ -328,6 +328,25 @@ select:focus {
   box-shadow: 0 0 0 3px var(--acento-suave);
 }
 
+.banda-prueba {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  margin-top: 8px;
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 14px;
+  background: var(--naranja-suave);
+  color: var(--naranja);
+  font-size: 15px;
+  text-align: left;
+}
+
+.banda-prueba span {
+  color: var(--texto);
+}
+
 .nota-prueba {
   margin: 24px auto 0;
   padding: 8px 14px;

@@ -69,7 +69,16 @@ function render() {
           : estado.pantalla === "resultados" && estado.analisis
             ? vistaResultados()
             : vistaInicio();
-  contenido.replaceChildren(vista);
+  // Sin clave todo son datos de ejemplo (siempre los mismos vaqueros): que se vea bien claro.
+  const avisoPrueba =
+    api.modoPrueba() &&
+    h(
+      "button",
+      { class: "banda-prueba", onclick: () => abrirAjustes() },
+      icono("aviso", 16),
+      h("span", {}, h("strong", {}, "Datos de ejemplo. "), "Toca aquí y pega tu clave para buscar de verdad."),
+    );
+  contenido.replaceChildren(...[avisoPrueba, vista].filter(Boolean));
   for (const boton of document.querySelectorAll(".pestanas button")) {
     boton.setAttribute("aria-selected", String(boton.dataset.pestana === estado.pestana));
   }
@@ -272,12 +281,6 @@ function vistaInicio() {
           ),
       estado.menuAbierto && estado.pidiendoEnlace && formularioEnlace,
     ),
-    api.modoPrueba() &&
-      h(
-        "button",
-        { class: "nota-prueba", onclick: () => abrirAjustes() },
-        "Modo de prueba: datos de ejemplo. Toca para conectar tu servidor.",
-      ),
     estado.analizando &&
       h("div", { class: "pildora cristal", role: "status" }, h("span", { class: "girando", "aria-hidden": "true" }), "Analizando la prenda…"),
   );
