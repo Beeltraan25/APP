@@ -1,0 +1,40 @@
+{
+  "analisis_id": "an_4c1f0e9a2b7d8e6f5a3c2b10",
+  "imagen_url": "https://static.zara.net/foto.jpg",
+  "producto_origen": {
+    "id": "prd_8a1b2c3d4e5f6a7b",
+    "titulo": "SUDADERA CAPUCHA HEAVYWEIGHT",
+    "tienda": { "id": "zara", "nombre": "Zara" },
+    "marca": "Zara",
+    "url": "https://www.zara.com/es/es/sudadera-capucha-p01234.html?v1=555",
+    "imagen_url": "https://static.zara.net/foto.jpg",
+    "precio": { "centimos": 2995, "moneda": "EUR" },
+    "precio_anterior": null,
+    "rango": "medio"
+  },
+  "ficha": {
+    "categoria": "sudadera",
+    "subcategoria": "oversize con capucha",
+    "color_principal": { "nombre": "gris marengo", "hex": "#4A4A4A" },
+    "colores_secundarios": [],
+    "estampado": "liso",
+    "material": "100% algodón",
+    "composicion": [{ "fibra": "algodón", "porcentaje": 100 }],
+    "gramaje_gsm": 380,
+    "gramaje_estimado": "pesado",
+    "fit": "oversize",
+    "largo": "regular",
+    "cuello": "capucha",
+    "mangas": "largas",
+    "cierres": null,
+    "detalles": ["hombros caídos", "bolsillo canguro"],
+    "acabado": "cepillado",
+    "palabras_clave_busqueda": [
+      "sudadera oversize gris pesada hombre",
+      "sudadera capucha heavyweight hombre",
+      "heavyweight hoodie grey"
+    ],
+    "campos_estimados": ["gramaje_gsm"],
+    "publico": "hombre"
+  }
+}

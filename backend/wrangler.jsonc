@@ -4,6 +4,10 @@
   "main": "src/index.ts",
   "compatibility_date": "2026-10-01",
 
+  // Versión web (carpeta web/ del repositorio): se sirve en la misma dirección que la API.
+  // Las rutas /v1/* no existen como archivos, así que van al Worker.
+  "assets": { "directory": "../web" },
+
   // Workers KV (plan gratuito): caché de 24 h y fotos temporales para Google Lens.
   // Al desplegar por primera vez, Wrangler crea los espacios y rellena los id.
   "kv_namespaces": [

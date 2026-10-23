@@ -1,0 +1,14 @@
+# Cabeceras de la versión web (Cloudflare Workers Static Assets).
+# Siempre comprueba si hay versión nueva de la web (los cambios llegan al momento).
+/*
+  Cache-Control: no-cache
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
+  Permissions-Policy: geolocation=(), microphone=()
+  X-Frame-Options: DENY
+
+/iconos/*
+  Cache-Control: public, max-age=86400
+
+/demo/*
+  Cache-Control: public, max-age=3600

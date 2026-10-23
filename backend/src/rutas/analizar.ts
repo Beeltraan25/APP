@@ -2,6 +2,7 @@ import { Hono, type Context } from "hono";
 import { z } from "zod";
 import { fichaDesdeFoto } from "../analisis/fichaDesdeFoto";
 import { fichaDesdePagina } from "../analisis/fichaDesdePagina";
+import { completarPaginaDesdeServidor, paginaVacia } from "../analisis/leerPaginaServidor";
 import { buscarProductoJsonLd, leerProductoJsonLd } from "../analisis/jsonLd";
 import { productoDesdePagina } from "../analisis/productoDesdePagina";
 import type { ContextoApp, Entorno } from "../entorno";
@@ -83,13 +84,16 @@ async function analizarPagina(
   }
   const peticion = PeticionAnalisisPagina.safeParse(cuerpo);
   if (!peticion.success) throw Errores.peticionNoValida(z.prettifyError(peticion.error));
-  const { pagina } = peticion.data;
+  let { pagina } = peticion.data;
 
   const urlLimpia = limpiarUrl(pagina.url);
   const huella = await sha256Hex(urlLimpia);
   const claveCache = `analisis:pagina:${huella}`;
   const enCache = await leerCache<RespuestaAnalisis>(c.env.CACHE, claveCache);
   if (enCache) return enCache;
+
+  // La versión web solo envía el enlace: el servidor intenta leer la página (si la tienda lo permite).
+  if (paginaVacia(pagina)) pagina = await completarPaginaDesdeServidor(pagina, fetchImagenes);
 
   const nodoProducto = buscarProductoJsonLd(pagina.json_ld);
   const jsonLd = nodoProducto ? leerProductoJsonLd(nodoProducto) : null;

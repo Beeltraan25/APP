@@ -1,0 +1,1313 @@
+{
+  "busqueda_id": "bs_real_vaqueros_22102026",
+  "alternativas": [
+    {
+      "producto": {
+        "id": "prd_d29f66ce9fc550a0",
+        "titulo": "BDG Urban Outfitters CACOON - Vaqueros holgados - rinse/azul ...",
+        "tienda": {
+          "id": "zalando",
+          "nombre": "Zalando"
+        },
+        "marca": null,
+        "url": "https://www.zalando.es/bdg-urban-outfitters-cacoon-vaqueros-holgados-rinse-qx72100c3-k11.html",
+        "imagen_url": "https://img01.ztat.net/article/spp-media-p1/9e300d9e5818448289d1c0ee88261a91/eac41f9fe242472a8d2be160951574f3.jpg?imwidth=762&filter=packshot",
+        "precio": {
+          "centimos": 7000,
+          "moneda": "EUR"
+        },
+        "precio_anterior": null,
+        "rango": "alto"
+      },
+      "similitud": {
+        "total": 91,
+        "criterios": [
+          {
+            "criterio": "visual",
+            "peso_base": 0.35,
+            "peso_aplicado": 0.35,
+            "puntuacion": 82,
+            "disponible": true
+          },
+          {
+            "criterio": "color",
+            "peso_base": 0.2,
+            "peso_aplicado": 0.2,
+            "puntuacion": 100,
+            "disponible": true
+          },
+          {
+            "criterio": "gramaje",
+            "peso_base": 0.15,
+            "peso_aplicado": 0.15,
+            "puntuacion": 100,
+            "disponible": true
+          },
+          {
+            "criterio": "material",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.1,
+            "puntuacion": 100,
+            "disponible": true
+          },
+          {
+            "criterio": "fit",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.1,
+            "puntuacion": 100,
+            "disponible": true
+          },
+          {
+            "criterio": "detalles",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.1,
+            "puntuacion": 75,
+            "disponible": true
+          }
+        ]
+      },
+      "etiquetas": [
+        {
+          "texto": "Mismo color",
+          "tipo": "coincide"
+        },
+        {
+          "texto": "Mismo gramaje",
+          "tipo": "coincide"
+        },
+        {
+          "texto": "Mismo corte",
+          "tipo": "coincide"
+        }
+      ],
+      "fuente": "lens"
+    },
+    {
+      "producto": {
+        "id": "prd_c56ceb0c9c46ae31",
+        "titulo": "Baggy Jeans - Azul denim oscuro - HOMBRE",
+        "tienda": {
+          "id": "hm",
+          "nombre": "H&M"
+        },
+        "marca": "H&M",
+        "url": "https://www2.hm.com/es_es/productpage.1285734002.html",
+        "imagen_url": "https://image.hm.com/assets/hm/82/2f/822f130f12e7c6bcd7067a12207ac47372aca0b2.jpg",
+        "precio": {
+          "centimos": 4300,
+          "moneda": "EUR"
+        },
+        "precio_anterior": null,
+        "rango": "medio"
+      },
+      "similitud": {
+        "total": 80,
+        "criterios": [
+          {
+            "criterio": "visual",
+            "peso_base": 0.35,
+            "peso_aplicado": 0.412,
+            "puntuacion": 74,
+            "disponible": true
+          },
+          {
+            "criterio": "color",
+            "peso_base": 0.2,
+            "peso_aplicado": 0.235,
+            "puntuacion": 96,
+            "disponible": true
+          },
+          {
+            "criterio": "gramaje",
+            "peso_base": 0.15,
+            "peso_aplicado": 0,
+            "puntuacion": null,
+            "disponible": false
+          },
+          {
+            "criterio": "material",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 100,
+            "disponible": true
+          },
+          {
+            "criterio": "fit",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 100,
+            "disponible": true
+          },
+          {
+            "criterio": "detalles",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 25,
+            "disponible": true
+          }
+        ]
+      },
+      "etiquetas": [
+        {
+          "texto": "Mismo color",
+          "tipo": "coincide"
+        },
+        {
+          "texto": "Mismo corte",
+          "tipo": "coincide"
+        },
+        {
+          "texto": "Con pernera ancha",
+          "tipo": "coincide"
+        }
+      ],
+      "fuente": "lens"
+    },
+    {
+      "producto": {
+        "id": "prd_c74ab6006f5b48c9",
+        "titulo": "WE Fashion BLUE RIDGE - Vaqueros holgados - dark blue/azul ...",
+        "tienda": {
+          "id": "zalando",
+          "nombre": "Zalando"
+        },
+        "marca": null,
+        "url": "https://www.zalando.es/we-fashion-pernera-ancha-dark-blue-wf522g0az-k11.html",
+        "imagen_url": "https://img01.ztat.net/article/spp-media-p1/9bda91bebc7c49089134b2ac017301a7/5bf7f22fe8e54fa4a8bebd4b9bce6794.jpg?imwidth=762&filter=packshot",
+        "precio": {
+          "centimos": 5500,
+          "moneda": "EUR"
+        },
+        "precio_anterior": null,
+        "rango": "medio"
+      },
+      "similitud": {
+        "total": 80,
+        "criterios": [
+          {
+            "criterio": "visual",
+            "peso_base": 0.35,
+            "peso_aplicado": 0.412,
+            "puntuacion": 76,
+            "disponible": true
+          },
+          {
+            "criterio": "color",
+            "peso_base": 0.2,
+            "peso_aplicado": 0.235,
+            "puntuacion": 80,
+            "disponible": true
+          },
+          {
+            "criterio": "gramaje",
+            "peso_base": 0.15,
+            "peso_aplicado": 0,
+            "puntuacion": null,
+            "disponible": false
+          },
+          {
+            "criterio": "material",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 100,
+            "disponible": true
+          },
+          {
+            "criterio": "fit",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 100,
+            "disponible": true
+          },
+          {
+            "criterio": "detalles",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 50,
+            "disponible": true
+          }
+        ]
+      },
+      "etiquetas": [
+        {
+          "texto": "Mismo corte",
+          "tipo": "coincide"
+        },
+        {
+          "texto": "Con bolsillos tipo carpintero",
+          "tipo": "coincide"
+        },
+        {
+          "texto": "Mismo material",
+          "tipo": "coincide"
+        }
+      ],
+      "fuente": "lens"
+    },
+    {
+      "producto": {
+        "id": "prd_1560f61da2e45ee9",
+        "titulo": "VAQUEROS BOOTCUT RELAXED FIT - ÍNDIGO",
+        "tienda": {
+          "id": "cos",
+          "nombre": "COS"
+        },
+        "marca": "COS",
+        "url": "https://www.cos.com/es-es/men/menswear/jeans/relaxed-fit/product/bootleg-denim-trousers-indigo-1306392002",
+        "imagen_url": "https://media.cos.com/assets/001/e9/20/e92017ac0a0abc7e06aee5811183abb81de88be5_xxl-1.jpg?imwidth=2160",
+        "precio": {
+          "centimos": 9900,
+          "moneda": "EUR"
+        },
+        "precio_anterior": null,
+        "rango": "alto"
+      },
+      "similitud": {
+        "total": 78,
+        "criterios": [
+          {
+            "criterio": "visual",
+            "peso_base": 0.35,
+            "peso_aplicado": 0.412,
+            "puntuacion": 85,
+            "disponible": true
+          },
+          {
+            "criterio": "color",
+            "peso_base": 0.2,
+            "peso_aplicado": 0.235,
+            "puntuacion": 89,
+            "disponible": true
+          },
+          {
+            "criterio": "gramaje",
+            "peso_base": 0.15,
+            "peso_aplicado": 0,
+            "puntuacion": null,
+            "disponible": false
+          },
+          {
+            "criterio": "material",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 100,
+            "disponible": true
+          },
+          {
+            "criterio": "fit",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 60,
+            "disponible": true
+          },
+          {
+            "criterio": "detalles",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 25,
+            "disponible": true
+          }
+        ]
+      },
+      "etiquetas": [
+        {
+          "texto": "Mismo color",
+          "tipo": "coincide"
+        },
+        {
+          "texto": "Corte más ajustado",
+          "tipo": "diferencia"
+        },
+        {
+          "texto": "Con pernera ancha",
+          "tipo": "coincide"
+        }
+      ],
+      "fuente": "lens"
+    },
+    {
+      "producto": {
+        "id": "prd_68a87f090463e98d",
+        "titulo": "CARHARTT WIP Hombre Brandon Pant",
+        "tienda": {
+          "id": "asos",
+          "nombre": "ASOS"
+        },
+        "marca": null,
+        "url": "https://www.google.es/search?ibp=oshop&q=vaqueros anchos hombre&prds=catalogid:1848874790054452753,productid:8088798206432586776,headlineOfferDocid:16282316868787649458,imageDocid:15550337775745156175,rds:PC_14742979037728760040|PROD_PC_14742979037728760040,gpcid:14736783103503761050,mid:576462913453907253,pvt:a&hl=es&gl=es&udm=28",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSuFUMFL1kIL1JLslGxPPfayeN9UXBySN2HQ_092E3mOyCMUTpeApAH4_xK-_6BZH278J29qrm9eA",
+        "precio": {
+          "centimos": 9900,
+          "moneda": "EUR"
+        },
+        "precio_anterior": null,
+        "rango": "alto"
+      },
+      "similitud": {
+        "total": 66,
+        "criterios": [
+          {
+            "criterio": "visual",
+            "peso_base": 0.35,
+            "peso_aplicado": 0.35,
+            "puntuacion": 42,
+            "disponible": true
+          },
+          {
+            "criterio": "color",
+            "peso_base": 0.2,
+            "peso_aplicado": 0.2,
+            "puntuacion": 55,
+            "disponible": true
+          },
+          {
+            "criterio": "gramaje",
+            "peso_base": 0.15,
+            "peso_aplicado": 0.15,
+            "puntuacion": 100,
+            "disponible": true
+          },
+          {
+            "criterio": "material",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.1,
+            "puntuacion": 100,
+            "disponible": true
+          },
+          {
+            "criterio": "fit",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.1,
+            "puntuacion": 100,
+            "disponible": true
+          },
+          {
+            "criterio": "detalles",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.1,
+            "puntuacion": 50,
+            "disponible": true
+          }
+        ]
+      },
+      "etiquetas": [
+        {
+          "texto": "Mismo gramaje",
+          "tipo": "coincide"
+        },
+        {
+          "texto": "Mismo corte",
+          "tipo": "coincide"
+        },
+        {
+          "texto": "Con bolsillos tipo carpintero",
+          "tipo": "coincide"
+        }
+      ],
+      "fuente": "shopping"
+    },
+    {
+      "producto": {
+        "id": "prd_d82c75305c707217",
+        "titulo": "Vaqueros Wrangler 13MWZ Hombre",
+        "tienda": {
+          "id": "asos",
+          "nombre": "ASOS"
+        },
+        "marca": null,
+        "url": "https://www.google.es/search?ibp=oshop&q=vaqueros anchos hombre&prds=catalogid:3504353451129261674,productid:7965961906290939587,headlineOfferDocid:15658827522951791844,imageDocid:16105046582371821079,rds:PC_5446177967047692342|PROD_PC_5446177967047692342,gpcid:5446177967047692342,mid:576462563897162548,pvt:a&hl=es&gl=es&udm=28",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRJoQewQUGwd_PP6Hrm3ZkOOWwe33fK7SPmCIhtS236PkDV5uaK-Go7sfKdU4JkhpF_b0wNoonIaQ",
+        "precio": {
+          "centimos": 5999,
+          "moneda": "EUR"
+        },
+        "precio_anterior": {
+          "centimos": 8800,
+          "moneda": "EUR"
+        },
+        "rango": "medio"
+      },
+      "similitud": {
+        "total": 64,
+        "criterios": [
+          {
+            "criterio": "visual",
+            "peso_base": 0.35,
+            "peso_aplicado": 0.35,
+            "puntuacion": 55,
+            "disponible": true
+          },
+          {
+            "criterio": "color",
+            "peso_base": 0.2,
+            "peso_aplicado": 0.2,
+            "puntuacion": 86,
+            "disponible": true
+          },
+          {
+            "criterio": "gramaje",
+            "peso_base": 0.15,
+            "peso_aplicado": 0.15,
+            "puntuacion": 100,
+            "disponible": true
+          },
+          {
+            "criterio": "material",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.1,
+            "puntuacion": 100,
+            "disponible": true
+          },
+          {
+            "criterio": "fit",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.1,
+            "puntuacion": 25,
+            "disponible": true
+          },
+          {
+            "criterio": "detalles",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.1,
+            "puntuacion": 0,
+            "disponible": true
+          }
+        ]
+      },
+      "etiquetas": [
+        {
+          "texto": "Mismo color",
+          "tipo": "coincide"
+        },
+        {
+          "texto": "Mismo gramaje",
+          "tipo": "coincide"
+        },
+        {
+          "texto": "Corte más ajustado",
+          "tipo": "diferencia"
+        }
+      ],
+      "fuente": "shopping"
+    },
+    {
+      "producto": {
+        "id": "prd_58484a9a502f6489",
+        "titulo": "Calvin Klein Hombres Baggy Jeans",
+        "tienda": {
+          "id": "zalando",
+          "nombre": "Zalando"
+        },
+        "marca": null,
+        "url": "https://www.google.es/search?ibp=oshop&q=vaqueros anchos hombre&prds=catalogid:3679851117229624369,productid:790499115034598688,headlineOfferDocid:5593464952195926882,imageDocid:15182976568446541293,gpcid:10527001507490689056,mid:576462894462308374,pvt:a&hl=es&gl=es&udm=28",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSuLsmqIY1aUznUOzkdALqUHH_AJ-7O7QfcmlqEDz5BcxuELch3BsT7TsKsQfdBu981Ys1p9uQ",
+        "precio": {
+          "centimos": 7195,
+          "moneda": "EUR"
+        },
+        "precio_anterior": {
+          "centimos": 7800,
+          "moneda": "EUR"
+        },
+        "rango": "alto"
+      },
+      "similitud": {
+        "total": 58,
+        "criterios": [
+          {
+            "criterio": "visual",
+            "peso_base": 0.35,
+            "peso_aplicado": 0.412,
+            "puntuacion": 42,
+            "disponible": true
+          },
+          {
+            "criterio": "color",
+            "peso_base": 0.2,
+            "peso_aplicado": 0.235,
+            "puntuacion": 62,
+            "disponible": true
+          },
+          {
+            "criterio": "gramaje",
+            "peso_base": 0.15,
+            "peso_aplicado": 0,
+            "puntuacion": null,
+            "disponible": false
+          },
+          {
+            "criterio": "material",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 100,
+            "disponible": true
+          },
+          {
+            "criterio": "fit",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 100,
+            "disponible": true
+          },
+          {
+            "criterio": "detalles",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 25,
+            "disponible": true
+          }
+        ]
+      },
+      "etiquetas": [
+        {
+          "texto": "Mismo corte",
+          "tipo": "coincide"
+        },
+        {
+          "texto": "Con pernera ancha",
+          "tipo": "coincide"
+        },
+        {
+          "texto": "Mismo material",
+          "tipo": "coincide"
+        }
+      ],
+      "fuente": "shopping"
+    },
+    {
+      "producto": {
+        "id": "prd_b82892eaf120d535",
+        "titulo": "Vaqueros azul grunge de talle medio y pernera ancha X003 de COLLUSION",
+        "tienda": {
+          "id": "asos",
+          "nombre": "ASOS"
+        },
+        "marca": null,
+        "url": "https://www.google.es/search?ibp=oshop&q=vaqueros anchos hombre&prds=catalogid:18014854739249905669,productid:341451880057968073,headlineOfferDocid:5402823746893131397,imageDocid:11953312651090164135,rds:PC_6857298680382184351|PROD_PC_6857298680382184351,gpcid:6857298680382184351,mid:576462899643576091,pvt:a&hl=es&gl=es&udm=28",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcS4VUMD_ajOzf8CXu7Llhs0MIcHOjEZxRaiAXkDo17qXkrfVKqhX7Jec7CCCSn_mjaBnow21ofP",
+        "precio": {
+          "centimos": 4499,
+          "moneda": "EUR"
+        },
+        "precio_anterior": null,
+        "rango": "medio"
+      },
+      "similitud": {
+        "total": 56,
+        "criterios": [
+          {
+            "criterio": "visual",
+            "peso_base": 0.35,
+            "peso_aplicado": 0.412,
+            "puntuacion": 36,
+            "disponible": true
+          },
+          {
+            "criterio": "color",
+            "peso_base": 0.2,
+            "peso_aplicado": 0.235,
+            "puntuacion": 64,
+            "disponible": true
+          },
+          {
+            "criterio": "gramaje",
+            "peso_base": 0.15,
+            "peso_aplicado": 0,
+            "puntuacion": null,
+            "disponible": false
+          },
+          {
+            "criterio": "material",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 100,
+            "disponible": true
+          },
+          {
+            "criterio": "fit",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 100,
+            "disponible": true
+          },
+          {
+            "criterio": "detalles",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 25,
+            "disponible": true
+          }
+        ]
+      },
+      "etiquetas": [
+        {
+          "texto": "Mismo corte",
+          "tipo": "coincide"
+        },
+        {
+          "texto": "Con pernera ancha",
+          "tipo": "coincide"
+        },
+        {
+          "texto": "Mismo material",
+          "tipo": "coincide"
+        }
+      ],
+      "fuente": "shopping"
+    },
+    {
+      "producto": {
+        "id": "prd_744e96d68ab36450",
+        "titulo": "Hombre Balmohk Vaqueros Paco carpenter relaxed Fit",
+        "tienda": {
+          "id": "zalando",
+          "nombre": "Zalando"
+        },
+        "marca": null,
+        "url": "https://www.google.es/search?ibp=oshop&q=vaqueros anchos hombre&prds=catalogid:9377146722227229289,productid:15508533732901179008,headlineOfferDocid:15769644459419551006,imageDocid:10156813377344707679,gpcid:6801149663311296298,mid:576462891337043645,pvt:a&hl=es&gl=es&udm=28",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRl16mE-wLLKCMnvN8Xds67Y7YdebXub2c0LZ1MqIOZTaym0zQ6Iq7dFscJj2pwOmQTAP3BZRU",
+        "precio": {
+          "centimos": 3599,
+          "moneda": "EUR"
+        },
+        "precio_anterior": null,
+        "rango": "medio"
+      },
+      "similitud": {
+        "total": 53,
+        "criterios": [
+          {
+            "criterio": "visual",
+            "peso_base": 0.35,
+            "peso_aplicado": 0.412,
+            "puntuacion": 42,
+            "disponible": true
+          },
+          {
+            "criterio": "color",
+            "peso_base": 0.2,
+            "peso_aplicado": 0.235,
+            "puntuacion": 34,
+            "disponible": true
+          },
+          {
+            "criterio": "gramaje",
+            "peso_base": 0.15,
+            "peso_aplicado": 0,
+            "puntuacion": null,
+            "disponible": false
+          },
+          {
+            "criterio": "material",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 100,
+            "disponible": true
+          },
+          {
+            "criterio": "fit",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 60,
+            "disponible": true
+          },
+          {
+            "criterio": "detalles",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 75,
+            "disponible": true
+          }
+        ]
+      },
+      "etiquetas": [
+        {
+          "texto": "Corte más ajustado",
+          "tipo": "diferencia"
+        },
+        {
+          "texto": "Con bolsillos tipo carpintero",
+          "tipo": "coincide"
+        },
+        {
+          "texto": "Mismo material",
+          "tipo": "coincide"
+        }
+      ],
+      "fuente": "shopping"
+    },
+    {
+      "producto": {
+        "id": "prd_37de158d6c22b920",
+        "titulo": "Won Hundred Genoa Unisex Vaqueros boyfriend, Original black",
+        "tienda": {
+          "id": "zalando",
+          "nombre": "Zalando"
+        },
+        "marca": null,
+        "url": "https://www.google.es/search?ibp=oshop&q=vaqueros anchos hombre&prds=productid:5248282903742926091,headlineOfferDocid:5248282903742926091,imageDocid:16505589417057330018,pvt:a&hl=es&gl=es&udm=28",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTlj91bdqwWLEf5ETq_uiCKV5-gTcWFoJxIiw5W2pRSg5rgFRk22YUxu-zVqTVy2JqStNou7Ae2",
+        "precio": {
+          "centimos": 14000,
+          "moneda": "EUR"
+        },
+        "precio_anterior": {
+          "centimos": 16000,
+          "moneda": "EUR"
+        },
+        "rango": "alto"
+      },
+      "similitud": {
+        "total": 52,
+        "criterios": [
+          {
+            "criterio": "visual",
+            "peso_base": 0.35,
+            "peso_aplicado": 0.412,
+            "puntuacion": 38,
+            "disponible": true
+          },
+          {
+            "criterio": "color",
+            "peso_base": 0.2,
+            "peso_aplicado": 0.235,
+            "puntuacion": 60,
+            "disponible": true
+          },
+          {
+            "criterio": "gramaje",
+            "peso_base": 0.15,
+            "peso_aplicado": 0,
+            "puntuacion": null,
+            "disponible": false
+          },
+          {
+            "criterio": "material",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 100,
+            "disponible": true
+          },
+          {
+            "criterio": "fit",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 60,
+            "disponible": true
+          },
+          {
+            "criterio": "detalles",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 25,
+            "disponible": true
+          }
+        ]
+      },
+      "etiquetas": [
+        {
+          "texto": "Corte más ajustado",
+          "tipo": "diferencia"
+        },
+        {
+          "texto": "Con pernera ancha",
+          "tipo": "coincide"
+        },
+        {
+          "texto": "Mismo material",
+          "tipo": "coincide"
+        }
+      ],
+      "fuente": "shopping"
+    },
+    {
+      "producto": {
+        "id": "prd_dd3465c3ce5d86d0",
+        "titulo": "Uniqlo - Vaquero Barrel - Verde Oliva - 34inch",
+        "tienda": {
+          "id": "uniqlo",
+          "nombre": "Uniqlo"
+        },
+        "marca": "Uniqlo",
+        "url": "https://www.google.es/search?ibp=oshop&q=vaqueros anchos hombre&prds=productid:10667852448056867946,headlineOfferDocid:10667852448056867946,imageDocid:16500491116813963702,pvt:a&hl=es&gl=es&udm=28",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcS7MOhdto6Xrc2KfFx3wvUWLa2VlwtIJEYMzYvugwqyetYkYTpH0hX7cF3kLYG851lb07XuXMJm",
+        "precio": {
+          "centimos": 4990,
+          "moneda": "EUR"
+        },
+        "precio_anterior": null,
+        "rango": "medio"
+      },
+      "similitud": {
+        "total": 51,
+        "criterios": [
+          {
+            "criterio": "visual",
+            "peso_base": 0.35,
+            "peso_aplicado": 0.412,
+            "puntuacion": 40,
+            "disponible": true
+          },
+          {
+            "criterio": "color",
+            "peso_base": 0.2,
+            "peso_aplicado": 0.235,
+            "puntuacion": 35,
+            "disponible": true
+          },
+          {
+            "criterio": "gramaje",
+            "peso_base": 0.15,
+            "peso_aplicado": 0,
+            "puntuacion": null,
+            "disponible": false
+          },
+          {
+            "criterio": "material",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 100,
+            "disponible": true
+          },
+          {
+            "criterio": "fit",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 100,
+            "disponible": true
+          },
+          {
+            "criterio": "detalles",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 25,
+            "disponible": true
+          }
+        ]
+      },
+      "etiquetas": [
+        {
+          "texto": "Mismo corte",
+          "tipo": "coincide"
+        },
+        {
+          "texto": "Con pernera ancha",
+          "tipo": "coincide"
+        },
+        {
+          "texto": "Mismo material",
+          "tipo": "coincide"
+        }
+      ],
+      "fuente": "shopping"
+    },
+    {
+      "producto": {
+        "id": "prd_90f6bf5ef172bf74",
+        "titulo": "Calvin Klein Hombres baggy Jeans",
+        "tienda": {
+          "id": "zalando",
+          "nombre": "Zalando"
+        },
+        "marca": null,
+        "url": "https://www.google.es/search?ibp=oshop&q=vaqueros anchos hombre&prds=catalogid:16217171798065945882,productid:17619190748435453100,headlineOfferDocid:4188098211946536900,imageDocid:18401719802745805364,rds:PC_16036120647602481171|PROD_PC_16036120647602481171,gpcid:16036120647602481171,mid:576462566999671358,pvt:a&hl=es&gl=es&udm=28",
+        "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSNW4Jw2Fnyy9ZYr9p3DH67i5Xns3VcLnRCLBQS3HjR2MdX4yD5RNxwHFHR0rdCi76bb1stxVvr",
+        "precio": {
+          "centimos": 8995,
+          "moneda": "EUR"
+        },
+        "precio_anterior": null,
+        "rango": "alto"
+      },
+      "similitud": {
+        "total": 48,
+        "criterios": [
+          {
+            "criterio": "visual",
+            "peso_base": 0.35,
+            "peso_aplicado": 0.412,
+            "puntuacion": 43,
+            "disponible": true
+          },
+          {
+            "criterio": "color",
+            "peso_base": 0.2,
+            "peso_aplicado": 0.235,
+            "puntuacion": 17,
+            "disponible": true
+          },
+          {
+            "criterio": "gramaje",
+            "peso_base": 0.15,
+            "peso_aplicado": 0,
+            "puntuacion": null,
+            "disponible": false
+          },
+          {
+            "criterio": "material",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 100,
+            "disponible": true
+          },
+          {
+            "criterio": "fit",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 100,
+            "disponible": true
+          },
+          {
+            "criterio": "detalles",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 25,
+            "disponible": true
+          }
+        ]
+      },
+      "etiquetas": [
+        {
+          "texto": "Otro color",
+          "tipo": "diferencia"
+        },
+        {
+          "texto": "Mismo corte",
+          "tipo": "coincide"
+        },
+        {
+          "texto": "Con pernera ancha",
+          "tipo": "coincide"
+        }
+      ],
+      "fuente": "shopping"
+    },
+    {
+      "producto": {
+        "id": "prd_96e11ac28ab10c3f",
+        "titulo": "Vaqueros Only & Sons Fade Hombres Loose",
+        "tienda": {
+          "id": "zalando",
+          "nombre": "Zalando"
+        },
+        "marca": null,
+        "url": "https://www.google.es/search?ibp=oshop&q=vaqueros anchos hombre&prds=catalogid:10995113113906929502,productid:8677223436571341195,headlineOfferDocid:14492948528180866789,imageDocid:14670616984054456325,rds:PC_2494577694757770485|PROD_PC_2494577694757770485,gpcid:2494577694757770485,mid:576462817092603006,pvt:a&hl=es&gl=es&udm=28",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSaj5WBuV9ve_cpP1R67g-cYhG7OLowvNT3B83qsklLx6QWLDq27DRtNdqAWB_TwXsGENI8Cfc",
+        "precio": {
+          "centimos": 4999,
+          "moneda": "EUR"
+        },
+        "precio_anterior": null,
+        "rango": "medio"
+      },
+      "similitud": {
+        "total": 41,
+        "criterios": [
+          {
+            "criterio": "visual",
+            "peso_base": 0.35,
+            "peso_aplicado": 0.412,
+            "puntuacion": 42,
+            "disponible": true
+          },
+          {
+            "criterio": "color",
+            "peso_base": 0.2,
+            "peso_aplicado": 0.235,
+            "puntuacion": 0,
+            "disponible": true
+          },
+          {
+            "criterio": "gramaje",
+            "peso_base": 0.15,
+            "peso_aplicado": 0,
+            "puntuacion": null,
+            "disponible": false
+          },
+          {
+            "criterio": "material",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 100,
+            "disponible": true
+          },
+          {
+            "criterio": "fit",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 100,
+            "disponible": true
+          },
+          {
+            "criterio": "detalles",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 0,
+            "disponible": true
+          }
+        ]
+      },
+      "etiquetas": [
+        {
+          "texto": "Otro color",
+          "tipo": "diferencia"
+        },
+        {
+          "texto": "Mismo corte",
+          "tipo": "coincide"
+        },
+        {
+          "texto": "Mismo material",
+          "tipo": "coincide"
+        }
+      ],
+      "fuente": "shopping"
+    },
+    {
+      "producto": {
+        "id": "prd_b9ed8a50e15cf26d",
+        "titulo": "Only & Sons Jeans Hombre",
+        "tienda": {
+          "id": "zalando",
+          "nombre": "Zalando"
+        },
+        "marca": null,
+        "url": "https://www.google.es/search?ibp=oshop&q=vaqueros anchos hombre&prds=catalogid:6062977160083147878,productid:1986044085542292316,headlineOfferDocid:3957839356642017381,imageDocid:5406765794922888181,rds:PC_15497538780852237148|PROD_PC_15497538780852237148,gpcid:15497538780852237148,mid:576462846658700083,pvt:a&hl=es&gl=es&udm=28",
+        "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQjX1vF1gGvP1ccSoIdOQlSBZKWDypZMO9y5CDdFC9G4eK7o5vWl-4aS7GQ1oc",
+        "precio": {
+          "centimos": 3699,
+          "moneda": "EUR"
+        },
+        "precio_anterior": null,
+        "rango": "medio"
+      },
+      "similitud": {
+        "total": 39,
+        "criterios": [
+          {
+            "criterio": "visual",
+            "peso_base": 0.35,
+            "peso_aplicado": 0.412,
+            "puntuacion": 6,
+            "disponible": true
+          },
+          {
+            "criterio": "color",
+            "peso_base": 0.2,
+            "peso_aplicado": 0.235,
+            "puntuacion": 55,
+            "disponible": true
+          },
+          {
+            "criterio": "gramaje",
+            "peso_base": 0.15,
+            "peso_aplicado": 0,
+            "puntuacion": null,
+            "disponible": false
+          },
+          {
+            "criterio": "material",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 100,
+            "disponible": true
+          },
+          {
+            "criterio": "fit",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 100,
+            "disponible": true
+          },
+          {
+            "criterio": "detalles",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 0,
+            "disponible": true
+          }
+        ]
+      },
+      "etiquetas": [
+        {
+          "texto": "Mismo corte",
+          "tipo": "coincide"
+        },
+        {
+          "texto": "Mismo material",
+          "tipo": "coincide"
+        }
+      ],
+      "fuente": "shopping"
+    },
+    {
+      "producto": {
+        "id": "prd_20744ab627104f28",
+        "titulo": "Diesel Macro Vaqueros boyfriend Hombre",
+        "tienda": {
+          "id": "zalando",
+          "nombre": "Zalando"
+        },
+        "marca": null,
+        "url": "https://www.google.es/search?ibp=oshop&q=vaqueros anchos hombre&prds=catalogid:12464379523439994706,productid:10121774930560761971,headlineOfferDocid:11425605690836888040,imageDocid:10022974529232726259,gpcid:14420457689314243383,mid:576462563332246411,pvt:a&hl=es&gl=es&udm=28",
+        "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcT2o48k6gUDyknQ5Dl2gKpPJ_7ipTA5BrMLxIv8u61x6lLwauWbaGbj9nvyGYdg9h6yPEEXBdPs",
+        "precio": {
+          "centimos": 14695,
+          "moneda": "EUR"
+        },
+        "precio_anterior": null,
+        "rango": "alto"
+      },
+      "similitud": {
+        "total": 32,
+        "criterios": [
+          {
+            "criterio": "visual",
+            "peso_base": 0.35,
+            "peso_aplicado": 0.412,
+            "puntuacion": 32,
+            "disponible": true
+          },
+          {
+            "criterio": "color",
+            "peso_base": 0.2,
+            "peso_aplicado": 0.235,
+            "puntuacion": 0,
+            "disponible": true
+          },
+          {
+            "criterio": "gramaje",
+            "peso_base": 0.15,
+            "peso_aplicado": 0,
+            "puntuacion": null,
+            "disponible": false
+          },
+          {
+            "criterio": "material",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 100,
+            "disponible": true
+          },
+          {
+            "criterio": "fit",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 60,
+            "disponible": true
+          },
+          {
+            "criterio": "detalles",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 0,
+            "disponible": true
+          }
+        ]
+      },
+      "etiquetas": [
+        {
+          "texto": "Otro color",
+          "tipo": "diferencia"
+        },
+        {
+          "texto": "Corte más ajustado",
+          "tipo": "diferencia"
+        },
+        {
+          "texto": "Mismo material",
+          "tipo": "coincide"
+        }
+      ],
+      "fuente": "shopping"
+    },
+    {
+      "producto": {
+        "id": "prd_2269f5d2f1992732",
+        "titulo": "Springfield Bermuda vaquera baggy fit",
+        "tienda": {
+          "id": "springfield",
+          "nombre": "Springfield"
+        },
+        "marca": "Springfield",
+        "url": "https://www.google.es/search?ibp=oshop&q=vaqueros anchos hombre&prds=catalogid:14668816327827296674,productid:226187422695720822,headlineOfferDocid:12170874595436013389,imageDocid:15479431660601358646,gpcid:10211273032508481288,mid:576462897724947564,pvt:a&hl=es&gl=es&udm=28",
+        "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTJIiQU72CJD9HcDXD8cVVBCNYXj5ngtVGz6UheYHjnqgWM-_Inx1sa7A4Hgu2mC8ggVms67JCK0g",
+        "precio": {
+          "centimos": 999,
+          "moneda": "EUR"
+        },
+        "precio_anterior": null,
+        "rango": "economico"
+      },
+      "similitud": {
+        "total": 27,
+        "criterios": [
+          {
+            "criterio": "visual",
+            "peso_base": 0.35,
+            "peso_aplicado": 0.412,
+            "puntuacion": 42,
+            "disponible": true
+          },
+          {
+            "criterio": "color",
+            "peso_base": 0.2,
+            "peso_aplicado": 0.235,
+            "puntuacion": 53,
+            "disponible": true
+          },
+          {
+            "criterio": "gramaje",
+            "peso_base": 0.15,
+            "peso_aplicado": 0,
+            "puntuacion": null,
+            "disponible": false
+          },
+          {
+            "criterio": "material",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 100,
+            "disponible": true
+          },
+          {
+            "criterio": "fit",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 100,
+            "disponible": true
+          },
+          {
+            "criterio": "detalles",
+            "peso_base": 0.1,
+            "peso_aplicado": 0.118,
+            "puntuacion": 0,
+            "disponible": true
+          }
+        ]
+      },
+      "etiquetas": [
+        {
+          "texto": "Otro tipo de prenda",
+          "tipo": "diferencia"
+        },
+        {
+          "texto": "Mismo corte",
+          "tipo": "coincide"
+        },
+        {
+          "texto": "Mismo material",
+          "tipo": "coincide"
+        }
+      ],
+      "fuente": "shopping"
+    }
+  ],
+  "conteo_por_rango": {
+    "economico": 1,
+    "medio": 8,
+    "alto": 7,
+    "premium": 0
+  },
+  "desde_cache": false
+}

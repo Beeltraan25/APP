@@ -193,12 +193,52 @@ describe("POST /v1/analizar con enlace", () => {
     expect(datos.producto_origen?.marca).toBeNull();
   });
 
-  it("si la página no tiene ni texto ni imagen pide una captura", async () => {
-    const { app, entorno, ia } = preparar();
+  it("si la página no tiene ni texto ni imagen (y la tienda bloquea al servidor) pide una captura", async () => {
+    const descargas = vi.fn<typeof fetch>(async () => new Response("Access Denied", { status: 403 }));
+    const { app, entorno, ia } = preparar(new IASimulada(), descargas);
     const respuesta = await pedir(app, entorno, { pagina: { url: "https://www.zara.com/es/es/x.html" } });
     expect(respuesta.status).toBe(422);
     expect((await leerError(respuesta)).codigo).toBe("PAGINA_SIN_DATOS");
     expect(ia.llamadas).toBe(0);
+    // Lo intentó leyendo la página desde el servidor y con el lector de páginas.
+    expect(descargas).toHaveBeenCalledWith("https://www.zara.com/es/es/x.html", expect.anything());
+    expect(descargas).toHaveBeenCalledWith("https://r.jina.ai/https://www.zara.com/es/es/x.html", expect.anything());
+  });
+
+  it("si la tienda bloquea al servidor, prueba con el lector de páginas", async () => {
+    const html = `<meta property="og:title" content="Vaqueros holgados"><meta property="og:image" content="https://img.example/v.jpg">`;
+    const descargas = vi.fn<typeof fetch>(async (entrada) => {
+      const url = String(entrada);
+      if (url.startsWith("https://r.jina.ai/")) return new Response(html, { headers: { "Content-Type": "text/html" } });
+      if (url.endsWith(".jpg")) return new Response(JPEG_MINIMO, { headers: { "Content-Type": "image/jpeg" } });
+      return new Response("Access Denied", { status: 403 });
+    });
+    const { app, entorno } = preparar(new IASimulada(), descargas);
+    const respuesta = await pedir(app, entorno, { pagina: { url: "https://www.zalando.es/vaqueros-x.html" } });
+    expect(respuesta.status).toBe(200);
+    const datos = RespuestaAnalisis.parse(await respuesta.json());
+    expect(datos.producto_origen?.titulo).toBe("Vaqueros holgados");
+    expect(datos.imagen_url).toBe("https://img.example/v.jpg");
+  });
+
+  it("con solo el enlace (versión web) lee la página desde el servidor", async () => {
+    const html = `<html><head><title>Ignorado</title>
+      <meta property="og:title" content="Camisa Oxford &amp; bolsillo">
+      <meta content="https://img.example/camisa.jpg" property="og:image">
+      <meta property="product:price:amount" content="39.99"><meta property="product:price:currency" content="EUR">
+      <script type="application/ld+json">{"@type":"Product","name":"Camisa Oxford","material":"100% algodón"}</script>
+      </head></html>`;
+    const descargas = vi.fn<typeof fetch>(async (entrada) =>
+      String(entrada).endsWith(".jpg")
+        ? new Response(JPEG_MINIMO, { headers: { "Content-Type": "image/jpeg" } })
+        : new Response(html, { headers: { "Content-Type": "text/html; charset=utf-8" } }),
+    );
+    const { app, entorno } = preparar(new IASimulada(), descargas);
+    const respuesta = await pedir(app, entorno, { pagina: { url: "https://www.massimodutti.com/es/camisa-l1234" } });
+    expect(respuesta.status).toBe(200);
+    const datos = RespuestaAnalisis.parse(await respuesta.json());
+    expect(datos.imagen_url).toBe("https://img.example/camisa.jpg");
+    expect(datos.producto_origen).toMatchObject({ titulo: "Camisa Oxford & bolsillo", precio: { centimos: 3999 } });
   });
 
   it("explica qué falla si el JSON no es válido", async () => {

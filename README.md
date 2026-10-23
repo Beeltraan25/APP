@@ -2,6 +2,7 @@
 
 App de iPhone para encontrar alternativas de ropa de hombre en tiendas que venden en España y crear outfits.
 
+- **`web/`** — versión web para Safari (se añade a la pantalla de inicio como una app).
 - **`ios/`** — app SwiftUI (iOS 26, Liquid Glass) y su Share Extension ("Dupe Finder" en la hoja de compartir). Sin backend configurado usa datos de prueba.
 - **`backend/`** — Cloudflare Worker en TypeScript: análisis de prendas con Gemini, búsqueda y outfits.
 - **`docs/ARQUITECTURA.md`** — decisiones, estructura y modelos de datos.
@@ -27,6 +28,18 @@ Sin configuración, la app funciona con datos de prueba (lo indica en la pantall
 2. Pon en `URL_BACKEND` la dirección del backend (`http://127.0.0.1:8787` en el simulador con `npm run dev`, o la de Cloudflare para un iPhone real).
 3. Pon en `CLAVE_APP` la misma clave que en `backend/.dev.vars`.
 4. Vuelve a generar el proyecto (`xcodegen generate`) y compila. La Share Extension usa la misma configuración.
+
+## Versión web (gratis, sin Apple ID)
+
+La carpeta `web/` es Dupe Finder para Safari: buscar por foto o enlace, ficha editable, alternativas con filtro de precio, outfits por estilo y guardados (en el propio iPhone). La sirve el mismo Worker que la API, así que al publicar el backend ya está en `https://dupe-finder.TU-SUBDOMINIO.workers.dev`.
+
+1. Publica el backend (ver «Publicar el backend en Cloudflare»).
+2. En el iPhone, abre esa dirección en Safari y toca el engranaje → pega tu `CLAVE_APP` → *Conectar*. También puedes abrir una vez `https://…workers.dev/#clave=TU_CLAVE`: la web guarda la clave y la borra de la dirección.
+3. *Compartir → Añadir a pantalla de inicio*: se abre a pantalla completa, como una app.
+
+Sin clave funciona en modo de prueba con datos de ejemplo. Para probarla en el PC: `npm run dev` en `backend` y abre http://localhost:8787.
+
+Los enlaces los lee el servidor (Safari no deja que una web lea otras webs). Algunas tiendas lo bloquean (Zara, H&M…); entonces se usa como plan B el lector gratuito [Jina Reader](https://jina.ai/reader), y si tampoco puede, la web pide una captura de pantalla.
 
 ## Instalar en tu iPhone sin Mac
 

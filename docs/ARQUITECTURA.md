@@ -230,6 +230,13 @@ ios/
 - **Pulido:** icono propio (lupa con "≈" sobre el azul de la app), se respeta "Reducir movimiento" (el menú de origen usa un fundido en vez del rebote y el desplazamiento a los outfits no se anima) y CI hace capturas con el texto de accesibilidad más grande (`grande-*.png`).
 - **Sin probar en un iPhone real:** la hoja de compartir de Safari, Instagram y Fotos solo se puede comprobar en un dispositivo.
 
+**Versión web (alternativa gratuita a instalar la app sin Mac):**
+- `web/`: HTML, CSS y JavaScript sin dependencias ni compilación. El Worker la sirve como *static assets* en la misma dirección que la API (`assets.directory: ../web`), así que no hay CORS.
+- Mismas pantallas que la app: buscar (foto con la cámara o la fototeca, o enlace), ficha editable, alternativas con rangos de precio y detalle, outfits (NDJSON en directo, cambiar pieza, guardar) y guardados en `localStorage`.
+- La clave de la app la pega el usuario una vez (o `#clave=` en la dirección); nunca va en el código público. Sin clave, modo de prueba con `web/demo/`.
+- Enlaces: la web no puede leer otras webs, así que `/v1/analizar` con solo `{url}` descarga la página en el servidor y, si la tienda lo bloquea, prueba con Jina Reader (gratis, sin clave). Comprobado: Zalando sí; Zara y H&M no (la web pide una captura).
+- Se añade a la pantalla de inicio (`manifest.webmanifest`, `apple-touch-icon`). Sin Share Extension ni diseño nativo.
+
 **Notas de diseño que afectan a la estructura**
 
 - **Servicios con versión simulada:** cada servicio es un protocolo con dos implementaciones (`…Remoto` y `…Simulado`). La fase 1 funciona entera con los JSON de `Simulados/` y, en la fase 2, basta con cambiar a la versión remota. Además, las pruebas de diseño no gastan cuota gratuita.
