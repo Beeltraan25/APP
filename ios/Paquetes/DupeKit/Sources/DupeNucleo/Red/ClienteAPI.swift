@@ -61,26 +61,34 @@ public final class ClienteAPI: Sendable {
         return try await enviar(peticion)
     }
 
-    /// POST /v1/buscar con la ficha revisada por el usuario.
-    public func buscar(imagenUrl: URL?, ficha: FichaPrenda) async throws -> RespuestaBusqueda {
+    /// POST /v1/buscar con la ficha revisada por el usuario. Con el precio de la prenda, solo
+    /// devuelve alternativas más baratas.
+    public func buscar(imagenUrl: URL?, ficha: FichaPrenda, precioOriginal: Int? = nil) async throws -> RespuestaBusqueda {
         var peticion = peticion(ruta: "v1/buscar")
+        // Lens + dos búsquedas en tiendas + comparar cada prenda con la foto: puede pasar del minuto.
+        peticion.timeoutInterval = 150
         peticion.setValue("application/json", forHTTPHeaderField: "Content-Type")
         let codificador = JSONEncoder()
         // La ficha no tiene claves dinámicas: aquí sí se puede convertir a snake_case.
         codificador.keyEncodingStrategy = .convertToSnakeCase
-        peticion.httpBody = try codificador.encode(CuerpoBusqueda(imagenUrl: imagenUrl, ficha: ficha))
+        peticion.httpBody = try codificador.encode(CuerpoBusqueda(imagenUrl: imagenUrl, ficha: ficha, precioOriginalCentimos: precioOriginal))
         return try await enviar(peticion)
     }
 
     /// POST /v1/inspiracion: el «rollo» de la prenda según Pinterest y más prendas de ese estilo.
-    public func inspiracion(ficha: FichaPrenda, imagenUrl: URL?, excluir: [String]) async throws -> RespuestaInspiracion {
+    public func inspiracion(
+        ficha: FichaPrenda,
+        imagenUrl: URL?,
+        precioOriginal: Int? = nil,
+        excluir: [String]
+    ) async throws -> RespuestaInspiracion {
         var peticion = peticion(ruta: "v1/inspiracion")
         // Pinterest + IA + Shopping + comparar cada prenda con la foto: puede pasar del minuto.
         peticion.timeoutInterval = 150
         peticion.setValue("application/json", forHTTPHeaderField: "Content-Type")
         let codificador = JSONEncoder()
         codificador.keyEncodingStrategy = .convertToSnakeCase
-        peticion.httpBody = try codificador.encode(CuerpoInspiracion(imagenUrl: imagenUrl, ficha: ficha, excluir: excluir))
+        peticion.httpBody = try codificador.encode(CuerpoInspiracion(imagenUrl: imagenUrl, ficha: ficha, precioOriginalCentimos: precioOriginal, excluir: excluir))
         return try await enviar(peticion)
     }
 
@@ -219,11 +227,13 @@ public final class ClienteAPI: Sendable {
 private struct CuerpoBusqueda: Encodable {
     let imagenUrl: URL?
     let ficha: FichaPrenda
+    let precioOriginalCentimos: Int?
 }
 
 private struct CuerpoInspiracion: Encodable {
     let imagenUrl: URL?
     let ficha: FichaPrenda
+    let precioOriginalCentimos: Int?
     let excluir: [String]
 }
 

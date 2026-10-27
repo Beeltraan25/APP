@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from "vitest";
 import { normalizarFicha } from "../src/analisis/normalizar";
 import {
   buscarAlternativas,
+  consultaEstilo,
   consultaTexto,
   esDeMujer,
   esPublica,
@@ -184,8 +185,10 @@ describe("buscarAlternativas", () => {
       ],
     );
     const { alternativas, consultas } = await buscarAlternativas(serpapi, { imagenUrl: imagen, ficha });
-    expect(consultas).toBe(2);
-    expect(serpapi.shopping).toHaveBeenCalledWith("sudadera oversize gris pesada hombre");
+    expect(consultas).toBe(3);
+    expect(serpapi.shopping).toHaveBeenCalledWith("sudadera oversize gris pesada hombre", {});
+    // La segunda, el mismo estilo sin el color: trae otros colores.
+    expect(serpapi.shopping).toHaveBeenCalledWith("sudadera oversize pesada hombre", {});
     expect(alternativas.map((a) => a.fuente)).toEqual(["lens", "shopping"]);
     expect(alternativas[1]?.producto).toMatchObject({ tienda: { id: "zalando" }, marca: null, rango: "alto" });
   });
@@ -194,7 +197,7 @@ describe("buscarAlternativas", () => {
     const lens = Array.from({ length: 30 }, (_, i) =>
       candidato({ posicion: i + 1, url: `https://www.zara.com/es/x${i}.html`, titulo: `Sudadera ${i}` }),
     );
-    const shopping = Array.from({ length: 12 }, (_, i) =>
+    const shopping = Array.from({ length: 20 }, (_, i) =>
       candidato({
         fuente: "shopping",
         posicion: i + 1,
@@ -205,10 +208,48 @@ describe("buscarAlternativas", () => {
     );
     const serpapi = serpapiFalso(lens, shopping);
     const { alternativas, consultas } = await buscarAlternativas(serpapi, { imagenUrl: imagen, ficha });
-    expect(consultas).toBe(2);
+    expect(consultas).toBe(3);
     expect(alternativas).toHaveLength(MAXIMO_ALTERNATIVAS);
     expect(alternativas.filter((a) => a.fuente === "lens")).toHaveLength(MAXIMO_LENS);
     expect(alternativas.filter((a) => a.fuente === "shopping")).toHaveLength(MAXIMO_ALTERNATIVAS - MAXIMO_LENS);
+  });
+
+  it("con el precio de la prenda, solo deja lo más barato y busca también de más barato a más caro", async () => {
+    const serpapi = serpapiFalso(
+      [
+        candidato({ posicion: 1, precio: { centimos: 2995, moneda: "EUR" } }),
+        candidato({ posicion: 2, url: "https://www.zara.com/es/cara.html", titulo: "Sudadera cara", precio: { centimos: 8995, moneda: "EUR" } }),
+        candidato({ posicion: 3, url: "https://www.zara.com/es/igual.html", titulo: "Sudadera igual", precio: { centimos: 5995, moneda: "EUR" } }),
+      ],
+      [],
+    );
+    const { alternativas } = await buscarAlternativas(serpapi, { imagenUrl: imagen, ficha, precioOriginal: 5995 });
+    expect(alternativas.map((a) => a.producto.precio.centimos)).toEqual([2995]);
+    // Además de las dos normales, otra de más barata a más cara.
+    expect(serpapi.shopping).toHaveBeenCalledTimes(3);
+    expect(serpapi.shopping).toHaveBeenCalledWith("sudadera oversize gris pesada hombre", { ordenarPorPrecio: true });
+  });
+
+  it("la búsqueda de estilo quita el color, aunque esté en medio", () => {
+    expect(consultaEstilo({ ...ficha, color_principal: { nombre: "azul oscuro", hex: "#1F2A44" }, palabras_clave_busqueda: ["vaqueros carpintero hombre azul oscuro"] })).toBe(
+      "vaqueros carpintero hombre",
+    );
+    expect(consultaEstilo({ ...ficha, palabras_clave_busqueda: ["gris marengo"] })).toBe("sudadera hombre");
+  });
+
+  it("si una de las dos de Shopping falla, sigue con la otra", async () => {
+    const { Errores } = await import("../src/infra/errores");
+    let llamada = 0;
+    const serpapi = {
+      ...serpapiFalso([]),
+      shopping: vi.fn(async () => {
+        llamada++;
+        if (llamada === 1) throw Errores.busquedaNoDisponible();
+        return [candidato({ fuente: "shopping", url: "https://www.google.es/search?prds=9", nombreTienda: "Zalando.es" })];
+      }),
+    };
+    const { alternativas } = await buscarAlternativas(serpapi, { imagenUrl: imagen, ficha });
+    expect(alternativas).toHaveLength(1);
   });
 
   it("Google Lens se guarda 24 h (salvo si no da nada)", async () => {
@@ -229,7 +270,7 @@ describe("buscarAlternativas", () => {
     const serpapi = serpapiFalso([], []);
     await buscarAlternativas(serpapi, { imagenUrl: "http://127.0.0.1:8787/v1/imagenes/an_1", ficha });
     expect(serpapi.lens).not.toHaveBeenCalled();
-    expect(serpapi.shopping).toHaveBeenCalledOnce();
+    expect(serpapi.shopping).toHaveBeenCalledTimes(2);
   });
 
   it("quita duplicados y conserva el precio anterior solo si era mayor", async () => {

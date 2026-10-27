@@ -35,6 +35,7 @@ export function crearRutaInspiracion(dependencias: {
       ficha: peticion.data.ficha,
       excluir: peticion.data.excluir,
       imagenUrl: peticion.data.imagen_url ?? null,
+      precioOriginal: peticion.data.precio_original_centimos ?? null,
       kvImagenes: c.env.IMAGENES,
       fetchImagenes: dependencias.fetchImagenes,
     });

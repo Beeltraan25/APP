@@ -39,6 +39,8 @@ export interface EntradaInspiracion {
   excluir: string[];
   /** Foto de la prenda: cada producto de las ideas se compara con ella. */
   imagenUrl?: string | null;
+  /** Si se sabe, las ideas solo traen prendas más baratas. */
+  precioOriginal?: number | null;
   kvImagenes?: KVNamespace;
   fetchImagenes?: typeof fetch;
 }
@@ -57,7 +59,7 @@ export function consultaPinterest(ficha: FichaPrenda): string {
 export async function inspiracionPinterest(entrada: EntradaInspiracion): Promise<RespuestaInspiracion & { consultas: number }> {
   const { serpapi, ia, kv, ficha, excluir } = entrada;
   const huella = await sha256Hex(
-    JSON.stringify([ficha.categoria, ficha.subcategoria, ficha.color_principal.nombre, ficha.fit, ficha.detalles, entrada.imagenUrl ?? null]),
+    JSON.stringify([ficha.categoria, ficha.subcategoria, ficha.color_principal.nombre, ficha.fit, ficha.detalles, entrada.imagenUrl ?? null, entrada.precioOriginal ?? null]),
   );
   const clave = `inspiracion:${huella}`;
   const enCache = await leerCache<RespuestaInspiracion>(kv, clave);
@@ -101,7 +103,9 @@ export async function inspiracionPinterest(entrada: EntradaInspiracion): Promise
   const ideas = await Promise.all(
     propuesta.ideas.slice(0, MAXIMO_IDEAS).map(async (idea) => {
       try {
-        const { productos, consultas: gastadas } = await buscarPieza(serpapi, kv, idea.consulta, null);
+        // buscarPieza deja pasar el mismo precio: aquí tiene que ser más barata.
+        const maximo = entrada.precioOriginal ? entrada.precioOriginal - 1 : null;
+        const { productos, consultas: gastadas } = await buscarPieza(serpapi, kv, idea.consulta, maximo, { completarConBaratas: true });
         consultas += gastadas;
         return { titulo: idea.titulo, consulta: idea.consulta, productos };
       } catch (error) {

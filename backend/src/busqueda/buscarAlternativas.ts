@@ -6,13 +6,16 @@ import { ErrorApp } from "../infra/errores";
 import { limpiarUrl, sha256Hex } from "../infra/utilidades";
 import { nombresDe, normalizarNombre, tiendaDeNombre, tiendaDeUrl, type TiendaConfig } from "./listaBlanca";
 import { rangoDePrecio } from "./precios";
-import type { Candidato, ClienteSerpapi } from "./serpapi";
+import type { Candidato, ClienteSerpapi, OpcionesShopping } from "./serpapi";
 
 /** Máximo de alternativas: todas se puntúan, y cada una gasta una descarga de miniatura. */
 // Con 30 caben en el límite gratuito de Cloudflare (50 descargas por petición): 30 miniaturas + foto + IA + SerpAPI.
 export const MAXIMO_ALTERNATIVAS = 30;
-/** Como mucho estas de Google Lens: el resto del hueco es para Shopping, que busca con el color. */
-export const MAXIMO_LENS = 18;
+/**
+ * Como mucho estas de Google Lens: el resto del hueco es para Shopping (una búsqueda con el color
+ * y otra del mismo estilo sin el color, para tener más colores).
+ */
+export const MAXIMO_LENS = 12;
 
 /**
  * Google Lens guardado 24 h por imagen: el análisis de la foto y la búsqueda posterior usan la
@@ -41,12 +44,18 @@ export interface ResultadoBusqueda {
 /**
  * 1. Google Lens con la imagen (si es pública): lo más parecido a la vista, de cualquier color.
  * 2. Google Shopping con las palabras clave y el color: más candidatas del color correcto.
- * 3. Solo tiendas activas de la lista blanca, ropa de hombre y precio en euros. Sin duplicados.
- * (Después, la evaluación deja solo las del mismo color.)
+ * 3. Google Shopping con el mismo estilo y sin el color: el mismo tipo de prenda en otros colores.
+ * 4. Solo tiendas activas de la lista blanca, ropa de hombre y precio en euros. Sin duplicados.
+ * Si se sabe lo que cuesta la prenda, solo lo que sea más barato (es un buscador de dupes).
  */
 export async function buscarAlternativas(
   serpapi: ClienteSerpapi,
-  { imagenUrl, ficha, cache }: { imagenUrl: string | null; ficha: FichaPrenda; cache?: KVNamespace },
+  {
+    imagenUrl,
+    ficha,
+    cache,
+    precioOriginal = null,
+  }: { imagenUrl: string | null; ficha: FichaPrenda; cache?: KVNamespace; precioOriginal?: number | null },
 ): Promise<ResultadoBusqueda> {
   const candidatos: Candidato[] = [];
   let consultas = 0;
@@ -64,18 +73,27 @@ export async function buscarAlternativas(
     }
   }
 
-  try {
-    consultas++;
-    candidatos.push(...(await serpapi.shopping(consultaTexto(ficha))));
-  } catch (error) {
-    // Si Lens sí funcionó, se devuelve lo que haya; si fallaron las dos, el error.
-    if (fallo || candidatos.length === 0) throw error;
+  // Shopping, todas a la vez: con el color, el mismo estilo sin el color (otros colores) y, si se
+  // sabe el precio, otra vez con el color pero de más barata a más cara (las más relevantes suelen
+  // ser de marcas caras). Lo que no sea más barato que la prenda se quita después.
+  const peticiones: [string, OpcionesShopping][] = [[consultaTexto(ficha), {}]];
+  if (consultaEstilo(ficha) !== consultaTexto(ficha)) peticiones.push([consultaEstilo(ficha), {}]);
+  if (precioOriginal) peticiones.push([consultaTexto(ficha), { ordenarPorPrecio: true }]);
+  const resultados = await Promise.allSettled(peticiones.map(([consulta, opciones]) => serpapi.shopping(consulta, opciones)));
+  consultas += resultados.length;
+  for (const resultado of resultados) {
+    if (resultado.status === "fulfilled") candidatos.push(...resultado.value);
   }
+  const errorShopping = resultados.find((r): r is PromiseRejectedResult => r.status === "rejected")?.reason;
+  if (errorShopping instanceof ErrorApp && errorShopping.codigo === "CUOTA_BUSQUEDAS") throw errorShopping;
+  // Si todo falló, el error; si algo funcionó, se sigue con lo que haya.
+  if (errorShopping && (fallo || candidatos.length === 0)) throw errorShopping;
 
-  const validos = repartir(deduplicar(filtrar(candidatos)));
+  const validos = repartir(deduplicar(masBaratas(filtrar(candidatos), precioOriginal)));
   return {
     alternativas: await Promise.all(validos.map(aAlternativa)),
-    miniaturas: validos.map(({ candidato }) => candidato.miniatura),
+    // La imagen grande (se pide reducida a JPEG): con la miniatura de Lens la IA ve muy poco.
+    miniaturas: validos.map(({ candidato }) => candidato.imagen ?? candidato.miniatura),
     consultas,
   };
 }
@@ -87,6 +105,28 @@ export function consultaTexto(ficha: FichaPrenda): string {
   // Basta con la palabra principal del color ("gris" en "gris marengo").
   const palabraColor = color.split(/\s+/)[0] ?? color;
   if (palabraColor && !consulta.toLowerCase().includes(palabraColor)) consulta = `${consulta} ${color}`;
+  return /\bhombre\b/i.test(consulta) ? consulta : `${consulta} hombre`;
+}
+
+/** Solo lo que cuesta menos que la prenda original (si se sabe su precio). */
+export function masBaratas(validos: Valido[], precioOriginal: number | null): Valido[] {
+  if (!precioOriginal) return validos;
+  return validos.filter(({ candidato }) => (candidato.precio?.centimos ?? Infinity) < precioOriginal);
+}
+
+/**
+ * El mismo estilo sin el color ("vaqueros carpintero hombre azul oscuro" → "vaqueros carpintero
+ * hombre"): trae la misma prenda en otros colores.
+ */
+export function consultaEstilo(ficha: FichaPrenda): string {
+  const base = ficha.palabras_clave_busqueda[0] ?? ficha.subcategoria ?? ficha.categoria;
+  const palabrasColor = new Set(ficha.color_principal.nombre.split(/\s+/).map(normalizarNombre).filter(Boolean));
+  const sinColor = base
+    .split(/\s+/)
+    .filter((palabra) => !palabrasColor.has(normalizarNombre(palabra)))
+    .join(" ")
+    .trim();
+  const consulta = sinColor || ficha.categoria;
   return /\bhombre\b/i.test(consulta) ? consulta : `${consulta} hombre`;
 }
 

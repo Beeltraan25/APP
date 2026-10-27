@@ -292,7 +292,9 @@ describe("evaluarAlternativas", () => {
     expect(otroColorBienParecida({ fit: 100, gramaje: 50 }, 80, EXIGENCIA_BUSQUEDA)).toBe(true);
     expect(otroColorBienParecida({ fit: 100, gramaje: 0 }, 80, EXIGENCIA_BUSQUEDA)).toBe(false);
     expect(otroColorBienParecida({ fit: null, gramaje: null }, 60, EXIGENCIA_BUSQUEDA)).toBe(false);
-    expect(otroColorBienParecida({ fit: 60, gramaje: 100 }, 90, EXIGENCIA_BUSQUEDA)).toBe(false);
+    // Corte vecino (relajado ↔ oversize) vale; dos pasos más allá, no.
+    expect(otroColorBienParecida({ fit: 60, gramaje: 100 }, 90, EXIGENCIA_BUSQUEDA)).toBe(true);
+    expect(otroColorBienParecida({ fit: 25, gramaje: 100 }, 90, EXIGENCIA_BUSQUEDA)).toBe(false);
     expect(otroColorBienParecida({ fit: null, gramaje: null }, null, EXIGENCIA_BUSQUEDA)).toBe(false);
   });
 
@@ -300,6 +302,8 @@ describe("evaluarAlternativas", () => {
     const attrs = { ...atributos.prendas[0]!, gramaje_estimado: "medio", fit: "regular", publico: "hombre" } as AtributosCandidata;
     expect(sePareceLoSuficiente({ ...attrs, parecido: 40 }, EXIGENCIA_BUSQUEDA)).toBe(true);
     expect(sePareceLoSuficiente({ ...attrs, parecido: 20 }, EXIGENCIA_BUSQUEDA)).toBe(false);
+    // Otro tipo de prenda (unos vaqueros cortos frente a unos largos), fuera aunque sea del mismo color.
+    expect(sePareceLoSuficiente({ ...attrs, parecido: 80, misma_prenda: false }, EXIGENCIA_BUSQUEDA)).toBe(false);
     // Las ideas de Pinterest se filtran más.
     expect(sePareceLoSuficiente({ ...attrs, parecido: 60 }, EXIGENCIA_IDEAS)).toBe(false);
     expect(sePareceLoSuficiente({ ...attrs, parecido: 75, misma_prenda: false }, EXIGENCIA_IDEAS)).toBe(false);
@@ -316,10 +320,10 @@ describe("evaluarAlternativas", () => {
     expect(pedidas[0]).toBe(urlEnJpeg("https://encrypted-tbn1.gstatic.com/shopping?q=tbn:abc"));
     expect(pedidas[0]).toContain("output=jpg");
 
-    // Otras tiendas, directamente; y si la conversión falla, la original.
+    // Las fotos de las tiendas también, reducidas (pesan mucho); y si la conversión falla, la original.
     pedidas.length = 0;
     await descargarMiniatura("https://static.zara.net/foto.jpg", f);
-    expect(pedidas).toEqual(["https://static.zara.net/foto.jpg"]);
+    expect(pedidas).toEqual([urlEnJpeg("https://static.zara.net/foto.jpg")]);
     const falla = vi.fn<typeof fetch>(async (url) => (String(url).includes("wsrv.nl") ? new Response("", { status: 500 }) : new Response(JPEG_MINIMO)));
     expect(await descargarMiniatura("https://encrypted-tbn1.gstatic.com/x", falla)).not.toBeNull();
     expect(falla).toHaveBeenCalledTimes(2);

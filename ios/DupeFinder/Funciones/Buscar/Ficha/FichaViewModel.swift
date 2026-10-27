@@ -42,11 +42,29 @@ final class FichaViewModel {
     var ficha: FichaPrenda
     let respuesta: RespuestaAnalisis
     let foto: Data?
+    /// Lo que cuesta la prenda (de la tienda o escrito por el usuario). Con él, solo se buscan
+    /// alternativas más baratas.
+    var precio: Precio?
 
     init(analisis: AnalisisPresentado) {
         respuesta = analisis.respuesta
         ficha = analisis.respuesta.ficha
         foto = analisis.foto
+        precio = analisis.respuesta.productoOrigen?.precio
+    }
+
+    /// "59,95", "59.95 €", "60" → 5995 céntimos. Vacío quita el precio.
+    func cambiarPrecio(_ texto: String) {
+        let limpio = texto
+            .replacingOccurrences(of: "€", with: "")
+            .replacingOccurrences(of: " ", with: "")
+            .replacingOccurrences(of: ",", with: ".")
+        if limpio.isEmpty {
+            precio = nil
+            return
+        }
+        guard let euros = Double(limpio), euros > 0, euros < 100_000 else { return }
+        precio = Precio(centimos: Int((euros * 100).rounded()))
     }
 
     var hayEstimados: Bool { !ficha.camposEstimados.isEmpty }

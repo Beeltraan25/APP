@@ -69,14 +69,14 @@ function serpapiFalso() {
       { imagen: "https://img/ref1.jpg", titulo: "Look 1", fuente: "Vogue" },
       { imagen: "https://img/ref2.jpg", titulo: "Look 2", fuente: "GQ" },
     ]),
-    shopping: vi.fn(async (consulta: string, opciones?: { maxPrecioCentimos?: number | null }): Promise<Candidato[]> =>
-      [2000, 4500, 9000]
-        .filter((centimos) => !opciones?.maxPrecioCentimos || centimos <= opciones.maxPrecioCentimos)
+    // De más barato a más caro trae otras más baratas.
+    shopping: vi.fn(async (consulta: string, opciones?: { ordenarPorPrecio?: boolean }): Promise<Candidato[]> =>
+      (opciones?.ordenarPorPrecio ? [1500, 2500, 3000] : [2000, 4500, 9000])
         .map((centimos, i) => ({
           fuente: "shopping" as const,
           posicion: i + 1,
-          titulo: `${consulta} ${i + 1}`,
-          url: `https://www.google.es/search?prds=${encodeURIComponent(consulta)}-${i}`,
+          titulo: `${consulta} ${opciones?.ordenarPorPrecio ? "barata " : ""}${i + 1}`,
+          url: `https://www.google.es/search?prds=${encodeURIComponent(consulta)}-${opciones?.ordenarPorPrecio ? "b" : ""}${i}`,
           nombreTienda: "Zara",
           imagen: `https://img/${i}.jpg`,
           miniatura: null,
@@ -162,7 +162,8 @@ describe("POST /v1/outfits", () => {
     const datos = resultado(
       await eventos(await app.request("/v1/outfits", { method: "POST", body: peticion(), headers: cabeceras }, entorno)),
     );
-    expect(serpapi.shopping).toHaveBeenCalledWith(expect.any(String), { maxPrecioCentimos: 6000 });
+    // Sin el precio máximo de Google (apenas devuelve nada): se filtra aquí.
+    expect(serpapi.shopping).not.toHaveBeenCalledWith(expect.any(String), { ordenarPorPrecio: true });
     for (const outfit of datos.outfits) {
       const precios = outfit.piezas.flatMap((p) => (p.producto?.precio ? [p.producto.precio.centimos] : []));
       expect(precios.every((c) => c <= 6000)).toBe(true);

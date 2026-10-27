@@ -8,6 +8,8 @@ export const PeticionBusqueda = z.object({
   imagen_url: z.url().nullish(),
   /** La ficha tal como la ha revisado el usuario. */
   ficha: ausentesComoNull(FichaPrenda),
+  /** Lo que cuesta la prenda original: solo se buscan alternativas más baratas. */
+  precio_original_centimos: z.number().int().positive().nullish(),
 });
 export type PeticionBusqueda = z.infer<typeof PeticionBusqueda>;
 

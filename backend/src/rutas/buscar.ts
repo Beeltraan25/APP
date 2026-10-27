@@ -33,9 +33,10 @@ export function crearRutaBuscar({ crearSerpapi, crearIA, fetchImagenes }: Depend
     const peticion = PeticionBusqueda.safeParse(cuerpo);
     if (!peticion.success) throw Errores.peticionNoValida(z.prettifyError(peticion.error));
     const { imagen_url: imagenUrl, ficha } = peticion.data;
+    const precioOriginal = peticion.data.precio_original_centimos ?? null;
 
-    // La misma imagen con la misma ficha da los mismos resultados durante 24 h.
-    const huella = await sha256Hex(JSON.stringify({ imagenUrl: imagenUrl ?? null, ficha }));
+    // La misma imagen con la misma ficha (y el mismo precio) da los mismos resultados durante 24 h.
+    const huella = await sha256Hex(JSON.stringify({ imagenUrl: imagenUrl ?? null, ficha, precioOriginal }));
     const claveCache = `busqueda:${huella}`;
     const enCache = await leerCache<RespuestaBusqueda>(c.env.CACHE, claveCache);
     if (enCache) return c.json({ ...enCache, desde_cache: true });
@@ -44,6 +45,7 @@ export function crearRutaBuscar({ crearSerpapi, crearIA, fetchImagenes }: Depend
       cache: c.env.CACHE,
       imagenUrl: imagenUrl ?? null,
       ficha,
+      precioOriginal,
     });
     console.log(`Búsqueda: ${encontradas.alternativas.length} alternativas con ${encontradas.consultas} consulta(s) de SerpAPI`);
 

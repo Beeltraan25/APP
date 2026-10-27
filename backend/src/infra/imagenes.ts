@@ -60,28 +60,21 @@ export async function descargarImagen(url: string, f: typeof fetch = fetch) {
   }
 }
 
-/** Google Shopping sirve sus miniaturas siempre en WebP (pidas lo que pidas). */
-const SIEMPRE_WEBP = /(^|\.)gstatic\.com$/;
-
 /** La misma imagen convertida a JPEG por wsrv.nl (gratis, sin clave). */
 export function urlEnJpeg(url: string): string {
   return `https://wsrv.nl/?url=${encodeURIComponent(url)}&output=jpg&w=384&q=80`;
 }
 
 /**
- * Miniatura de una candidata para compararla con la original. Los embeddings de imagen solo
- * admiten JPEG y PNG: las de Google se piden ya convertidas. Si la conversión falla, la original.
+ * Imagen de una candidata para compararla con la original, reducida a JPEG de 384 px: los
+ * embeddings solo admiten JPEG y PNG (Google Shopping da WebP) y las fotos grandes de las tiendas
+ * pesan mucho. Si la conversión falla, la original.
  */
 export async function descargarMiniatura(url: string, f: typeof fetch = fetch) {
-  let host: string;
   try {
-    host = new URL(url).hostname;
+    if (!["http:", "https:"].includes(new URL(url).protocol)) return null;
   } catch {
     return null;
   }
-  if (SIEMPRE_WEBP.test(host)) {
-    const convertida = await descargarImagen(urlEnJpeg(url), f);
-    if (convertida) return convertida;
-  }
-  return descargarImagen(url, f);
+  return (await descargarImagen(urlEnJpeg(url), f)) ?? descargarImagen(url, f);
 }

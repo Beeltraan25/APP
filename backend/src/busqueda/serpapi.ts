@@ -28,11 +28,18 @@ export interface Referencia {
   enlace?: string | null;
 }
 
+export interface OpcionesShopping {
+  ordenarPorPrecio?: boolean;
+}
+
 export interface ClienteSerpapi {
   /** Google Lens: búsqueda por imagen. La imagen debe estar en una URL pública. */
   lens(urlImagen: string): Promise<Candidato[]>;
-  /** Google Shopping: búsqueda por texto en España, con precio máximo opcional. */
-  shopping(consulta: string, opciones?: { maxPrecioCentimos?: number | null }): Promise<Candidato[]>;
+  /**
+   * Google Shopping: búsqueda por texto en España. Con `ordenarPorPrecio`, de más barato a más caro.
+   * (No se usa el precio máximo de Google: con él apenas devuelve 2 o 3 resultados.)
+   */
+  shopping(consulta: string, opciones?: OpcionesShopping): Promise<Candidato[]>;
   /** Google Images: referencias visuales de un estilo. */
   imagenes(consulta: string): Promise<Referencia[]>;
 }
@@ -75,7 +82,7 @@ export function crearClienteSerpapi(entorno: Entorno, f: typeof fetch = fetch): 
         google_domain: "google.es",
         json_restrictor: CAMPOS_SHOPPING,
       };
-      if (opciones?.maxPrecioCentimos) parametros.max_price = String(Math.floor(opciones.maxPrecioCentimos / 100));
+      if (opciones?.ordenarPorPrecio) parametros.sort_by = "1";
       return leerShopping(await pedir(parametros));
     },
     async imagenes(consulta) {

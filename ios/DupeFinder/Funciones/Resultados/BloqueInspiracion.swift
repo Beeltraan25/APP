@@ -7,6 +7,7 @@ import SwiftUI
 struct BloqueInspiracion: View {
     let estado: EstadoCarga<RespuestaInspiracion>
     let columnas: [GridItem]
+    var precioOriginal: Precio? = nil
     let alPedir: () -> Void
 
     @State private var pinAbierto: EnlaceTienda?
@@ -101,7 +102,7 @@ struct BloqueInspiracion: View {
                     ForEach(idea.productos) { producto in
                         let alternativa = Alternativa(producto: producto)
                         NavigationLink(value: Destino.detalle(alternativa)) {
-                            TarjetaAlternativa(alternativa: alternativa)
+                            TarjetaAlternativa(alternativa: alternativa, precioOriginal: precioOriginal)
                         }
                         .buttonStyle(.plain)
                     }

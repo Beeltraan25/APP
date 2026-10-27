@@ -5,6 +5,8 @@ import SwiftUI
 /// Tarjeta limpia: foto sin vidrio, tienda, precio, % de similitud y 2–3 etiquetas.
 struct TarjetaAlternativa: View {
     let alternativa: Alternativa
+    /// Lo que cuesta la prenda original, para enseñar cuánto se ahorra.
+    var precioOriginal: Precio? = nil
 
     var body: some View {
         let producto = alternativa.producto
@@ -43,6 +45,12 @@ struct TarjetaAlternativa: View {
                 }
             }
 
+            if let ahorro = ahorro(de: producto) {
+                Text("Ahorras \(ahorro.formateado)")
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(.green)
+            }
+
             // En la tarjeta caben 2 etiquetas; el detalle las muestra todas.
             if !alternativa.etiquetas.isEmpty {
                 FlujoChips(espacio: 4) {
@@ -55,5 +63,12 @@ struct TarjetaAlternativa: View {
         .contentShape(.rect)
         .accessibilityElement(children: .combine)
         .accessibilityHint("Abre el detalle")
+    }
+
+    private func ahorro(de producto: Producto) -> Precio? {
+        guard let original = precioOriginal, original.moneda == producto.precio.moneda,
+              original.centimos > producto.precio.centimos
+        else { return nil }
+        return Precio(centimos: original.centimos - producto.precio.centimos, moneda: original.moneda)
     }
 }

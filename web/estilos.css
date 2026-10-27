@@ -1303,3 +1303,44 @@ select:focus {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
+
+/* --- Precio de la prenda --- */
+
+.fila-precio {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 6px 16px;
+  min-height: 48px;
+}
+
+.campo-precio {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--texto-2);
+}
+
+.campo-precio input {
+  width: 96px;
+  min-height: 36px;
+  padding: 6px 10px;
+  text-align: right;
+  background: var(--superficie-2);
+}
+
+.ahorro {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--verde);
+}
+
+.aviso-precio {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 4px 0 0;
+  font-size: 14px;
+  color: var(--texto-2);
+}

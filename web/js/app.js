@@ -51,6 +51,8 @@ const estado = {
   analisis: null,
   fotoLocal: null,
   ficha: null,
+  /** Lo que cuesta la prenda (céntimos): con él, solo se buscan alternativas más baratas. */
+  precio: null,
   busqueda: { estado: "inactivo", datos: null, error: null, rango: null },
   /** Prenda con la que se crean los outfits: { ficha, producto, imagen_url, foto }. */
   base: null,
@@ -400,9 +402,16 @@ function tiraHistorial() {
   );
 }
 
+/** "59,95", "60 €" → céntimos; vacío o no válido → sin precio. */
+function leerPrecio(texto) {
+  const importe = Number(String(texto).replace(/[€\s]/g, "").replace(",", "."));
+  return Number.isFinite(importe) && importe > 0 && importe < 100000 ? Math.round(importe * 100) : null;
+}
+
 function abrirFicha(analisis) {
   estado.analisis = analisis;
   estado.ficha = structuredClone(analisis.ficha);
+  estado.precio = analisis.producto_origen?.precio?.centimos ?? null;
   estado.menuAbierto = false;
   estado.pidiendoEnlace = false;
   // La última prenda analizada es la que se usa por defecto en Outfits.
@@ -476,7 +485,34 @@ function vistaFicha() {
         icono("check", 18),
         h("span", {}, h("strong", {}, "La hemos reconocido: "), origen.titulo, h("span", { class: "secundario" }, ` · ${origen.tienda.nombre}`)),
       ),
-    h("p", { class: "nota" }, "Revisa la ficha: la búsqueda usa estos datos y pone primero las prendas de este color. Puedes corregir lo que no esté bien."),
+    h(
+      "div",
+      { class: "tarjeta lista" },
+      h(
+        "label",
+        { class: "fila-ficha fila-precio" },
+        h("span", {}, "Tu prenda cuesta"),
+        h("span", { class: "campo-precio" }, h("input", {
+          type: "text",
+          inputmode: "decimal",
+          placeholder: "Añadir",
+          "aria-label": "Precio de tu prenda en euros",
+          value: estado.precio ? (estado.precio / 100).toFixed(2).replace(".", ",") : "",
+          onchange: (evento) => {
+            estado.precio = leerPrecio(evento.target.value);
+            render();
+          },
+        }), "€"),
+      ),
+    ),
+    h(
+      "p",
+      { class: "nota" },
+      estado.precio
+        ? "Solo te enseñaremos alternativas más baratas. "
+        : "Pon cuánto cuesta y solo te enseñaremos alternativas más baratas. ",
+      "Revisa la ficha: la búsqueda usa estos datos y pone primero las prendas de este color.",
+    ),
     h(
       "div",
       { class: "tarjeta lista" },
@@ -521,7 +557,7 @@ async function buscarAlternativas() {
   estado.inspiracion = { estado: "inactivo", datos: null, error: null };
   irA("resultados");
   try {
-    const datos = await api.buscar(estado.analisis.imagen_url, estado.ficha);
+    const datos = await api.buscar(estado.analisis.imagen_url, estado.ficha, estado.precio);
     estado.busqueda = { estado: "listo", datos, error: null, rango: null };
   } catch (error) {
     estado.busqueda = { estado: "error", datos: null, error, rango: null };
@@ -535,7 +571,7 @@ async function buscarInspiracion() {
   render();
   try {
     const yaMostrados = (estado.busqueda.datos?.alternativas ?? []).map((a) => a.producto.id);
-    const datos = await api.inspiracion(estado.ficha, yaMostrados, estado.analisis?.imagen_url);
+    const datos = await api.inspiracion(estado.ficha, yaMostrados, estado.analisis?.imagen_url, estado.precio);
     estado.inspiracion = { estado: "listo", datos, error: null };
   } catch (error) {
     estado.inspiracion = { estado: "error", datos: null, error };
@@ -612,6 +648,7 @@ function vistaResultados() {
     "section",
     { class: "pantalla resultados" },
     cabecera("Alternativas", { atras: () => history.back() }),
+    estado.precio && h("p", { class: "aviso-precio" }, `Solo más baratas que tu prenda (${euros(estado.precio)})`),
     h(
       "div",
       { class: "filtro-fijo" },
@@ -734,6 +771,7 @@ function tarjetaAlternativa(alternativa) {
       p.precio_anterior && h("s", { class: "secundario" }, euros(p.precio_anterior.centimos)),
       alternativa.similitud && h("span", { class: "porcentaje", "aria-label": `${alternativa.similitud.total} % de parecido` }, `${alternativa.similitud.total} %`),
     ),
+    estado.precio > p.precio.centimos && h("span", { class: "ahorro" }, `Ahorras ${euros(estado.precio - p.precio.centimos)}`),
     alternativa.etiquetas.length > 0 && h("span", { class: "etiquetas" }, alternativa.etiquetas.slice(0, 2).map(etiquetaSimilitud)),
   );
 }

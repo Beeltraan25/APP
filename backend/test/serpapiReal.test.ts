@@ -34,7 +34,8 @@ describe("respuestas reales de SerpAPI", () => {
       ficha,
     });
 
-    expect(consultas).toBe(2);
+    // Lens + Shopping con el color + Shopping del mismo estilo sin el color.
+    expect(consultas).toBe(3);
     expect(alternativas.length).toBeGreaterThanOrEqual(15);
     expect(alternativas.every((a) => a.producto.precio.moneda === "EUR")).toBe(true);
     expect(alternativas.some((a) => /\bmujer\b/i.test(a.producto.titulo))).toBe(false);

@@ -113,9 +113,14 @@ export async function analizarEnlace(url) {
   return pedirJSON("v1/analizar", { pagina: { url } });
 }
 
-export async function buscar(imagenUrl, ficha) {
-  if (modoPrueba()) return demo("busqueda", 1400);
-  return pedirJSON("v1/buscar", { imagen_url: imagenUrl ?? null, ficha });
+export async function buscar(imagenUrl, ficha, precioCentimos) {
+  if (modoPrueba()) {
+    // Como el servidor: con precio, solo lo más barato.
+    const datos = await demo("busqueda", 1400);
+    if (precioCentimos) datos.alternativas = datos.alternativas.filter((a) => a.producto.precio.centimos < precioCentimos);
+    return datos;
+  }
+  return pedirJSON("v1/buscar", { imagen_url: imagenUrl ?? null, ficha, precio_original_centimos: precioCentimos ?? null });
 }
 
 /** Los outfits llegan por líneas (NDJSON): avisos de progreso y, al final, el resultado. */
@@ -152,9 +157,9 @@ export async function crearOutfits(cuerpo, alProgresar) {
 }
 
 /** Más prendas del mismo rollo, a partir de referencias de Pinterest. */
-export async function inspiracion(ficha, excluir, imagenUrl) {
+export async function inspiracion(ficha, excluir, imagenUrl, precioCentimos) {
   if (modoPrueba()) return demo("inspiracion", 1800);
-  return pedirJSON("v1/inspiracion", { ficha, excluir, imagen_url: imagenUrl ?? null });
+  return pedirJSON("v1/inspiracion", { ficha, excluir, imagen_url: imagenUrl ?? null, precio_original_centimos: precioCentimos ?? null });
 }
 
 export async function cambiarPieza(consulta, maximoCentimos, excluir) {

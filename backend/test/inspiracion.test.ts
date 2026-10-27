@@ -122,6 +122,17 @@ describe("POST /v1/inspiracion", () => {
     expect(ia.peticionComparar!.instrucciones).toContain("parecido");
   });
 
+  it("con el precio de la prenda, las ideas solo traen prendas más baratas", async () => {
+    const { serpapi, pedir } = preparar();
+    // Los productos de prueba cuestan 29,96–29,99 €.
+    const datos = RespuestaInspiracion.parse(await (await pedir({ ficha, precio_original_centimos: 2998 })).json());
+    const precios = datos.ideas.flatMap((i) => i.productos.map((p) => p.precio.centimos));
+    expect(precios.length).toBeGreaterThan(0);
+    expect(precios.every((c) => c < 2998)).toBe(true);
+    // Quedan pocas: busca también de más barata a más cara.
+    expect(serpapi.shopping).toHaveBeenCalledWith(expect.any(String), { ordenarPorPrecio: true });
+  });
+
   it("pide ideas de la misma silueta", async () => {
     const { ia, pedir } = preparar();
     await pedir({ ficha });

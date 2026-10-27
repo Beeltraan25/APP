@@ -12,14 +12,15 @@ struct FichaSheet: View {
     @State private var campoEditando: CampoEditable?
     @State private var listaAnadiendo: ListaFicha?
     @State private var textoEditado = ""
+    @State private var editandoPrecio = false
     /// Se llama con la ficha revisada al pulsar "Buscar alternativas".
-    private let alBuscar: (FichaPrenda) -> Void
+    private let alBuscar: (FichaPrenda, Precio?) -> Void
     /// Se llama con la ficha revisada al pulsar "Crear outfits".
     private let alCrearOutfits: (FichaPrenda) -> Void
 
     init(
         analisis: AnalisisPresentado,
-        alBuscar: @escaping (FichaPrenda) -> Void = { _ in },
+        alBuscar: @escaping (FichaPrenda, Precio?) -> Void = { _, _ in },
         alCrearOutfits: @escaping (FichaPrenda) -> Void = { _ in }
     ) {
         _vm = State(initialValue: FichaViewModel(analisis: analisis))
@@ -33,6 +34,7 @@ struct FichaSheet: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 28) {
                     cabecera
+                    seccionPrecio
                     seccion("Aspecto") {
                         chipTexto(.color, muestra: vm.ficha.colorPrincipal.color)
                         chipTexto(.estampado)
@@ -81,6 +83,17 @@ struct FichaSheet: View {
             Button("Guardar") { vm.actualizar(campo, a: textoEditado) }
             Button("Cancelar", role: .cancel) {}
         }
+        .alert("¿Cuánto cuesta tu prenda?", isPresented: $editandoPrecio) {
+            TextField("Precio en euros", text: $textoEditado)
+                .keyboardType(.decimalPad)
+            Button("Guardar") { vm.cambiarPrecio(textoEditado) }
+            if vm.precio != nil {
+                Button("Quitar precio", role: .destructive) { vm.cambiarPrecio("") }
+            }
+            Button("Cancelar", role: .cancel) {}
+        } message: {
+            Text("Solo te enseñaremos alternativas más baratas.")
+        }
         .alert(listaAnadiendo?.titulo ?? "Añadir", isPresented: anadiendoEnLista, presenting: listaAnadiendo) { lista in
             TextField("Escribe aquí", text: $textoEditado)
             Button("Añadir") { vm.anadir(textoEditado, a: lista) }
@@ -117,6 +130,29 @@ struct FichaSheet: View {
                 }
             }
             Spacer(minLength: 0)
+        }
+    }
+
+    /// Precio de la prenda: con él, solo se buscan alternativas más baratas.
+    private var seccionPrecio: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("Precio")
+                .font(.footnote.weight(.semibold))
+                .foregroundStyle(.secondary)
+                .textCase(.uppercase)
+            Button {
+                textoEditado = vm.precio.map { String(format: "%.2f", Double($0.centimos) / 100).replacingOccurrences(of: ".", with: ",") } ?? ""
+                editandoPrecio = true
+            } label: {
+                Chip(vm.precio?.formateado ?? "Añadir precio", titulo: "Tu prenda cuesta")
+            }
+            .buttonStyle(.plain)
+            .accessibilityHint("Toca para cambiarlo")
+            Text(vm.precio == nil
+                 ? "Pon cuánto cuesta y solo te enseñaremos alternativas más baratas."
+                 : "Solo te enseñaremos alternativas más baratas.")
+                .font(.footnote)
+                .foregroundStyle(.secondary)
         }
     }
 
@@ -223,8 +259,9 @@ struct FichaSheet: View {
         HStack(spacing: Espacio.s) {
             Button {
                 let ficha = vm.ficha
+                let precio = vm.precio
                 cerrar()
-                alBuscar(ficha)
+                alBuscar(ficha, precio)
             } label: {
                 Label("Buscar alternativas", systemImage: "magnifyingglass")
                     .font(.headline)

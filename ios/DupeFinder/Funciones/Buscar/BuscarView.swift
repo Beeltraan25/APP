@@ -72,8 +72,8 @@ struct BuscarView: View {
         .sheet(item: $vm.analisis) { analisis in
             FichaSheet(
                 analisis: analisis,
-                alBuscar: { ficha in
-                    ruta = [.resultados(PeticionResultados(ficha: ficha, imagenUrl: analisis.respuesta.imagenUrl))]
+                alBuscar: { ficha, precio in
+                    ruta = [.resultados(PeticionResultados(ficha: ficha, imagenUrl: analisis.respuesta.imagenUrl, precioOriginal: precio))]
                 },
                 alCrearOutfits: { ficha in
                     estado.crearOutfits(con: prendaBase(de: analisis, ficha: ficha))

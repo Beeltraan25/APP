@@ -5,7 +5,7 @@ import Testing
 
 /// Servicio de búsqueda que siempre falla.
 nonisolated struct BusquedaQueFalla: ServicioBusqueda {
-    func buscar(imagenUrl: URL?, ficha: FichaPrenda) async throws -> RespuestaBusqueda {
+    func buscar(imagenUrl: URL?, ficha: FichaPrenda, precioOriginal: Int?) async throws -> RespuestaBusqueda {
         throw ErrorApp.sinConexion
     }
 }

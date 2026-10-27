@@ -125,12 +125,17 @@ struct ClienteAPITests {
         }
 
         let ficha = DatosSimulados.analisisFoto.ficha
-        let resultado = try await cliente().buscar(imagenUrl: URL(string: "https://api.prueba/v1/imagenes/an_1"), ficha: ficha)
+        let resultado = try await cliente().buscar(
+            imagenUrl: URL(string: "https://api.prueba/v1/imagenes/an_1"),
+            ficha: ficha,
+            precioOriginal: 5995
+        )
 
         #expect(resultado.alternativas.count == 16)
         #expect(registro.peticion?.url?.path() == "/v1/buscar")
         let json = try JSONSerialization.jsonObject(with: try #require(registro.cuerpo)) as? [String: Any]
         #expect(json?["imagen_url"] as? String == "https://api.prueba/v1/imagenes/an_1")
+        #expect(json?["precio_original_centimos"] as? Int == 5995)
         let fichaEnviada = try #require(json?["ficha"] as? [String: Any])
         #expect(fichaEnviada["palabras_clave_busqueda"] as? [String] == ficha.palabrasClaveBusqueda)
         #expect(fichaEnviada["gramaje_gsm"] as? Int == 350)

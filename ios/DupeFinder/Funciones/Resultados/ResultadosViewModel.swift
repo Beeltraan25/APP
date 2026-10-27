@@ -6,6 +6,8 @@ import Observation
 struct PeticionResultados: Hashable {
     let ficha: FichaPrenda
     let imagenUrl: URL?
+    /// Lo que cuesta la prenda: solo se buscan alternativas más baratas.
+    var precioOriginal: Precio? = nil
 
     /// Para previews y capturas.
     static var ejemplo: PeticionResultados {
@@ -52,7 +54,12 @@ final class ResultadosViewModel {
         inspiracion = .cargando
         let yaMostradas = (estado.valor?.alternativas ?? []).map(\.producto.id)
         do {
-            inspiracion = .listo(try await servicio.inspiracion(ficha: peticion.ficha, imagenUrl: peticion.imagenUrl, excluir: yaMostradas))
+            inspiracion = .listo(try await servicio.inspiracion(
+                ficha: peticion.ficha,
+                imagenUrl: peticion.imagenUrl,
+                precioOriginal: peticion.precioOriginal?.centimos,
+                excluir: yaMostradas
+            ))
         } catch let error as ErrorApp {
             inspiracion = .error(error)
         } catch {
@@ -65,7 +72,7 @@ final class ResultadosViewModel {
         inspiracion = .inactivo
         estado = .cargando
         do {
-            estado = .listo(try await servicio.buscar(imagenUrl: peticion.imagenUrl, ficha: peticion.ficha))
+            estado = .listo(try await servicio.buscar(imagenUrl: peticion.imagenUrl, ficha: peticion.ficha, precioOriginal: peticion.precioOriginal?.centimos))
         } catch let error as ErrorApp {
             estado = .error(error)
         } catch {

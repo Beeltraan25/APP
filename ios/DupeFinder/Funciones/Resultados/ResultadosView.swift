@@ -23,9 +23,14 @@ struct ResultadosView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: Espacio.m) {
                     resumen
+                    if let precio = vm.peticion.precioOriginal {
+                        Label("Solo más baratas que tu prenda (\(precio.formateado))", systemImage: "tag")
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
+                    }
                     contenido
                     if case .listo = vm.estado {
-                        BloqueInspiracion(estado: vm.inspiracion, columnas: columnas) {
+                        BloqueInspiracion(estado: vm.inspiracion, columnas: columnas, precioOriginal: vm.peticion.precioOriginal) {
                             Task { await vm.cargarInspiracion() }
                         }
                         .id("inspiracion")
@@ -137,7 +142,7 @@ struct ResultadosView: View {
         LazyVGrid(columns: columnas, spacing: Espacio.l) {
             ForEach(alternativas) { alternativa in
                 NavigationLink(value: Destino.detalle(alternativa)) {
-                    TarjetaAlternativa(alternativa: alternativa)
+                    TarjetaAlternativa(alternativa: alternativa, precioOriginal: vm.peticion.precioOriginal)
                 }
                 .buttonStyle(.plain)
             }

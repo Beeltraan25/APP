@@ -62,7 +62,7 @@ export interface Exigencia {
   /** Quitar también las de otro tipo de prenda aunque sean del mismo color. */
   soloMismaPrenda: boolean;
 }
-export const EXIGENCIA_BUSQUEDA: Exigencia = { mismoColor: 35, otroColor: 70, otroColorForma: 70, detallesMinimo: 0, soloMismaPrenda: false };
+export const EXIGENCIA_BUSQUEDA: Exigencia = { mismoColor: 35, otroColor: 70, otroColorForma: 65, detallesMinimo: 0, soloMismaPrenda: true };
 /** Ideas de Pinterest: vienen de búsquedas de texto, más sueltas; se filtran más. */
 export const EXIGENCIA_IDEAS: Exigencia = { mismoColor: 65, otroColor: 65, otroColorForma: 70, detallesMinimo: 20, soloMismaPrenda: true };
 
@@ -78,7 +78,7 @@ export function sePareceLoSuficiente(attrs: AtributosCandidata | null, exigencia
 }
 
 /**
- * Lo que la IA no siempre ve: una de otro color solo vale si además tiene el mismo corte, un grosor
+ * Lo que la IA no siempre ve: una de otro color solo vale si además tiene un corte igual o vecino, un grosor
  * parecido y su forma puntúa alto. Si no, es «otra prenda de otro color».
  */
 export function otroColorBienParecida(
@@ -86,7 +86,8 @@ export function otroColorBienParecida(
   forma: number | null,
   exigencia: Exigencia,
 ): boolean {
-  if (puntuaciones.fit !== null && puntuaciones.fit < 100) return false;
+  // Corte igual o vecino (regular ↔ relajado); más lejos, ya es otra prenda.
+  if (puntuaciones.fit !== null && puntuaciones.fit < 60) return false;
   if (puntuaciones.gramaje !== null && puntuaciones.gramaje === 0) return false;
   // Sin datos no hay forma de saber si se parece: fuera.
   return forma !== null && forma >= exigencia.otroColorForma;
