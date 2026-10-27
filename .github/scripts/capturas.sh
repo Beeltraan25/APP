@@ -7,7 +7,7 @@ UDID="$1"
 APP="$2"
 SALIDA="$3"
 BUNDLE="com.beeltraan25.dupefinder"
-PANTALLAS=(inicio menu ficha resultados detalle outfits guardados outfitGuardado compartir inspiracion)
+PANTALLAS=(inicio menu ficha resultados detalle outfits guardados outfitGuardado compartir inspiracion historial)
 
 mkdir -p "$SALIDA"
 xcrun simctl boot "$UDID" 2>/dev/null || true

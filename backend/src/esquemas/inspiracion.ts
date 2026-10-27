@@ -4,6 +4,8 @@ import { FichaPrenda } from "./ficha";
 import { Producto } from "./producto";
 
 export const PeticionInspiracion = z.object({
+  /** La foto de la prenda (la de /v1/analizar): para comparar cada idea con ella. */
+  imagen_url: z.url().nullish(),
   /** La ficha tal como la ha revisado el usuario. */
   ficha: ausentesComoNull(FichaPrenda),
   /** Productos que ya se están mostrando (no se repiten). */

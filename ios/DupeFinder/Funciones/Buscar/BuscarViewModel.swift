@@ -9,6 +9,8 @@ struct AnalisisPresentado: Identifiable {
     let respuesta: RespuestaAnalisis
     /// La foto que hizo o eligió el usuario (para la miniatura). Nil si era un enlace.
     let foto: Data?
+    /// Viene del historial (no es un análisis nuevo).
+    var reabierto = false
 }
 
 @Observable

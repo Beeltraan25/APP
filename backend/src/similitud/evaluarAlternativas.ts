@@ -1,7 +1,7 @@
 import type { Alternativa } from "../esquemas/busqueda";
 import type { FichaPrenda } from "../esquemas/ficha";
 import type { ImagenEntrada, ParteEntrada, ProveedorIA } from "../ia/proveedor";
-import { descargarImagen, leerImagen, type TipoImagen } from "../infra/imagenes";
+import { descargarImagen, descargarMiniatura, leerImagen, type TipoImagen } from "../infra/imagenes";
 import { aBase64 } from "../infra/utilidades";
 import {
   describirOriginal,
@@ -45,6 +45,53 @@ export function coseno(a: number[], b: number[]): number {
   return normaA && normaB ? producto / Math.sqrt(normaA * normaB) : 0;
 }
 
+/**
+ * Cuánto tiene que parecerse una candidata (forma, corte y detalles, sin contar el color; 0–100,
+ * según la IA) para enseñarla. De otro color se exige mucho: si no, «otra prenda azul cualquiera».
+ */
+export interface Exigencia {
+  mismoColor: number;
+  otroColor: number;
+  /**
+   * De otro color, además: puntuación de la forma (grosor, material, corte y detalles). Sin lo
+   * visual: el parecido de la foto baja solo por ser de otro color.
+   */
+  otroColorForma: number;
+  /** Proporción mínima de los detalles de la original que tiene que tener (0 = no se mira). */
+  detallesMinimo: number;
+  /** Quitar también las de otro tipo de prenda aunque sean del mismo color. */
+  soloMismaPrenda: boolean;
+}
+export const EXIGENCIA_BUSQUEDA: Exigencia = { mismoColor: 35, otroColor: 70, otroColorForma: 70, detallesMinimo: 0, soloMismaPrenda: false };
+/** Ideas de Pinterest: vienen de búsquedas de texto, más sueltas; se filtran más. */
+export const EXIGENCIA_IDEAS: Exigencia = { mismoColor: 65, otroColor: 65, otroColorForma: 70, detallesMinimo: 20, soloMismaPrenda: true };
+
+/** Sin atributos de la IA (no ha devuelto esa candidata), parecido visual mínimo para enseñarla. */
+export const VISUAL_MINIMO_SIN_ATRIBUTOS = 50;
+
+/** Si se enseña o no, según los atributos de la IA (sin ellos, se enseña). */
+export function sePareceLoSuficiente(attrs: AtributosCandidata | null, exigencia: Exigencia): boolean {
+  if (!attrs) return true;
+  if (attrs.mismo_color === false) return attrs.misma_prenda && attrs.parecido >= exigencia.otroColor;
+  if (exigencia.soloMismaPrenda && !attrs.misma_prenda) return false;
+  return attrs.parecido >= exigencia.mismoColor;
+}
+
+/**
+ * Lo que la IA no siempre ve: una de otro color solo vale si además tiene el mismo corte, un grosor
+ * parecido y su forma puntúa alto. Si no, es «otra prenda de otro color».
+ */
+export function otroColorBienParecida(
+  puntuaciones: { fit: number | null; gramaje: number | null },
+  forma: number | null,
+  exigencia: Exigencia,
+): boolean {
+  if (puntuaciones.fit !== null && puntuaciones.fit < 100) return false;
+  if (puntuaciones.gramaje !== null && puntuaciones.gramaje === 0) return false;
+  // Sin datos no hay forma de saber si se parece: fuera.
+  return forma !== null && forma >= exigencia.otroColorForma;
+}
+
 export interface EntradaEvaluacion {
   ia: ProveedorIA;
   ficha: FichaPrenda;
@@ -56,12 +103,16 @@ export interface EntradaEvaluacion {
   /** Para leer la foto original si está guardada en este backend. */
   kvImagenes: KVNamespace;
   fetchImagenes?: typeof fetch;
+  /** Por defecto, la de la búsqueda normal. */
+  exigencia?: Exigencia;
 }
 
 export interface ResultadoEvaluacion {
   alternativas: Alternativa[];
   /** Cuántas son de otro color (van al final). */
   deOtroColor: number;
+  /** Cuántas se han quitado por parecerse poco. */
+  descartadas: number;
 }
 
 /**
@@ -71,11 +122,12 @@ export interface ResultadoEvaluacion {
  */
 export async function evaluarAlternativas(entrada: EntradaEvaluacion): Promise<ResultadoEvaluacion> {
   const { ia, ficha, alternativas } = entrada;
-  if (!alternativas.length) return { alternativas, deOtroColor: 0 };
+  if (!alternativas.length) return { alternativas, deOtroColor: 0, descartadas: 0 };
+  const exigencia = entrada.exigencia ?? EXIGENCIA_BUSQUEDA;
 
   const [original, miniaturas] = await Promise.all([
     imagenOriginal(entrada),
-    Promise.all(entrada.miniaturas.map((url) => (url ? descargarImagen(url, entrada.fetchImagenes) : Promise.resolve(null)))),
+    Promise.all(entrada.miniaturas.map((url) => (url ? descargarMiniatura(url, entrada.fetchImagenes) : Promise.resolve(null)))),
   ]);
 
   // Visual y atributos a la vez: son independientes.
@@ -93,6 +145,7 @@ export async function evaluarAlternativas(entrada: EntradaEvaluacion): Promise<R
   const labOriginal = hexALab(ficha.color_principal.hex);
   const fibrasOriginal = fibrasDeFicha(ficha);
 
+  const pocoParecidas = new Set<number>();
   const evaluadas = alternativas.map((alternativa, indice) => {
     const attrs = atributos?.get(indice) ?? null;
     const labCandidata = attrs?.color ? hexALab(attrs.color.hex) : null;
@@ -101,17 +154,25 @@ export async function evaluarAlternativas(entrada: EntradaEvaluacion): Promise<R
     const visual = visuales?.[indice] ?? null;
     const mismaPrenda = attrs?.misma_prenda ?? true;
 
-    const similitud = combinar(
-      {
-        visual: visual === null ? null : puntuacionVisual(visual),
-        color: deltaE === null ? null : puntuacionColor(deltaE),
-        gramaje: puntuacionGramaje(ficha.gramaje_estimado, attrs?.gramaje_estimado ?? null),
-        material: puntuacionMaterial(fibrasOriginal, fibras),
-        fit: puntuacionFit(ficha.fit, attrs?.fit ?? null),
-        detalles: attrs ? puntuacionDetalles(ficha.detalles, attrs.detalles_presentes) : null,
-      },
-      mismaPrenda,
-    );
+    const puntuaciones = {
+      visual: visual === null ? null : puntuacionVisual(visual),
+      color: deltaE === null ? null : puntuacionColor(deltaE),
+      gramaje: puntuacionGramaje(ficha.gramaje_estimado, attrs?.gramaje_estimado ?? null),
+      material: puntuacionMaterial(fibrasOriginal, fibras),
+      fit: puntuacionFit(ficha.fit, attrs?.fit ?? null),
+      detalles: attrs ? puntuacionDetalles(ficha.detalles, attrs.detalles_presentes) : null,
+    };
+    const similitud = combinar(puntuaciones, mismaPrenda);
+    if (attrs?.mismo_color === false) {
+      const forma = combinar({ ...puntuaciones, color: null, visual: null }, mismaPrenda)?.total ?? null;
+      if (!otroColorBienParecida(puntuaciones, forma, exigencia)) pocoParecidas.add(indice);
+    }
+    // Sin datos de la IA, solo queda la foto: si se parece poco, fuera.
+    if (!attrs && puntuaciones.visual !== null && puntuaciones.visual < VISUAL_MINIMO_SIN_ATRIBUTOS) pocoParecidas.add(indice);
+    // Ideas de Pinterest: tienen que tener al menos parte de los detalles clave (bolsillos cargo, capucha…).
+    if (exigencia.detallesMinimo && puntuaciones.detalles !== null && puntuaciones.detalles < exigencia.detallesMinimo) {
+      pocoParecidas.add(indice);
+    }
 
     const etiquetas = attrs
       ? crearEtiquetas(ficha, {
@@ -136,6 +197,8 @@ export async function evaluarAlternativas(entrada: EntradaEvaluacion): Promise<R
       if (atributos?.get(posicion)?.publico !== "mujer") return true;
       return dichoDeHombre(alternativa.producto.titulo, alternativa.producto.url);
     })
+    // Fuera las que se parecen poco (sobre todo las de otro color: tienen que ser casi la misma prenda).
+    .filter(({ posicion }) => !pocoParecidas.has(posicion) && sePareceLoSuficiente(atributos?.get(posicion) ?? null, exigencia))
     // El mismo color primero: es lo que más se nota al ver dos prendas juntas.
     .sort(
       (a, b) =>
@@ -144,7 +207,11 @@ export async function evaluarAlternativas(entrada: EntradaEvaluacion): Promise<R
         a.posicion - b.posicion,
     )
     .map(({ alternativa }) => alternativa);
-  return { alternativas: ordenadas, deOtroColor: ordenadas.filter((a) => a.mismo_color === false).length };
+  return {
+    alternativas: ordenadas,
+    deOtroColor: ordenadas.filter((a) => a.mismo_color === false).length,
+    descartadas: alternativas.length - ordenadas.length,
+  };
 }
 
 const MARCA_HOMBRE = /\b(hombres?|men|mens|man|caballero)\b/i;
@@ -155,7 +222,11 @@ export function dichoDeHombre(titulo: string, url: string): boolean {
 }
 
 /** La foto original: si es una de este backend se lee de KV; si no (imagen de la tienda), se descarga. */
-async function imagenOriginal({ imagenUrl, kvImagenes, fetchImagenes }: EntradaEvaluacion): Promise<Imagen | null> {
+export async function imagenOriginal({
+  imagenUrl,
+  kvImagenes,
+  fetchImagenes,
+}: Pick<EntradaEvaluacion, "imagenUrl" | "kvImagenes" | "fetchImagenes">): Promise<Imagen | null> {
   if (!imagenUrl) return null;
   const propia = /\/v1\/imagenes\/(an_[0-9a-f]{24})$/.exec(new URL(imagenUrl).pathname)?.[1];
   if (propia) {

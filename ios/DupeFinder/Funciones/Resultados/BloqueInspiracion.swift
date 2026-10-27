@@ -16,7 +16,7 @@ struct BloqueInspiracion: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text("Más del mismo rollo")
                     .font(.title2.bold())
-                Text("Miramos cómo se lleva esta prenda en Pinterest y te proponemos más prendas de ese estilo, también en otros colores.")
+                Text("Miramos cómo se lleva esta prenda en Pinterest y te proponemos prendas muy parecidas, también en otros colores.")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
             }
@@ -38,7 +38,7 @@ struct BloqueInspiracion: View {
                         ProgressView()
                         Text("Buscando inspiración en Pinterest…")
                     }
-                    Text("Tarda unos 20–40 segundos.")
+                    Text("Tarda casi un minuto: comparamos cada prenda con tu foto.")
                         .font(.footnote)
                 }
                 .foregroundStyle(.secondary)

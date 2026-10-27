@@ -152,9 +152,9 @@ export async function crearOutfits(cuerpo, alProgresar) {
 }
 
 /** Más prendas del mismo rollo, a partir de referencias de Pinterest. */
-export async function inspiracion(ficha, excluir) {
+export async function inspiracion(ficha, excluir, imagenUrl) {
   if (modoPrueba()) return demo("inspiracion", 1800);
-  return pedirJSON("v1/inspiracion", { ficha, excluir });
+  return pedirJSON("v1/inspiracion", { ficha, excluir, imagen_url: imagenUrl ?? null });
 }
 
 export async function cambiarPieza(consulta, maximoCentimos, excluir) {

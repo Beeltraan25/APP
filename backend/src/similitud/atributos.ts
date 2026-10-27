@@ -20,6 +20,12 @@ export function esquemaAtributos(detallesOriginales: string[]) {
           .describe(
             "true solo si el color dominante es el mismo que el de la original o un tono casi igual (azul marino ≈ azul noche; gris marengo ≠ gris claro; negro ≠ gris oscuro; crudo ≠ blanco óptico)",
           ),
+        parecido: z
+          .number()
+          .int()
+          .min(0)
+          .max(100)
+          .describe("Cuánto se parece a la original SIN contar el color: tipo, silueta, corte, largo, tejido, lavado y detalles (0–100)"),
         color: z
           .object({ nombre: z.string(), hex: z.string().describe("#RRGGBB") })
           .nullable()
@@ -43,6 +49,7 @@ Reglas:
 - fibras: solo si el título o la foto lo dejan claro (p. ej. "denim" → algodón, "punto de lana" → lana). Si no, lista vacía.
 - gramaje_estimado y fit: null si no se puede deducir.
 - detalles_presentes: solo detalles de la lista de la prenda original que se ven o se mencionan en la candidata.
+- parecido: puntúa la forma sin mirar el color. 85–100: casi la misma prenda (mismo corte, largo y detalles clave). 65–84: mismo tipo y silueta con algún detalle distinto. 40–64: mismo tipo pero otra silueta o estilo (p. ej. vaquero pitillo frente a uno ancho). Menos de 40: poco que ver. Sé exigente: el usuario quiere prendas que se parezcan de verdad.
 - misma_prenda: false si es otro tipo de prenda (unos vaqueros cortos no son unos vaqueros largos; una camiseta no es una sudadera).
 - publico: "mujer" si la prenda es de la sección o del corte de mujer (tiro alto, patrón femenino, título de mujer). Que la lleve una modelo es solo una pista: una prenda unisex puede llevarla cualquiera. Si el título dice "hombre", es "hombre". Si dudas, "unisex".
 - Devuelve exactamente una entrada por candidata, con su número en "indice".

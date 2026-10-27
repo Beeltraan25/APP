@@ -15,21 +15,29 @@ struct GuardadosView: View {
     private var outfits: [OutfitGuardado]
     @State private var tiendaAbierta: EnlaceTienda?
     @State private var ruta: [OutfitGuardado] = []
+    @State private var viendoHistorial = false
+    @Query private var historial: [PrendaBuscada]
 
     var body: some View {
         NavigationStack(path: $ruta) {
             Group {
-                if prendas.isEmpty && outfits.isEmpty {
+                if prendas.isEmpty && outfits.isEmpty && historial.isEmpty {
                     ContentUnavailableView {
                         Label("Aún no has guardado nada", systemImage: "bookmark")
                     } description: {
-                        Text("Guarda alternativas y outfits para tenerlos siempre a mano.")
+                        Text("Guarda alternativas y outfits para tenerlos siempre a mano. Las fotos que busques también aparecerán aquí.")
                     } actions: {
                         Button("Buscar una prenda", action: irABuscar)
                             .buttonStyle(.glass)
                     }
                 } else {
                     List {
+                        if !historial.isEmpty {
+                            Section {
+                                TiraHistorial { viendoHistorial = true }
+                            }
+                            .listRowSeparator(.hidden)
+                        }
                         if !outfits.isEmpty {
                             Section("Outfits") {
                                 ForEach(outfits) { outfit in
@@ -64,8 +72,10 @@ struct GuardadosView: View {
             .navigationDestination(for: OutfitGuardado.self) { outfit in
                 DetalleOutfitGuardado(outfit: outfit)
             }
+            .navigationDestination(isPresented: $viendoHistorial) { HistorialView() }
             .task {
                 if ModoCaptura.actual == .outfitGuardado, let primero = outfits.first { ruta = [primero] }
+                if ModoCaptura.actual == .historial { viendoHistorial = true }
             }
             .sheet(item: $tiendaAbierta) { enlace in
                 NavegadorTienda(url: enlace.url).ignoresSafeArea()
@@ -138,5 +148,6 @@ private struct FilaOutfitGuardado: View {
 
 #Preview {
     GuardadosView {}
-        .modelContainer(for: [PrendaGuardada.self, OutfitGuardado.self], inMemory: true)
+        .modelContainer(for: [PrendaGuardada.self, OutfitGuardado.self, PrendaBuscada.self], inMemory: true)
+        .environment(EstadoCompartido())
 }

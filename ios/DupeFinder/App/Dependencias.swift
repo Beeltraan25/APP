@@ -48,7 +48,7 @@ final class Dependencias {
 /// Pantalla que se abre al lanzar la app con `-captura <pantalla>`.
 /// Lo usa la integración continua para hacer capturas sin Mac.
 enum ModoCaptura: String {
-    case inicio, menu, ficha, resultados, detalle, outfits, guardados, outfitGuardado, compartir, inspiracion
+    case inicio, menu, ficha, resultados, detalle, outfits, guardados, outfitGuardado, compartir, inspiracion, historial
 
     static var actual: ModoCaptura? {
         UserDefaults.standard.string(forKey: "captura").flatMap(ModoCaptura.init(rawValue:))

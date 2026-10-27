@@ -248,6 +248,13 @@ ios/
 - Hasta 30 alternativas por búsqueda (18 de Lens como mucho): es lo que cabe en el límite gratuito de Cloudflare de 50 descargas por petición.
 - `POST /v1/inspiracion` { ficha, excluir }: Google Images con `site:pinterest.com` → la IA ve 8 referencias y describe el «rollo» y 2–4 ideas de prendas del mismo tipo (al menos una de otro color) → Google Shopping por idea (`buscarPieza`, tiendas de la lista blanca). Unas 4 consultas de SerpAPI, por eso va en un botón aparte («Ver ideas de Pinterest»); se guarda 24 h por prenda. Prueba real con tus vaqueros: 39 s, 12 referencias y 3 ideas con 8 prendas cada una.
 
+**Más parecidas e historial de fotos:**
+- La IA puntúa cada candidata con `parecido` (0–100): forma, corte, tejido y detalles **sin contar el color**. Se quitan las que se parecen poco (`sePareceLoSuficiente`): del mismo color, por debajo de 35; de otro color, hace falta parecido ≥ 70, ser el mismo tipo de prenda, el mismo corte, un grosor parecido y una «forma» (grosor, material, corte y detalles, sin la foto) ≥ 70. Las candidatas que la IA no devuelve solo se enseñan si la foto se parece (visual ≥ 50).
+- Las miniaturas de Google Shopping vienen siempre en WebP y los embeddings de imagen solo admiten JPEG/PNG: se piden convertidas a JPEG con wsrv.nl (gratis, sin clave; si falla, la original). Antes la puntuación visual faltaba en casi todas.
+- Ideas de Pinterest: la búsqueda usa la misma frase que la de tiendas, la IA de estilista ve primero la foto original (manda sobre Pinterest) y después cada producto de las ideas se compara con la prenda con exigencia `EXIGENCIA_IDEAS` (más estricta). `POST /v1/inspiracion` acepta `imagen_url`. Prueba real con los vaqueros carpintero: 36 s, 4 de 22 descartadas, ideas «Carpintero en lavado claro» y «Denim ancho negro».
+- Caché `v3`.
+- **Historial «Tus fotos»** (solo en el dispositivo): cada análisis (foto o enlace) se guarda sin repetir (SHA-256 de la foto o la URL del producto), hasta 60. App: modelo SwiftData `PrendaBuscada` (foto en almacenamiento externo + miniatura de 300 px), tira en Inicio y en Guardados y pantalla `HistorialView`. Web: IndexedDB (`js/historial.js`). Al tocar una se abre su ficha; si la foto tiene más de 23 h, se vuelve a analizar porque el servidor ya la ha borrado (Google Lens la necesita).
+
 **Notas de diseño que afectan a la estructura**
 
 - **Servicios con versión simulada:** cada servicio es un protocolo con dos implementaciones (`…Remoto` y `…Simulado`). La fase 1 funciona entera con los JSON de `Simulados/` y, en la fase 2, basta con cambiar a la versión remota. Además, las pruebas de diseño no gastan cuota gratuita.

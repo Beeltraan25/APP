@@ -51,7 +51,8 @@ export function crearRutaBuscar({ crearSerpapi, crearIA, fetchImagenes }: Depend
     let alternativas = encontradas.alternativas;
     let deOtroColor = 0;
     try {
-      ({ alternativas, deOtroColor } = await evaluarAlternativas({
+      let descartadas = 0;
+      ({ alternativas, deOtroColor, descartadas } = await evaluarAlternativas({
         ia: crearIA(c.env),
         ficha,
         alternativas,
@@ -60,6 +61,7 @@ export function crearRutaBuscar({ crearSerpapi, crearIA, fetchImagenes }: Depend
         kvImagenes: c.env.IMAGENES,
         fetchImagenes,
       }));
+      console.log(`Similitud: ${descartadas} descartadas por parecerse poco, ${deOtroColor} de otro color`);
     } catch (error) {
       console.warn("No se ha podido puntuar la similitud", error);
     }

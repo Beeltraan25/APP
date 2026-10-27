@@ -73,12 +73,14 @@ public final class ClienteAPI: Sendable {
     }
 
     /// POST /v1/inspiracion: el «rollo» de la prenda según Pinterest y más prendas de ese estilo.
-    public func inspiracion(ficha: FichaPrenda, excluir: [String]) async throws -> RespuestaInspiracion {
+    public func inspiracion(ficha: FichaPrenda, imagenUrl: URL?, excluir: [String]) async throws -> RespuestaInspiracion {
         var peticion = peticion(ruta: "v1/inspiracion")
+        // Pinterest + IA + Shopping + comparar cada prenda con la foto: puede pasar del minuto.
+        peticion.timeoutInterval = 150
         peticion.setValue("application/json", forHTTPHeaderField: "Content-Type")
         let codificador = JSONEncoder()
         codificador.keyEncodingStrategy = .convertToSnakeCase
-        peticion.httpBody = try codificador.encode(CuerpoInspiracion(ficha: ficha, excluir: excluir))
+        peticion.httpBody = try codificador.encode(CuerpoInspiracion(imagenUrl: imagenUrl, ficha: ficha, excluir: excluir))
         return try await enviar(peticion)
     }
 
@@ -220,6 +222,7 @@ private struct CuerpoBusqueda: Encodable {
 }
 
 private struct CuerpoInspiracion: Encodable {
+    let imagenUrl: URL?
     let ficha: FichaPrenda
     let excluir: [String]
 }

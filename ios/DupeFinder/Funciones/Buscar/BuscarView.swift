@@ -1,6 +1,7 @@
 import DupeDiseno
 import DupeNucleo
 import PhotosUI
+import SwiftData
 import SwiftUI
 import UIKit
 
@@ -21,6 +22,7 @@ struct BuscarView: View {
     @Environment(\.scenePhase) private var fase
     @Environment(\.accessibilityReduceMotion) private var reducirMovimiento
     @Environment(EstadoCompartido.self) private var estado
+    @Environment(\.modelContext) private var contexto
     private let modoPrueba: Bool
 
     init(servicio: any ServicioAnalisis, busqueda: any ServicioBusqueda, modoPrueba: Bool = false) {
@@ -39,6 +41,11 @@ struct BuscarView: View {
                 sugerenciaPortapapeles
                     .frame(minHeight: 110, alignment: .top)
                 Spacer()
+                if !menuAbierto {
+                    TiraHistorial(limite: 10) { estado.pestana = .guardados }
+                        .padding(.bottom, Espacio.m)
+                        .transition(.opacity)
+                }
                 if modoPrueba && ModoCaptura.actual == nil {
                     Label("Modo de prueba: no hay servidor configurado", systemImage: "testtube.2")
                         .font(.footnote)
@@ -77,7 +84,14 @@ struct BuscarView: View {
         .onChange(of: vm.analisis?.id) {
             if let analisis = vm.analisis {
                 estado.prendaBase = prendaBase(de: analisis, ficha: analisis.respuesta.ficha)
+                // Toda prenda analizada queda en "Tus fotos".
+                Historial.registrar(analisis, en: contexto)
             }
+        }
+        .onChange(of: estado.porReabrir?.persistentModelID) {
+            guard let prenda = estado.porReabrir else { return }
+            estado.porReabrir = nil
+            Task { await reabrir(prenda) }
         }
         .fullScreenCover(isPresented: $mostrandoCamara) {
             CamaraView { datos in
@@ -238,6 +252,20 @@ struct BuscarView: View {
             imagenUrl: analisis.respuesta.imagenUrl,
             fotoLocal: analisis.foto
         )
+    }
+
+    /// Abre la ficha de una prenda del historial. Si era una foto de hace más de un día, el
+    /// servidor ya la ha borrado: se vuelve a analizar (Google Lens la necesita para buscar).
+    private func reabrir(_ prenda: PrendaBuscada) async {
+        ruta = []
+        cambiarMenu(abierto: false)
+        if prenda.caducada, let foto = prenda.foto {
+            await vm.analizar(.foto(foto), foto: foto)
+        } else if let analisis = prenda.analisis() {
+            vm.analisis = analisis
+        } else {
+            vm.mensajeError = "No hemos podido abrir esa prenda. Prueba a buscarla otra vez."
+        }
     }
 
     private func cambiarMenu(abierto: Bool) {

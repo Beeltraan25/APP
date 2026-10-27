@@ -4,12 +4,12 @@ import Foundation
 public protocol ServicioBusqueda: Sendable {
     func buscar(imagenUrl: URL?, ficha: FichaPrenda) async throws -> RespuestaBusqueda
     /// Más prendas del mismo rollo, a partir de referencias de Pinterest.
-    func inspiracion(ficha: FichaPrenda, excluir: [String]) async throws -> RespuestaInspiracion
+    func inspiracion(ficha: FichaPrenda, imagenUrl: URL?, excluir: [String]) async throws -> RespuestaInspiracion
 }
 
 extension ServicioBusqueda {
     /// Por defecto no hay inspiración (p. ej. en servicios de prueba que solo buscan).
-    public func inspiracion(ficha: FichaPrenda, excluir: [String]) async throws -> RespuestaInspiracion {
+    public func inspiracion(ficha: FichaPrenda, imagenUrl: URL?, excluir: [String]) async throws -> RespuestaInspiracion {
         throw ErrorApp.desconocido
     }
 }
@@ -29,7 +29,7 @@ public struct ServicioBusquedaSimulado: ServicioBusqueda {
         return DatosSimulados.busqueda
     }
 
-    public func inspiracion(ficha: FichaPrenda, excluir: [String]) async throws -> RespuestaInspiracion {
+    public func inspiracion(ficha: FichaPrenda, imagenUrl: URL?, excluir: [String]) async throws -> RespuestaInspiracion {
         if retraso > .zero {
             try await Task.sleep(for: retraso)
         }
@@ -49,7 +49,7 @@ public struct ServicioBusquedaRemoto: ServicioBusqueda {
         try await cliente.buscar(imagenUrl: imagenUrl, ficha: ficha)
     }
 
-    public func inspiracion(ficha: FichaPrenda, excluir: [String]) async throws -> RespuestaInspiracion {
-        try await cliente.inspiracion(ficha: ficha, excluir: excluir)
+    public func inspiracion(ficha: FichaPrenda, imagenUrl: URL?, excluir: [String]) async throws -> RespuestaInspiracion {
+        try await cliente.inspiracion(ficha: ficha, imagenUrl: imagenUrl, excluir: excluir)
     }
 }

@@ -52,7 +52,7 @@ final class ResultadosViewModel {
         inspiracion = .cargando
         let yaMostradas = (estado.valor?.alternativas ?? []).map(\.producto.id)
         do {
-            inspiracion = .listo(try await servicio.inspiracion(ficha: peticion.ficha, excluir: yaMostradas))
+            inspiracion = .listo(try await servicio.inspiracion(ficha: peticion.ficha, imagenUrl: peticion.imagenUrl, excluir: yaMostradas))
         } catch let error as ErrorApp {
             inspiracion = .error(error)
         } catch {

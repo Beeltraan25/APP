@@ -1,5 +1,5 @@
 /** Súbela cuando cambien los prompts o los esquemas: así se ignora la caché antigua. */
-const VERSION = "v2";
+const VERSION = "v3";
 
 export const TTL_24_HORAS = 60 * 60 * 24;
 

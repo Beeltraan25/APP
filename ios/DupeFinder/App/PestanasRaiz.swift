@@ -35,5 +35,5 @@ struct PestanasRaiz: View {
     PestanasRaiz()
         .environment(Dependencias.simuladas())
         .environment(EstadoCompartido())
-        .modelContainer(for: [PrendaGuardada.self, OutfitGuardado.self], inMemory: true)
+        .modelContainer(for: [PrendaGuardada.self, OutfitGuardado.self, PrendaBuscada.self], inMemory: true)
 }

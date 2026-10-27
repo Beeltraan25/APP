@@ -1,6 +1,7 @@
 // Dupe Finder (versión web): las mismas pantallas que la app de iPhone, en Safari.
 import * as api from "./api.js";
 import * as guardados from "./guardados.js";
+import * as historial from "./historial.js";
 import { abrirHoja, avisar, conMayuscula, euros, h, icono, imagen } from "./ui.js";
 
 // --- Datos fijos (los mismos que la app) ---
@@ -55,6 +56,8 @@ const estado = {
   base: null,
   /** Ideas de Pinterest para la búsqueda actual. */
   inspiracion: { estado: "inactivo", datos: null, error: null },
+  /** «Tus fotos»: lo que se ha analizado en este navegador, de lo más reciente a lo más antiguo. */
+  historial: [],
   outfits: { estilo: "old money", presupuesto: 6000, generando: false, progreso: "", respuesta: null, error: null, estiloUsado: null },
 };
 
@@ -283,6 +286,7 @@ function vistaInicio() {
           ),
       estado.menuAbierto && estado.pidiendoEnlace && formularioEnlace,
     ),
+    !estado.menuAbierto && tiraHistorial(),
     estado.analizando &&
       h("div", { class: "pildora cristal", role: "status" }, h("span", { class: "girando", "aria-hidden": "true" }), "Analizando la prenda…"),
   );
@@ -293,8 +297,24 @@ async function analizarFoto(archivo) {
   render();
   try {
     const { blob, url } = await api.prepararFoto(archivo);
+    await analizarFotoPreparada(blob, url);
+  } catch (error) {
+    mostrarError(error);
+    estado.analizando = false;
+    render();
+  }
+}
+
+/** La foto ya reducida: se analiza y queda en «Tus fotos». */
+async function analizarFotoPreparada(blob, url) {
+  estado.analizando = true;
+  render();
+  try {
     estado.fotoLocal = url;
-    abrirFicha(await api.analizarFoto(blob));
+    const analisis = await api.analizarFoto(blob);
+    abrirFicha(analisis);
+    await historial.registrar(analisis, blob);
+    await refrescarHistorial();
   } catch (error) {
     mostrarError(error);
   } finally {
@@ -313,13 +333,71 @@ async function analizarEnlace(texto) {
   render();
   try {
     estado.fotoLocal = null;
-    abrirFicha(await api.analizarEnlace(url));
+    const analisis = await api.analizarEnlace(url);
+    abrirFicha(analisis);
+    await historial.registrar(analisis, null);
+    await refrescarHistorial();
   } catch (error) {
     mostrarError(error);
   } finally {
     estado.analizando = false;
     render();
   }
+}
+
+async function refrescarHistorial() {
+  estado.historial = await historial.cargar();
+}
+
+/**
+ * Abre otra vez la ficha de una prenda del historial. Si era una foto de hace más de un día, el
+ * servidor ya la ha borrado: se vuelve a analizar (Google Lens la necesita para buscar).
+ */
+async function reabrir(entrada) {
+  estado.pestana = "buscar";
+  if (historial.caducada(entrada)) {
+    await analizarFotoPreparada(entrada.foto, URL.createObjectURL(entrada.foto));
+    return;
+  }
+  estado.fotoLocal = entrada.foto ? URL.createObjectURL(entrada.foto) : null;
+  abrirFicha(entrada.analisis);
+  await historial.usar(entrada);
+  await refrescarHistorial();
+}
+
+/** Miniatura de una prenda del historial (botón que la reabre). */
+function celdaHistorial(entrada) {
+  const fecha = new Date(entrada.fechaUso);
+  return h(
+    "button",
+    { class: "foto-historial", onclick: () => reabrir(entrada), "aria-label": `${entrada.titulo}. Abre su ficha` },
+    imagen(entrada.miniatura ?? entrada.imagen, "foto-miniatura", ""),
+    h("span", { class: "titulo" }, entrada.titulo),
+    h("span", { class: "secundario" }, fechaRelativa(fecha)),
+  );
+}
+
+function fechaRelativa(fecha) {
+  const dias = Math.floor((Date.now() - fecha.getTime()) / 86_400_000);
+  if (dias <= 0) return "Hoy";
+  if (dias === 1) return "Ayer";
+  if (dias < 7) return `Hace ${dias} días`;
+  return fecha.toLocaleDateString("es-ES", { day: "numeric", month: "short" });
+}
+
+function tiraHistorial() {
+  if (!estado.historial.length) return null;
+  return h(
+    "div",
+    { class: "tira-historial" },
+    h(
+      "div",
+      { class: "tira-cabecera" },
+      h("h3", {}, "Tus fotos"),
+      h("button", { class: "boton-texto", onclick: () => cambiarPestana("guardados") }, "Ver todo"),
+    ),
+    h("div", { class: "moodboard" }, estado.historial.slice(0, 10).map(celdaHistorial)),
+  );
 }
 
 function abrirFicha(analisis) {
@@ -457,7 +535,7 @@ async function buscarInspiracion() {
   render();
   try {
     const yaMostrados = (estado.busqueda.datos?.alternativas ?? []).map((a) => a.producto.id);
-    const datos = await api.inspiracion(estado.ficha, yaMostrados);
+    const datos = await api.inspiracion(estado.ficha, yaMostrados, estado.analisis?.imagen_url);
     estado.inspiracion = { estado: "listo", datos, error: null };
   } catch (error) {
     estado.inspiracion = { estado: "error", datos: null, error };
@@ -567,7 +645,7 @@ function bloqueInspiracion() {
     "div",
     { class: "inspiracion-cabecera" },
     h("h2", {}, "Más del mismo rollo"),
-    h("p", { class: "secundario" }, "Miramos cómo se lleva esta prenda en Pinterest y te proponemos más prendas de ese estilo, también en otros colores."),
+    h("p", { class: "secundario" }, "Miramos cómo se lleva esta prenda en Pinterest y te proponemos prendas muy parecidas, también en otros colores."),
   );
 
   if (insp.estado === "inactivo") {
@@ -584,7 +662,7 @@ function bloqueInspiracion() {
       { class: "tarjeta inspiracion" },
       cabeceraBloque,
       h("p", { class: "progreso", role: "status" }, h("span", { class: "girando", "aria-hidden": "true" }), "Buscando inspiración en Pinterest…"),
-      h("p", { class: "nota" }, "Tarda unos 20–40 segundos."),
+      h("p", { class: "nota" }, "Tarda casi un minuto: comparamos cada prenda con tu foto."),
     );
   }
   if (insp.estado === "error") {
@@ -1001,7 +1079,7 @@ function abrirCambiarPieza(outfit, pieza) {
 function vistaGuardados() {
   const outfits = guardados.outfits();
   const prendas = guardados.prendas();
-  if (outfits.length === 0 && prendas.length === 0) {
+  if (outfits.length === 0 && prendas.length === 0 && estado.historial.length === 0) {
     return h(
       "section",
       { class: "pantalla" },
@@ -1011,7 +1089,7 @@ function vistaGuardados() {
         { class: "vacio" },
         icono("marcador", 40),
         h("h2", {}, "Aún no has guardado nada"),
-        h("p", {}, "Guarda alternativas y outfits para tenerlos siempre a mano."),
+        h("p", {}, "Guarda alternativas y outfits para tenerlos siempre a mano. Las fotos que busques también aparecerán aquí."),
         h("button", { class: "boton cristal", onclick: () => cambiarPestana("buscar") }, "Buscar una prenda"),
       ),
     );
@@ -1036,6 +1114,45 @@ function vistaGuardados() {
     "section",
     { class: "pantalla guardados" },
     cabecera("Guardados"),
+    estado.historial.length > 0 &&
+      h(
+        "div",
+        { class: "seccion" },
+        h(
+          "div",
+          { class: "tira-cabecera" },
+          h("h3", {}, `Tus fotos · ${estado.historial.length}`),
+          h(
+            "button",
+            {
+              class: "boton-texto peligro",
+              onclick: async () => {
+                if (!confirm("¿Borrar todas las fotos del historial? Tus prendas y outfits guardados no se borran.")) return;
+                await historial.borrarTodo();
+                await refrescarHistorial();
+                render();
+              },
+            },
+            "Borrar todo",
+          ),
+        ),
+        h(
+          "div",
+          { class: "rejilla-historial" },
+          estado.historial.map((entrada) =>
+            h(
+              "div",
+              { class: "con-borrar" },
+              celdaHistorial(entrada),
+              borrar(async () => {
+                await historial.borrar(entrada.id);
+                await refrescarHistorial();
+                render();
+              }, `Quitar ${entrada.titulo} del historial`),
+            ),
+          ),
+        ),
+      ),
     outfits.length > 0 &&
       h(
         "div",
@@ -1170,3 +1287,4 @@ for (const boton of document.querySelectorAll(".pestanas button")) {
 if (api.leerClaveDeLaDireccion()) avisar("Conectado a tu servidor");
 history.replaceState({ pantalla: "inicio" }, "");
 render();
+refrescarHistorial().then(render);

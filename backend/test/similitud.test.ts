@@ -8,10 +8,21 @@ import {
   puntuacionFit,
   puntuacionGramaje,
   puntuacionMaterial,
+  type AtributosCandidata,
 } from "../src/similitud/atributos";
 import { deltaE2000, hexALab, puntuacionColor } from "../src/similitud/color";
-import { coseno, dichoDeHombre, evaluarAlternativas, puntuacionVisual } from "../src/similitud/evaluarAlternativas";
+import {
+  coseno,
+  dichoDeHombre,
+  evaluarAlternativas,
+  EXIGENCIA_BUSQUEDA,
+  EXIGENCIA_IDEAS,
+  otroColorBienParecida,
+  puntuacionVisual,
+  sePareceLoSuficiente,
+} from "../src/similitud/evaluarAlternativas";
 import { combinar, crearEtiquetas, PESOS } from "../src/similitud/puntuar";
+import { descargarMiniatura, urlEnJpeg } from "../src/infra/imagenes";
 import { fichaIAEjemplo, JPEG_MINIMO, KVSimulado } from "./ayudas";
 
 const ficha = normalizarFicha(fichaIAEjemplo(), "pagina");
@@ -214,8 +225,8 @@ describe("evaluarAlternativas", () => {
 
   const atributos = {
     prendas: [
-      { indice: 0, misma_prenda: true, mismo_color: true, publico: "hombre", color: { nombre: "rojo", hex: "#C8102E" }, fibras: ["algodón"], gramaje_estimado: "medio", fit: "regular", detalles_presentes: [] },
-      { indice: 1, misma_prenda: true, mismo_color: true, publico: "hombre", color: { nombre: "gris", hex: "#4A4A4A" }, fibras: ["algodón"], gramaje_estimado: "pesado", fit: "oversize", detalles_presentes: ["hombros caídos", "bolsillo canguro"] },
+      { indice: 0, misma_prenda: true, mismo_color: true, parecido: 50, publico: "hombre", color: { nombre: "rojo", hex: "#C8102E" }, fibras: ["algodón"], gramaje_estimado: "medio", fit: "regular", detalles_presentes: [] },
+      { indice: 1, misma_prenda: true, mismo_color: true, parecido: 95, publico: "hombre", color: { nombre: "gris", hex: "#4A4A4A" }, fibras: ["algodón"], gramaje_estimado: "pesado", fit: "oversize", detalles_presentes: ["hombros caídos", "bolsillo canguro"] },
     ],
   };
 
@@ -254,11 +265,70 @@ describe("evaluarAlternativas", () => {
 
   it("pone primero las del mismo color aunque otra se parezca más", async () => {
     // "a" se parece más a la vista, pero es de otro color: va detrás.
-    const otroColor = { prendas: [{ ...atributos.prendas[0]!, mismo_color: false }, atributos.prendas[1]!] };
+    const otroColor = {
+      prendas: [{ ...atributos.prendas[0]!, mismo_color: false, parecido: 85, fit: "oversize", gramaje_estimado: "pesado" }, atributos.prendas[1]!],
+    };
     const resultado = await evaluar(new IAFalsa([[1, 0], [1, 0], [0.6, 0.8]], otroColor));
     expect(resultado.alternativas.map((a) => a.producto.id)).toEqual(["b", "a"]);
     expect(resultado.alternativas.map((a) => a.mismo_color)).toEqual([true, false]);
     expect(resultado.deOtroColor).toBe(1);
+  });
+
+  it("de otro color solo deja las que son casi la misma prenda", async () => {
+    const poco = { prendas: [{ ...atributos.prendas[0]!, mismo_color: false, parecido: 60 }, atributos.prendas[1]!] };
+    const resultado = await evaluar(new IAFalsa([[1, 0], [1, 0], [1, 0]], poco));
+    expect(resultado.alternativas.map((a) => a.producto.id)).toEqual(["b"]);
+    expect(resultado.descartadas).toBe(1);
+    expect(resultado.deOtroColor).toBe(0);
+
+    const otraPrenda = { prendas: [{ ...atributos.prendas[0]!, mismo_color: false, misma_prenda: false, parecido: 90 }, atributos.prendas[1]!] };
+    expect((await evaluar(new IAFalsa([[1, 0], [1, 0], [1, 0]], otraPrenda))).alternativas.map((a) => a.producto.id)).toEqual(["b"]);
+  });
+
+  it("de otro color, con otro corte, fuera aunque la IA diga que se parece", async () => {
+    const otroCorte = { prendas: [{ ...atributos.prendas[0]!, mismo_color: false, parecido: 90, fit: "regular" }, atributos.prendas[1]!] };
+    const resultado = await evaluar(new IAFalsa([[1, 0], [1, 0], [1, 0]], otroCorte));
+    expect(resultado.alternativas.map((a) => a.producto.id)).toEqual(["b"]);
+    expect(otroColorBienParecida({ fit: 100, gramaje: 50 }, 80, EXIGENCIA_BUSQUEDA)).toBe(true);
+    expect(otroColorBienParecida({ fit: 100, gramaje: 0 }, 80, EXIGENCIA_BUSQUEDA)).toBe(false);
+    expect(otroColorBienParecida({ fit: null, gramaje: null }, 60, EXIGENCIA_BUSQUEDA)).toBe(false);
+    expect(otroColorBienParecida({ fit: 60, gramaje: 100 }, 90, EXIGENCIA_BUSQUEDA)).toBe(false);
+    expect(otroColorBienParecida({ fit: null, gramaje: null }, null, EXIGENCIA_BUSQUEDA)).toBe(false);
+  });
+
+  it("del mismo color solo quita las que no tienen nada que ver", () => {
+    const attrs = { ...atributos.prendas[0]!, gramaje_estimado: "medio", fit: "regular", publico: "hombre" } as AtributosCandidata;
+    expect(sePareceLoSuficiente({ ...attrs, parecido: 40 }, EXIGENCIA_BUSQUEDA)).toBe(true);
+    expect(sePareceLoSuficiente({ ...attrs, parecido: 20 }, EXIGENCIA_BUSQUEDA)).toBe(false);
+    // Las ideas de Pinterest se filtran más.
+    expect(sePareceLoSuficiente({ ...attrs, parecido: 60 }, EXIGENCIA_IDEAS)).toBe(false);
+    expect(sePareceLoSuficiente({ ...attrs, parecido: 75, misma_prenda: false }, EXIGENCIA_IDEAS)).toBe(false);
+    expect(sePareceLoSuficiente(null, EXIGENCIA_IDEAS)).toBe(true);
+  });
+
+  it("las miniaturas de Google se piden en JPEG (los embeddings no admiten WebP)", async () => {
+    const pedidas: string[] = [];
+    const f = vi.fn<typeof fetch>(async (url) => {
+      pedidas.push(String(url));
+      return new Response(JPEG_MINIMO);
+    });
+    expect(await descargarMiniatura("https://encrypted-tbn1.gstatic.com/shopping?q=tbn:abc", f)).not.toBeNull();
+    expect(pedidas[0]).toBe(urlEnJpeg("https://encrypted-tbn1.gstatic.com/shopping?q=tbn:abc"));
+    expect(pedidas[0]).toContain("output=jpg");
+
+    // Otras tiendas, directamente; y si la conversión falla, la original.
+    pedidas.length = 0;
+    await descargarMiniatura("https://static.zara.net/foto.jpg", f);
+    expect(pedidas).toEqual(["https://static.zara.net/foto.jpg"]);
+    const falla = vi.fn<typeof fetch>(async (url) => (String(url).includes("wsrv.nl") ? new Response("", { status: 500 }) : new Response(JPEG_MINIMO)));
+    expect(await descargarMiniatura("https://encrypted-tbn1.gstatic.com/x", falla)).not.toBeNull();
+    expect(falla).toHaveBeenCalledTimes(2);
+  });
+
+  it("pide a la IA que puntúe el parecido sin contar el color", async () => {
+    const ia = new IAFalsa([[1, 0], [0, 1], [1, 0]], atributos);
+    await preparar(ia);
+    expect(ia.peticionAtributos!.instrucciones).toContain("parecido: puntúa la forma sin mirar el color");
   });
 
   it("pide a la IA que sea estricta con el color", async () => {
