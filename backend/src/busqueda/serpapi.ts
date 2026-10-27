@@ -24,6 +24,8 @@ export interface Referencia {
   imagen: string;
   titulo: string | null;
   fuente: string | null;
+  /** Página de la imagen (p. ej. el pin de Pinterest). */
+  enlace?: string | null;
 }
 
 export interface ClienteSerpapi {
@@ -41,7 +43,7 @@ export interface ClienteSerpapi {
  */
 const CAMPOS_SHOPPING =
   "error, shopping_results[].{position,title,source,price,extracted_price,old_price,extracted_old_price,link,product_link,thumbnail,serpapi_thumbnail,second_hand_condition}";
-const CAMPOS_IMAGENES = "error, images_results[0:15].{thumbnail,title,source}";
+const CAMPOS_IMAGENES = "error, images_results[0:15].{thumbnail,title,source,link}";
 
 export function crearClienteSerpapi(entorno: Entorno, f: typeof fetch = fetch): ClienteSerpapi {
   const apiKey = entorno.SERPAPI_KEY;
@@ -160,7 +162,8 @@ export function leerImagenes(datos: Objeto): Referencia[] {
   return lista.filter(esObjeto).flatMap((item) => {
     const imagen = texto(item.thumbnail);
     if (!imagen?.startsWith("https://")) return [];
-    return [{ imagen, titulo: texto(item.title), fuente: texto(item.source) }];
+    const enlace = texto(item.link);
+    return [{ imagen, titulo: texto(item.title), fuente: texto(item.source), enlace: enlace?.startsWith("https://") ? enlace : null }];
   });
 }
 

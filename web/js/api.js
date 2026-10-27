@@ -151,6 +151,12 @@ export async function crearOutfits(cuerpo, alProgresar) {
   throw new ErrorApp("La respuesta se ha cortado. Inténtalo de nuevo.", "RESPUESTA_INCOMPLETA");
 }
 
+/** Más prendas del mismo rollo, a partir de referencias de Pinterest. */
+export async function inspiracion(ficha, excluir) {
+  if (modoPrueba()) return demo("inspiracion", 1800);
+  return pedirJSON("v1/inspiracion", { ficha, excluir });
+}
+
 export async function cambiarPieza(consulta, maximoCentimos, excluir) {
   if (modoPrueba()) {
     const busqueda = await demo("busqueda", 600);

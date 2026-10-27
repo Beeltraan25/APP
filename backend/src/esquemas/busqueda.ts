@@ -35,6 +35,8 @@ export const Alternativa = z.object({
   similitud: Similitud.nullable(),
   etiquetas: z.array(Etiqueta),
   fuente: z.enum(["lens", "shopping"]),
+  /** Si es del mismo color que la prenda buscada (según la IA). null si no se sabe. */
+  mismo_color: z.boolean().nullable().default(null),
 });
 export type Alternativa = z.infer<typeof Alternativa>;
 
@@ -42,8 +44,8 @@ export const RespuestaBusqueda = z.object({
   busqueda_id: z.string(),
   alternativas: z.array(Alternativa),
   conteo_por_rango: z.record(RangoPrecio, z.number().int()),
-  /** Resultados quitados por ser de otro color (solo se muestran prendas del mismo color). */
-  descartadas_por_color: z.number().int().default(0),
+  /** Cuántas son de otro color (van al final, después de las del mismo color). */
+  de_otro_color: z.number().int().default(0),
   desde_cache: z.boolean(),
 });
 export type RespuestaBusqueda = z.infer<typeof RespuestaBusqueda>;

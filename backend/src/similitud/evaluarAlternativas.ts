@@ -60,18 +60,18 @@ export interface EntradaEvaluacion {
 
 export interface ResultadoEvaluacion {
   alternativas: Alternativa[];
-  /** Cuántas se han quitado por ser de otro color (la IA es estricta con el color). */
-  descartadasPorColor: number;
+  /** Cuántas son de otro color (van al final). */
+  deOtroColor: number;
 }
 
 /**
- * Puntúa cada alternativa (0–100) y le pone hasta 3 etiquetas. Se ordenan de más a menos parecida.
- * Solo se quedan las del mismo color que la original (según la IA).
+ * Puntúa cada alternativa (0–100) y le pone hasta 3 etiquetas. Primero las del mismo color que
+ * la original (según la IA) y después las demás; dentro de cada grupo, de más a menos parecida.
  * Si la IA falla, se devuelven igualmente: sin el dato que falte (o sin similitud si no hay ninguno).
  */
 export async function evaluarAlternativas(entrada: EntradaEvaluacion): Promise<ResultadoEvaluacion> {
   const { ia, ficha, alternativas } = entrada;
-  if (!alternativas.length) return { alternativas, descartadasPorColor: 0 };
+  if (!alternativas.length) return { alternativas, deOtroColor: 0 };
 
   const [original, miniaturas] = await Promise.all([
     imagenOriginal(entrada),
@@ -124,27 +124,27 @@ export async function evaluarAlternativas(entrada: EntradaEvaluacion): Promise<R
         })
       : [];
 
-    return { ...alternativa, similitud, etiquetas };
+    return { ...alternativa, similitud, etiquetas, mismo_color: attrs ? attrs.mismo_color : null };
   });
 
-  let descartadasPorColor = 0;
+  const otroColor = (a: Alternativa) => (a.mismo_color === false ? 1 : 0);
   const ordenadas = evaluadas
     .map((alternativa, posicion) => ({ alternativa, posicion }))
-    // Solo el mismo color: es lo que más se nota al ver dos prendas juntas.
-    .filter(({ posicion }) => {
-      if (atributos?.get(posicion)?.mismo_color !== false) return true;
-      descartadasPorColor++;
-      return false;
-    })
     // Por ahora la app es solo de hombre: fuera lo que la IA ve de mujer (la URL y el título no
     // siempre lo dicen). Pero si la tienda dice que es de hombre, manda la tienda: la IA se equivoca a veces.
     .filter(({ alternativa, posicion }) => {
       if (atributos?.get(posicion)?.publico !== "mujer") return true;
       return dichoDeHombre(alternativa.producto.titulo, alternativa.producto.url);
     })
-    .sort((a, b) => (b.alternativa.similitud?.total ?? -1) - (a.alternativa.similitud?.total ?? -1) || a.posicion - b.posicion)
+    // El mismo color primero: es lo que más se nota al ver dos prendas juntas.
+    .sort(
+      (a, b) =>
+        otroColor(a.alternativa) - otroColor(b.alternativa) ||
+        (b.alternativa.similitud?.total ?? -1) - (a.alternativa.similitud?.total ?? -1) ||
+        a.posicion - b.posicion,
+    )
     .map(({ alternativa }) => alternativa);
-  return { alternativas: ordenadas, descartadasPorColor };
+  return { alternativas: ordenadas, deOtroColor: ordenadas.filter((a) => a.mismo_color === false).length };
 }
 
 const MARCA_HOMBRE = /\b(hombres?|men|mens|man|caballero)\b/i;

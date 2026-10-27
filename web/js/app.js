@@ -53,6 +53,8 @@ const estado = {
   busqueda: { estado: "inactivo", datos: null, error: null, rango: null },
   /** Prenda con la que se crean los outfits: { ficha, producto, imagen_url, foto }. */
   base: null,
+  /** Ideas de Pinterest para la búsqueda actual. */
+  inspiracion: { estado: "inactivo", datos: null, error: null },
   outfits: { estilo: "old money", presupuesto: 6000, generando: false, progreso: "", respuesta: null, error: null, estiloUsado: null },
 };
 
@@ -396,7 +398,7 @@ function vistaFicha() {
         icono("check", 18),
         h("span", {}, h("strong", {}, "La hemos reconocido: "), origen.titulo, h("span", { class: "secundario" }, ` · ${origen.tienda.nombre}`)),
       ),
-    h("p", { class: "nota" }, "Revisa la ficha: la búsqueda usa estos datos y solo muestra prendas de este color. Puedes corregir lo que no esté bien."),
+    h("p", { class: "nota" }, "Revisa la ficha: la búsqueda usa estos datos y pone primero las prendas de este color. Puedes corregir lo que no esté bien."),
     h(
       "div",
       { class: "tarjeta lista" },
@@ -438,12 +440,27 @@ function vistaFicha() {
 
 async function buscarAlternativas() {
   estado.busqueda = { estado: "cargando", datos: null, error: null, rango: null };
+  estado.inspiracion = { estado: "inactivo", datos: null, error: null };
   irA("resultados");
   try {
     const datos = await api.buscar(estado.analisis.imagen_url, estado.ficha);
     estado.busqueda = { estado: "listo", datos, error: null, rango: null };
   } catch (error) {
     estado.busqueda = { estado: "error", datos: null, error, rango: null };
+  }
+  if (estado.pestana === "buscar" && estado.pantalla === "resultados") render();
+}
+
+/** Más prendas del mismo rollo: referencias de Pinterest → ideas → tiendas. */
+async function buscarInspiracion() {
+  estado.inspiracion = { estado: "cargando", datos: null, error: null };
+  render();
+  try {
+    const yaMostrados = (estado.busqueda.datos?.alternativas ?? []).map((a) => a.producto.id);
+    const datos = await api.inspiracion(estado.ficha, yaMostrados);
+    estado.inspiracion = { estado: "listo", datos, error: null };
+  } catch (error) {
+    estado.inspiracion = { estado: "error", datos: null, error };
   }
   if (estado.pestana === "buscar" && estado.pantalla === "resultados") render();
 }
@@ -455,7 +472,9 @@ function vistaResultados() {
   const todas = busqueda.datos?.alternativas ?? [];
   const visibles = busqueda.rango ? todas.filter((a) => a.producto.rango === busqueda.rango) : todas;
   const conteo = (rango) => (rango ? todas.filter((a) => a.producto.rango === rango).length : todas.length);
-  const quitadas = busqueda.datos?.descartadas_por_color ?? 0;
+  // Primero las de tu color; después, las de otros colores.
+  const deTuColor = visibles.filter((a) => a.mismo_color !== false);
+  const otrosColores = visibles.filter((a) => a.mismo_color === false);
 
   let cuerpo;
   if (busqueda.estado === "cargando") {
@@ -486,17 +505,29 @@ function vistaResultados() {
         : h(
             "div",
             { class: "vacio" },
-            h("h2", {}, quitadas ? "Nada en este color" : "Sin alternativas"),
-            h(
-              "p",
-              {},
-              quitadas
-                ? `Había ${quitadas} parecidas, pero de otro color. Si el color de la ficha no es el correcto, corrígelo y busca otra vez.`
-                : "No hemos encontrado prendas parecidas en las tiendas de la lista. Prueba a ajustar la ficha.",
-            ),
+            h("h2", {}, "Sin alternativas"),
+            h("p", {}, "No hemos encontrado prendas parecidas en las tiendas de la lista. Prueba con las ideas de Pinterest o ajusta la ficha."),
           );
-  } else {
+  } else if (otrosColores.length === 0) {
     cuerpo = h("div", { class: "rejilla" }, visibles.map(tarjetaAlternativa));
+  } else {
+    cuerpo = h(
+      "div",
+      { class: "pila-secciones" },
+      deTuColor.length > 0 &&
+        h(
+          "div",
+          { class: "seccion" },
+          h("h3", {}, muestraColor(ficha.color_principal.hex), `En ${ficha.color_principal.nombre} · ${deTuColor.length}`),
+          h("div", { class: "rejilla" }, deTuColor.map(tarjetaAlternativa)),
+        ),
+      h(
+        "div",
+        { class: "seccion" },
+        h("h3", {}, `En otros colores · ${otrosColores.length}`),
+        h("div", { class: "rejilla" }, otrosColores.map(tarjetaAlternativa)),
+      ),
+    );
   }
 
   return h(
@@ -524,11 +555,80 @@ function vistaResultados() {
       busqueda.estado === "listo" &&
         h("span", { class: "secundario" }, conteo(busqueda.rango) === 1 ? "1 alternativa" : `${conteo(busqueda.rango)} alternativas`),
     ),
-    busqueda.estado === "listo" &&
-      quitadas > 0 &&
-      todas.length > 0 &&
-      h("p", { class: "nota" }, `Solo prendas en ${ficha.color_principal.nombre}: hemos quitado ${quitadas} de otros colores.`),
     cuerpo,
+    busqueda.estado === "listo" && bloqueInspiracion(),
+  );
+}
+
+/** «Más del mismo rollo»: ideas sacadas de Pinterest, con prendas reales de las tiendas. */
+function bloqueInspiracion() {
+  const insp = estado.inspiracion ?? { estado: "inactivo" };
+  const cabeceraBloque = h(
+    "div",
+    { class: "inspiracion-cabecera" },
+    h("h2", {}, "Más del mismo rollo"),
+    h("p", { class: "secundario" }, "Miramos cómo se lleva esta prenda en Pinterest y te proponemos más prendas de ese estilo, también en otros colores."),
+  );
+
+  if (insp.estado === "inactivo") {
+    return h(
+      "div",
+      { class: "tarjeta inspiracion" },
+      cabeceraBloque,
+      h("button", { class: "boton principal ancho", onclick: buscarInspiracion }, icono("destellos"), "Ver ideas de Pinterest"),
+    );
+  }
+  if (insp.estado === "cargando") {
+    return h(
+      "div",
+      { class: "tarjeta inspiracion" },
+      cabeceraBloque,
+      h("p", { class: "progreso", role: "status" }, h("span", { class: "girando", "aria-hidden": "true" }), "Buscando inspiración en Pinterest…"),
+      h("p", { class: "nota" }, "Tarda unos 20–40 segundos."),
+    );
+  }
+  if (insp.estado === "error") {
+    return h(
+      "div",
+      { class: "tarjeta inspiracion" },
+      cabeceraBloque,
+      h("p", { class: "texto-error" }, insp.error.message),
+      h("button", { class: "boton cristal ancho", onclick: buscarInspiracion }, "Reintentar"),
+    );
+  }
+
+  const { rollo, referencias, ideas } = insp.datos;
+  return h(
+    "div",
+    { class: "inspiracion" },
+    cabeceraBloque,
+    h("p", { class: "rollo" }, rollo),
+    referencias.length > 0 &&
+      h(
+        "div",
+        { class: "moodboard", "aria-label": "Referencias de Pinterest" },
+        referencias.map((r) =>
+          r.enlace
+            ? h("a", { href: r.enlace, target: "_blank", rel: "noopener noreferrer" }, imagen(r.imagen, "referencia", r.titulo ?? "Referencia de Pinterest"))
+            : imagen(r.imagen, "referencia", r.titulo ?? "Referencia de Pinterest"),
+        ),
+      ),
+    ideas.length === 0
+      ? h("p", { class: "secundario" }, "No hemos encontrado más prendas de este estilo en las tiendas de la lista.")
+      : ideas.map((idea) =>
+          h(
+            "div",
+            { class: "seccion" },
+            h("h3", {}, idea.titulo),
+            h(
+              "div",
+              { class: "rejilla" },
+              idea.productos.map((producto) =>
+                tarjetaAlternativa({ producto, similitud: null, etiquetas: [], fuente: "shopping", mismo_color: null }),
+              ),
+            ),
+          ),
+        ),
   );
 }
 

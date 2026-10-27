@@ -33,7 +33,7 @@ Sin configuración, la app funciona con datos de prueba (lo indica en la pantall
 
 Publicada en **https://dupe-finder.beeltraan25.workers.dev** (web y API en la misma dirección).
 
-La carpeta `web/` es Dupe Finder para Safari: buscar por foto o enlace, ficha editable, alternativas con filtro de precio, outfits por estilo y guardados (en el propio iPhone). La sirve el mismo Worker que la API, así que al publicar el backend ya está en `https://dupe-finder.TU-SUBDOMINIO.workers.dev`.
+La carpeta `web/` es Dupe Finder para Safari: buscar por foto o enlace, ficha editable, alternativas con filtro de precio (primero las de tu color), ideas de Pinterest con más prendas del mismo rollo, outfits por estilo y guardados (en el propio iPhone). La sirve el mismo Worker que la API, así que al publicar el backend ya está en `https://dupe-finder.TU-SUBDOMINIO.workers.dev`.
 
 1. Publica el backend (ver «Publicar el backend en Cloudflare»).
 2. En el iPhone, abre esa dirección en Safari y toca el engranaje → pega tu `CLAVE_APP` → *Conectar*. También puedes abrir una vez `https://…workers.dev/#clave=TU_CLAVE`: la web guarda la clave y la borra de la dirección.

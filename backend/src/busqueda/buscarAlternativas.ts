@@ -9,9 +9,10 @@ import { rangoDePrecio } from "./precios";
 import type { Candidato, ClienteSerpapi } from "./serpapi";
 
 /** Máximo de alternativas: todas se puntúan, y cada una gasta una descarga de miniatura. */
-export const MAXIMO_ALTERNATIVAS = 24;
+// Con 30 caben en el límite gratuito de Cloudflare (50 descargas por petición): 30 miniaturas + foto + IA + SerpAPI.
+export const MAXIMO_ALTERNATIVAS = 30;
 /** Como mucho estas de Google Lens: el resto del hueco es para Shopping, que busca con el color. */
-export const MAXIMO_LENS = 16;
+export const MAXIMO_LENS = 18;
 
 /**
  * Google Lens guardado 24 h por imagen: el análisis de la foto y la búsqueda posterior usan la
@@ -179,7 +180,7 @@ export async function aProducto({ candidato, tienda }: Valido): Promise<Producto
 }
 
 async function aAlternativa(valido: Valido): Promise<Alternativa> {
-  return { producto: await aProducto(valido), similitud: null, etiquetas: [], fuente: valido.candidato.fuente };
+  return { producto: await aProducto(valido), similitud: null, etiquetas: [], fuente: valido.candidato.fuente, mismo_color: null };
 }
 
 /**

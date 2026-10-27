@@ -49,9 +49,9 @@ export function crearRutaBuscar({ crearSerpapi, crearIA, fetchImagenes }: Depend
 
     // Similitud y etiquetas. Si la IA no está disponible, los resultados se devuelven sin ellas.
     let alternativas = encontradas.alternativas;
-    let descartadasPorColor = 0;
+    let deOtroColor = 0;
     try {
-      ({ alternativas, descartadasPorColor } = await evaluarAlternativas({
+      ({ alternativas, deOtroColor } = await evaluarAlternativas({
         ia: crearIA(c.env),
         ficha,
         alternativas,
@@ -68,7 +68,7 @@ export function crearRutaBuscar({ crearSerpapi, crearIA, fetchImagenes }: Depend
       busqueda_id: `bs_${huella.slice(0, 24)}`,
       alternativas,
       conteo_por_rango: contarPorRango(alternativas),
-      descartadas_por_color: descartadasPorColor,
+      de_otro_color: deOtroColor,
       desde_cache: false,
     };
     // Sin resultados se guarda menos tiempo, por si era algo puntual.

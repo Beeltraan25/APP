@@ -1,0 +1,189 @@
+{
+  "rollo": "Rollo streetwear relajado: vaqueros anchos de tiro medio con sudaderas amplias, camisetas boxy y zapatillas de suela gruesa. Lavados oscuros y bajos que caen sobre la zapatilla.",
+  "referencias": [
+    {
+      "imagen": "https://img01.ztat.net/article/spp-media-p1/9e300d9e5818448289d1c0ee88261a91/eac41f9fe242472a8d2be160951574f3.jpg?imwidth=762&filter=packshot",
+      "titulo": "Referencia de ejemplo",
+      "enlace": null
+    },
+    {
+      "imagen": "https://image.hm.com/assets/hm/82/2f/822f130f12e7c6bcd7067a12207ac47372aca0b2.jpg",
+      "titulo": "Referencia de ejemplo",
+      "enlace": null
+    },
+    {
+      "imagen": "https://img01.ztat.net/article/spp-media-p1/9bda91bebc7c49089134b2ac017301a7/5bf7f22fe8e54fa4a8bebd4b9bce6794.jpg?imwidth=762&filter=packshot",
+      "titulo": "Referencia de ejemplo",
+      "enlace": null
+    },
+    {
+      "imagen": "https://media.cos.com/assets/001/e9/20/e92017ac0a0abc7e06aee5811183abb81de88be5_xxl-1.jpg?imwidth=2160",
+      "titulo": "Referencia de ejemplo",
+      "enlace": null
+    },
+    {
+      "imagen": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSuFUMFL1kIL1JLslGxPPfayeN9UXBySN2HQ_092E3mOyCMUTpeApAH4_xK-_6BZH278J29qrm9eA",
+      "titulo": "Referencia de ejemplo",
+      "enlace": null
+    },
+    {
+      "imagen": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRJoQewQUGwd_PP6Hrm3ZkOOWwe33fK7SPmCIhtS236PkDV5uaK-Go7sfKdU4JkhpF_b0wNoonIaQ",
+      "titulo": "Referencia de ejemplo",
+      "enlace": null
+    }
+  ],
+  "ideas": [
+    {
+      "titulo": "Baggy en lavado oscuro",
+      "consulta": "vaqueros baggy azul oscuro hombre",
+      "productos": [
+        {
+          "id": "prd_744e96d68ab36450",
+          "titulo": "Hombre Balmohk Vaqueros Paco carpenter relaxed Fit",
+          "tienda": {
+            "id": "zalando",
+            "nombre": "Zalando"
+          },
+          "marca": null,
+          "url": "https://www.google.es/search?ibp=oshop&q=vaqueros anchos hombre&prds=catalogid:9377146722227229289,productid:15508533732901179008,headlineOfferDocid:15769644459419551006,imageDocid:10156813377344707679,gpcid:6801149663311296298,mid:576462891337043645,pvt:a&hl=es&gl=es&udm=28",
+          "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRl16mE-wLLKCMnvN8Xds67Y7YdebXub2c0LZ1MqIOZTaym0zQ6Iq7dFscJj2pwOmQTAP3BZRU",
+          "precio": {
+            "centimos": 3599,
+            "moneda": "EUR"
+          },
+          "precio_anterior": null,
+          "rango": "medio"
+        },
+        {
+          "id": "prd_37de158d6c22b920",
+          "titulo": "Won Hundred Genoa Unisex Vaqueros boyfriend, Original black",
+          "tienda": {
+            "id": "zalando",
+            "nombre": "Zalando"
+          },
+          "marca": null,
+          "url": "https://www.google.es/search?ibp=oshop&q=vaqueros anchos hombre&prds=productid:5248282903742926091,headlineOfferDocid:5248282903742926091,imageDocid:16505589417057330018,pvt:a&hl=es&gl=es&udm=28",
+          "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTlj91bdqwWLEf5ETq_uiCKV5-gTcWFoJxIiw5W2pRSg5rgFRk22YUxu-zVqTVy2JqStNou7Ae2",
+          "precio": {
+            "centimos": 14000,
+            "moneda": "EUR"
+          },
+          "precio_anterior": {
+            "centimos": 16000,
+            "moneda": "EUR"
+          },
+          "rango": "alto"
+        },
+        {
+          "id": "prd_dd3465c3ce5d86d0",
+          "titulo": "Uniqlo - Vaquero Barrel - Verde Oliva - 34inch",
+          "tienda": {
+            "id": "uniqlo",
+            "nombre": "Uniqlo"
+          },
+          "marca": "Uniqlo",
+          "url": "https://www.google.es/search?ibp=oshop&q=vaqueros anchos hombre&prds=productid:10667852448056867946,headlineOfferDocid:10667852448056867946,imageDocid:16500491116813963702,pvt:a&hl=es&gl=es&udm=28",
+          "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcS7MOhdto6Xrc2KfFx3wvUWLa2VlwtIJEYMzYvugwqyetYkYTpH0hX7cF3kLYG851lb07XuXMJm",
+          "precio": {
+            "centimos": 4990,
+            "moneda": "EUR"
+          },
+          "precio_anterior": null,
+          "rango": "medio"
+        },
+        {
+          "id": "prd_90f6bf5ef172bf74",
+          "titulo": "Calvin Klein Hombres baggy Jeans",
+          "tienda": {
+            "id": "zalando",
+            "nombre": "Zalando"
+          },
+          "marca": null,
+          "url": "https://www.google.es/search?ibp=oshop&q=vaqueros anchos hombre&prds=catalogid:16217171798065945882,productid:17619190748435453100,headlineOfferDocid:4188098211946536900,imageDocid:18401719802745805364,rds:PC_16036120647602481171|PROD_PC_16036120647602481171,gpcid:16036120647602481171,mid:576462566999671358,pvt:a&hl=es&gl=es&udm=28",
+          "imagen_url": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcSNW4Jw2Fnyy9ZYr9p3DH67i5Xns3VcLnRCLBQS3HjR2MdX4yD5RNxwHFHR0rdCi76bb1stxVvr",
+          "precio": {
+            "centimos": 8995,
+            "moneda": "EUR"
+          },
+          "precio_anterior": null,
+          "rango": "alto"
+        }
+      ]
+    },
+    {
+      "titulo": "Corte barrel en negro",
+      "consulta": "vaqueros barrel negros hombre",
+      "productos": [
+        {
+          "id": "prd_96e11ac28ab10c3f",
+          "titulo": "Vaqueros Only & Sons Fade Hombres Loose",
+          "tienda": {
+            "id": "zalando",
+            "nombre": "Zalando"
+          },
+          "marca": null,
+          "url": "https://www.google.es/search?ibp=oshop&q=vaqueros anchos hombre&prds=catalogid:10995113113906929502,productid:8677223436571341195,headlineOfferDocid:14492948528180866789,imageDocid:14670616984054456325,rds:PC_2494577694757770485|PROD_PC_2494577694757770485,gpcid:2494577694757770485,mid:576462817092603006,pvt:a&hl=es&gl=es&udm=28",
+          "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcSaj5WBuV9ve_cpP1R67g-cYhG7OLowvNT3B83qsklLx6QWLDq27DRtNdqAWB_TwXsGENI8Cfc",
+          "precio": {
+            "centimos": 4999,
+            "moneda": "EUR"
+          },
+          "precio_anterior": null,
+          "rango": "medio"
+        },
+        {
+          "id": "prd_b9ed8a50e15cf26d",
+          "titulo": "Only & Sons Jeans Hombre",
+          "tienda": {
+            "id": "zalando",
+            "nombre": "Zalando"
+          },
+          "marca": null,
+          "url": "https://www.google.es/search?ibp=oshop&q=vaqueros anchos hombre&prds=catalogid:6062977160083147878,productid:1986044085542292316,headlineOfferDocid:3957839356642017381,imageDocid:5406765794922888181,rds:PC_15497538780852237148|PROD_PC_15497538780852237148,gpcid:15497538780852237148,mid:576462846658700083,pvt:a&hl=es&gl=es&udm=28",
+          "imagen_url": "https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQjX1vF1gGvP1ccSoIdOQlSBZKWDypZMO9y5CDdFC9G4eK7o5vWl-4aS7GQ1oc",
+          "precio": {
+            "centimos": 3699,
+            "moneda": "EUR"
+          },
+          "precio_anterior": null,
+          "rango": "medio"
+        },
+        {
+          "id": "prd_20744ab627104f28",
+          "titulo": "Diesel Macro Vaqueros boyfriend Hombre",
+          "tienda": {
+            "id": "zalando",
+            "nombre": "Zalando"
+          },
+          "marca": null,
+          "url": "https://www.google.es/search?ibp=oshop&q=vaqueros anchos hombre&prds=catalogid:12464379523439994706,productid:10121774930560761971,headlineOfferDocid:11425605690836888040,imageDocid:10022974529232726259,gpcid:14420457689314243383,mid:576462563332246411,pvt:a&hl=es&gl=es&udm=28",
+          "imagen_url": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcT2o48k6gUDyknQ5Dl2gKpPJ_7ipTA5BrMLxIv8u61x6lLwauWbaGbj9nvyGYdg9h6yPEEXBdPs",
+          "precio": {
+            "centimos": 14695,
+            "moneda": "EUR"
+          },
+          "precio_anterior": null,
+          "rango": "alto"
+        },
+        {
+          "id": "prd_2269f5d2f1992732",
+          "titulo": "Springfield Bermuda vaquera baggy fit",
+          "tienda": {
+            "id": "springfield",
+            "nombre": "Springfield"
+          },
+          "marca": "Springfield",
+          "url": "https://www.google.es/search?ibp=oshop&q=vaqueros anchos hombre&prds=catalogid:14668816327827296674,productid:226187422695720822,headlineOfferDocid:12170874595436013389,imageDocid:15479431660601358646,gpcid:10211273032508481288,mid:576462897724947564,pvt:a&hl=es&gl=es&udm=28",
+          "imagen_url": "https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTJIiQU72CJD9HcDXD8cVVBCNYXj5ngtVGz6UheYHjnqgWM-_Inx1sa7A4Hgu2mC8ggVms67JCK0g",
+          "precio": {
+            "centimos": 999,
+            "moneda": "EUR"
+          },
+          "precio_anterior": null,
+          "rango": "economico"
+        }
+      ]
+    }
+  ],
+  "desde_cache": false
+}

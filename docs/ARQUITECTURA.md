@@ -243,6 +243,11 @@ ios/
 - **Identificar la prenda:** al analizar una foto se pasa por Google Lens (guardado 24 h; la búsqueda lo reutiliza, así que no cuesta una consulta extra). La IA ve los 10 primeros títulos: los usa para afinar la ficha y, si uno es exactamente esa prenda en una tienda conocida, se lee su página (directa o Jina Reader) y se completa la ficha con sus datos reales (material, composición, precio), manteniendo el color de la foto. La foto se guarda antes de analizarla porque Lens necesita leerla. Un resultado vacío de Lens no se guarda en caché (justo después de subir la foto, a veces aún no la ve).
 - Caché `v2`: los análisis y búsquedas antiguos se recalculan.
 
+**Más opciones (colores agrupados e inspiración de Pinterest):**
+- El color ya no filtra: cada alternativa lleva `mismo_color` y se ordenan primero las de tu color y después las de otros colores (`de_otro_color` en la respuesta). La web las muestra en dos secciones.
+- Hasta 30 alternativas por búsqueda (18 de Lens como mucho): es lo que cabe en el límite gratuito de Cloudflare de 50 descargas por petición.
+- `POST /v1/inspiracion` { ficha, excluir }: Google Images con `site:pinterest.com` → la IA ve 8 referencias y describe el «rollo» y 2–4 ideas de prendas del mismo tipo (al menos una de otro color) → Google Shopping por idea (`buscarPieza`, tiendas de la lista blanca). Unas 4 consultas de SerpAPI, por eso va en un botón aparte («Ver ideas de Pinterest»); se guarda 24 h por prenda. Prueba real con tus vaqueros: 39 s, 12 referencias y 3 ideas con 8 prendas cada una.
+
 **Notas de diseño que afectan a la estructura**
 
 - **Servicios con versión simulada:** cada servicio es un protocolo con dos implementaciones (`…Remoto` y `…Simulado`). La fase 1 funciona entera con los JSON de `Simulados/` y, en la fase 2, basta con cambiar a la versión remota. Además, las pruebas de diseño no gastan cuota gratuita.

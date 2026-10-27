@@ -403,6 +403,68 @@ select:focus {
   font-weight: 700;
 }
 
+.pila-secciones {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.seccion > h3 .muestra {
+  width: 12px;
+  height: 12px;
+  margin-right: 6px;
+  vertical-align: -1px;
+}
+
+.inspiracion {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.tarjeta.inspiracion {
+  gap: 14px;
+}
+
+.inspiracion-cabecera h2 {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.inspiracion-cabecera p {
+  margin-top: 4px;
+  font-size: 15px;
+}
+
+.rollo {
+  padding: 12px 14px;
+  border-radius: 14px;
+  background: var(--acento-suave);
+  font-size: 16px;
+}
+
+.moodboard {
+  display: flex;
+  gap: 8px;
+  margin: 0 -16px;
+  padding: 0 16px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.moodboard::-webkit-scrollbar {
+  display: none;
+}
+
+.referencia {
+  width: 104px;
+  height: 150px;
+  border-radius: 14px;
+  object-fit: cover;
+  flex: none;
+}
+
 .tarjeta.identificada {
   display: flex;
   align-items: center;

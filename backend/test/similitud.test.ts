@@ -172,6 +172,7 @@ describe("evaluarAlternativas", () => {
       similitud: null,
       etiquetas: [],
       fuente: "lens",
+      mismo_color: null,
     };
   }
 
@@ -251,11 +252,13 @@ describe("evaluarAlternativas", () => {
     expect(resultado.map((a) => a.producto.id)).toEqual(["b"]);
   });
 
-  it("solo deja las del mismo color y dice cuántas ha quitado", async () => {
+  it("pone primero las del mismo color aunque otra se parezca más", async () => {
+    // "a" se parece más a la vista, pero es de otro color: va detrás.
     const otroColor = { prendas: [{ ...atributos.prendas[0]!, mismo_color: false }, atributos.prendas[1]!] };
-    const resultado = await evaluar(new IAFalsa([[1, 0], [0, 1], [1, 0]], otroColor));
-    expect(resultado.alternativas.map((a) => a.producto.id)).toEqual(["b"]);
-    expect(resultado.descartadasPorColor).toBe(1);
+    const resultado = await evaluar(new IAFalsa([[1, 0], [1, 0], [0.6, 0.8]], otroColor));
+    expect(resultado.alternativas.map((a) => a.producto.id)).toEqual(["b", "a"]);
+    expect(resultado.alternativas.map((a) => a.mismo_color)).toEqual([true, false]);
+    expect(resultado.deOtroColor).toBe(1);
   });
 
   it("pide a la IA que sea estricta con el color", async () => {
