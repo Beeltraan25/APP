@@ -11,7 +11,7 @@ struct HistorialView: View {
     @Query(sort: \PrendaBuscada.fechaUso, order: .reverse) private var prendas: [PrendaBuscada]
     @State private var confirmandoBorrado = false
 
-    private let columnas = [GridItem(.adaptive(minimum: 104), spacing: Espacio.s)]
+    private let columnas = [GridItem(.adaptive(minimum: 104), spacing: Espacio.s, alignment: .top)]
 
     var body: some View {
         Group {
@@ -113,6 +113,7 @@ struct CeldaHistorial: View {
                 .lineLimit(2)
             Text(prenda.fechaUso, format: .relative(presentation: .named))
                 .font(.caption2)
+                .lineLimit(1)
                 .foregroundStyle(.secondary)
         }
         .frame(width: ancho, alignment: .leading)

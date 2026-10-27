@@ -3,6 +3,12 @@ import DupeNucleo
 import SwiftData
 import SwiftUI
 
+/// Pantallas a las que se navega dentro de Guardados.
+enum DestinoGuardados: Hashable {
+    case outfit(OutfitGuardado)
+    case historial
+}
+
 /// Outfits y prendas guardadas en el iPhone (SwiftData). Tocar un outfit muestra sus piezas;
 /// tocar una prenda abre la tienda; deslizar borra.
 struct GuardadosView: View {
@@ -14,8 +20,7 @@ struct GuardadosView: View {
     @Query(sort: \OutfitGuardado.fechaGuardado, order: .reverse)
     private var outfits: [OutfitGuardado]
     @State private var tiendaAbierta: EnlaceTienda?
-    @State private var ruta: [OutfitGuardado] = []
-    @State private var viendoHistorial = false
+    @State private var ruta: [DestinoGuardados] = []
     @Query private var historial: [PrendaBuscada]
 
     var body: some View {
@@ -34,14 +39,14 @@ struct GuardadosView: View {
                     List {
                         if !historial.isEmpty {
                             Section {
-                                TiraHistorial { viendoHistorial = true }
+                                TiraHistorial { ruta.append(.historial) }
                             }
                             .listRowSeparator(.hidden)
                         }
                         if !outfits.isEmpty {
                             Section("Outfits") {
                                 ForEach(outfits) { outfit in
-                                    NavigationLink(value: outfit) {
+                                    NavigationLink(value: DestinoGuardados.outfit(outfit)) {
                                         FilaOutfitGuardado(outfit: outfit)
                                     }
                                 }
@@ -69,13 +74,15 @@ struct GuardadosView: View {
                 }
             }
             .navigationTitle("Guardados")
-            .navigationDestination(for: OutfitGuardado.self) { outfit in
-                DetalleOutfitGuardado(outfit: outfit)
+            .navigationDestination(for: DestinoGuardados.self) { destino in
+                switch destino {
+                case .outfit(let outfit): DetalleOutfitGuardado(outfit: outfit)
+                case .historial: HistorialView()
+                }
             }
-            .navigationDestination(isPresented: $viendoHistorial) { HistorialView() }
             .task {
-                if ModoCaptura.actual == .outfitGuardado, let primero = outfits.first { ruta = [primero] }
-                if ModoCaptura.actual == .historial { viendoHistorial = true }
+                if ModoCaptura.actual == .outfitGuardado, let primero = outfits.first { ruta = [.outfit(primero)] }
+                if ModoCaptura.actual == .historial { ruta = [.historial] }
             }
             .sheet(item: $tiendaAbierta) { enlace in
                 NavegadorTienda(url: enlace.url).ignoresSafeArea()
