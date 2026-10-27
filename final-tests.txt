@@ -1,0 +1,120 @@
+2026-10-27 21:24:55.152457+0000 DupeFinder[6558:26785] [error] CoreData: error:   component is writeable
+CoreData: error:   component is writeable
+2026-10-27 21:24:55.152578+0000 DupeFinder[6558:26785] [error] CoreData: error: Failed to stat path '/Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application/50027240-C1E5-43B4-97D8-A6280483193B/Library/Application Support', errno 2 / No such file or directory.
+CoreData: error: Failed to stat path '/Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application/50027240-C1E5-43B4-97D8-A6280483193B/Library/Application Support', errno 2 / No such file or directory.
+2026-10-27 21:24:55.152660+0000 DupeFinder[6558:26785] [error] CoreData: error:   Sandbox access to file-write-create denied
+CoreData: error:   Sandbox access to file-write-create denied
+2026-10-27 21:24:55.177798+0000 DupeFinder[6558:26785] [error] CoreData: error: addPersistentStoreWithType:configuration:URL:options:error: returned error NSCocoaErrorDomain (512)
+CoreData: error: addPersistentStoreWithType:configuration:URL:options:error: returned error NSCocoaErrorDomain (512)
+2026-10-27 21:24:55.177947+0000 DupeFinder[6558:26785] [error] CoreData: error: userInfo:
+CoreData: error: userInfo:
+2026-10-27 21:24:55.178031+0000 DupeFinder[6558:26785] [error] CoreData: error: 	reason : Failed to create file; code = 2
+CoreData: error: 	reason : Failed to create file; code = 2
+2026-10-27 21:24:55.178096+0000 DupeFinder[6558:26785] [error] CoreData: error: storeType: SQLite
+CoreData: error: storeType: SQLite
+2026-10-27 21:24:55.178163+0000 DupeFinder[6558:26785] [error] CoreData: error: configuration: default
+CoreData: error: configuration: default
+2026-10-27 21:24:55.178249+0000 DupeFinder[6558:26785] [error] CoreData: error: URL: file:///Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application/50027240-C1E5-43B4-97D8-A6280483193B/Library/Application%20Support/default.store
+CoreData: error: URL: file:///Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application/50027240-C1E5-43B4-97D8-A6280483193B/Library/Application%20Support/default.store
+CoreData: annotation: options:
+CoreData: annotation: 	NSMigratePersistentStoresAutomaticallyOption : 1
+CoreData: annotation: 	NSInferMappingModelAutomaticallyOption : 1
+CoreData: annotation: 	NSPersistentStoreRemoteChangeNotificationOptionKey : 1
+CoreData: annotation: 	NSPersistentHistoryTrackingKey : 1
+2026-10-27 21:24:55.189540+0000 DupeFinder[6558:26785] [error] CoreData: error: <NSPersistentStoreCoordinator: 0x103905680>: Attempting recovery from error encountered during addPersistentStore: 0x1038743f0 Error Domain=NSCocoaErrorDomain Code=512 "El archivo no ha podido guardarse." UserInfo={reason=Failed to create file; code = 2}
+CoreData: error: <NSPersistentStoreCoordinator: 0x103905680>: Attempting recovery from error encountered during addPersistentStore: 0x1038743f0 Error Domain=NSCocoaErrorDomain Code=512 "El archivo no ha podido guardarse." UserInfo={reason=Failed to create file; code = 2}
+2026-10-27 21:24:55.189867+0000 DupeFinder[6558:26785] [error] CoreData: error: During recovery, parent directory path reported as missing
+CoreData: error: During recovery, parent directory path reported as missing
+2026-10-27 21:24:55.198119+0000 DupeFinder[6558:26785] [error] CoreData: error: Recovery attempt while adding <NSPersistentStoreDescription: 0x1038743f0> (type: SQLite, url: file:///Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application/50027240-C1E5-43B4-97D8-A6280483193B/Library/Application%20Support/default.store) was successful!
+CoreData: error: Recovery attempt while adding <NSPersistentStoreDescription: 0x1038743f0> (type: SQLite, url: file:///Users/runner/Library/Developer/CoreSimulator/Devices/E839A11B-51B4-4AD3-ACF4-A53B95B7C957/data/Containers/Data/Application/50027240-C1E5-43B4-97D8-A6280483193B/Library/Application%20Support/default.store) was successful!
+Test Suite 'All tests' started at 2026-10-27 21:24:59.299.
+Test Suite 'All tests' passed at 2026-10-27 21:24:59.301.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.003) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64-apple-ios13.0-simulator
+◇ Suite "Buscar" started.
+◇ Test "Una foto abre la ficha" started.
+✔ Test "Una foto abre la ficha" passed after 0.033 seconds.
+◇ Test "Un enlace dentro de un texto también funciona" started.
+✔ Test "Un enlace dentro de un texto también funciona" passed after 0.043 seconds.
+◇ Test "Un texto sin enlace muestra un aviso amable" started.
+✔ Test "Un texto sin enlace muestra un aviso amable" passed after 0.026 seconds.
+◇ Test "Los errores del servidor se muestran con su mensaje" started.
+✔ Test "Los errores del servidor se muestran con su mensaje" passed after 0.001 seconds.
+✔ Suite "Buscar" passed after 0.108 seconds.
+◇ Suite "Ficha" started.
+◇ Test "Corregir un dato deja de marcarlo como estimado" started.
+✔ Test "Corregir un dato deja de marcarlo como estimado" passed after 0.003 seconds.
+◇ Test "La prenda no se puede dejar vacía" started.
+✔ Test "La prenda no se puede dejar vacía" passed after 0.193 seconds.
+◇ Test "Elegir el gramaje borra los g/m² estimados" started.
+✔ Test "Elegir el gramaje borra los g/m² estimados" passed after 0.001 seconds.
+◇ Test "Añadir y quitar detalles" started.
+✔ Test "Añadir y quitar detalles" passed after 0.001 seconds.
+✔ Suite "Ficha" passed after 0.199 seconds.
+◇ Suite "Fotos" started.
+◇ Test "Reduce las fotos grandes a 1024 px como máximo" started.
+✔ Test "Reduce las fotos grandes a 1024 px como máximo" passed after 0.859 seconds.
+◇ Test "Rechaza datos que no son una imagen" started.
+✔ Test "Rechaza datos que no son una imagen" passed after 0.008 seconds.
+✔ Suite "Fotos" passed after 0.868 seconds.
+◇ Suite "Dependencias" started.
+◇ Test "Sin servidor configurado, la app usa datos de prueba" started.
+✔ Test "Sin servidor configurado, la app usa datos de prueba" passed after 0.002 seconds.
+◇ Test "Con servidor configurado, la app usa el backend" started.
+✔ Test "Con servidor configurado, la app usa el backend" passed after 0.030 seconds.
+✔ Suite "Dependencias" passed after 0.033 seconds.
+◇ Suite "Historial de fotos" started.
+◇ Test "Cada foto analizada se guarda, con miniatura, y la misma foto no se repite" started.
+✔ Test "Cada foto analizada se guarda, con miniatura, y la misma foto no se repite" passed after 0.206 seconds.
+◇ Test "Los enlaces también se guardan, sin foto" started.
+✔ Test "Los enlaces también se guardan, sin foto" passed after 0.026 seconds.
+◇ Test "Reabrir devuelve la misma ficha y no crea otra entrada" started.
+✔ Test "Reabrir devuelve la misma ficha y no crea otra entrada" passed after 0.016 seconds.
+◇ Test "Una foto de hace más de un día hay que volver a analizarla" started.
+✔ Test "Una foto de hace más de un día hay que volver a analizarla" passed after 0.010 seconds.
+◇ Test "Se queda solo con las más recientes" started.
+✔ Test "Se queda solo con las más recientes" passed after 0.020 seconds.
+✔ Suite "Historial de fotos" passed after 0.450 seconds.
+◇ Suite "Outfits" started.
+◇ Test "Sin estilo elegido no genera nada" started.
+✔ Test "Sin estilo elegido no genera nada" passed after 0.007 seconds.
+◇ Test "Genera 3 outfits y muestra el progreso" started.
+✔ Test "Genera 3 outfits y muestra el progreso" passed after 0.045 seconds.
+◇ Test "Cambiar una pieza actualiza el outfit y su precio total" started.
+✔ Test "Cambiar una pieza actualiza el outfit y su precio total" passed after 0.034 seconds.
+◇ Test "Al cambiar de prenda base se olvidan los outfits anteriores" started.
+✔ Test "Al cambiar de prenda base se olvidan los outfits anteriores" passed after 0.001 seconds.
+✔ Suite "Outfits" passed after 0.090 seconds.
+◇ Suite "Precio de la ficha" started.
+◇ Test "Si la tienda dice el precio, viene puesto" started.
+✔ Test "Si la tienda dice el precio, viene puesto" passed after 0.001 seconds.
+◇ Test "Se puede escribir a mano, con coma o con punto, y quitar" started.
+✔ Test "Se puede escribir a mano, con coma o con punto, y quitar" passed after 0.006 seconds.
+◇ Test "La búsqueda lleva el precio" started.
+✔ Test "La búsqueda lleva el precio" passed after 0.001 seconds.
+✔ Suite "Precio de la ficha" passed after 0.008 seconds.
+◇ Suite "Resultados" started.
+◇ Test "Carga todas las alternativas" started.
+✔ Test "Carga todas las alternativas" passed after 0.003 seconds.
+◇ Test "Filtra por rango sin volver a buscar" started.
+✔ Test "Filtra por rango sin volver a buscar" passed after 0.003 seconds.
+◇ Test "Separa las de tu color de las de otros colores" started.
+✔ Test "Separa las de tu color de las de otros colores" passed after 0.002 seconds.
+◇ Test "Las ideas de Pinterest se piden aparte" started.
+✔ Test "Las ideas de Pinterest se piden aparte" passed after 0.052 seconds.
+◇ Test "Si la búsqueda falla, guarda el error para mostrarlo" started.
+✔ Test "Si la búsqueda falla, guarda el error para mostrarlo" passed after 0.001 seconds.
+✔ Suite "Resultados" passed after 0.063 seconds.
+✔ Test run with 29 tests in 8 suites passed after 1.824 seconds.
+2026-10-27 21:25:02.202 xcodebuild[4866:20154] [MT] IDETestOperationsObserverDebug: 182.096 elapsed -- Testing started completed.
+2026-10-27 21:25:02.202 xcodebuild[4866:20154] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-27 21:25:02.202 xcodebuild[4866:20154] [MT] IDETestOperationsObserverDebug: 182.096 sec, +182.096 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/runner/work/APP/APP/ios/build/Logs/Test/Test-DupeFinder-2026.10.27_21-21-57-+0000.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started
