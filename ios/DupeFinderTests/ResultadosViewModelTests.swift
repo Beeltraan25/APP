@@ -36,6 +36,26 @@ struct ResultadosViewModelTests {
         #expect(vm.visibles.count == 16)
     }
 
+    @Test("Separa las de tu color de las de otros colores")
+    func porColor() async {
+        let vm = await cargado()
+        #expect(vm.deTuColor.count == 11)
+        #expect(vm.deOtrosColores.count == 5)
+        #expect(vm.deOtrosColores.allSatisfy { $0.mismoColor == false })
+    }
+
+    @Test("Las ideas de Pinterest se piden aparte")
+    func inspiracion() async {
+        let vm = await cargado()
+        guard case .inactivo = vm.inspiracion else {
+            Issue.record("No debería pedirlas sin que el usuario quiera")
+            return
+        }
+        await vm.cargarInspiracion()
+        #expect(vm.inspiracion.valor?.ideas.isEmpty == false)
+        #expect(vm.inspiracion.valor?.rollo.isEmpty == false)
+    }
+
     @Test("Si la búsqueda falla, guarda el error para mostrarlo")
     func error() async {
         let vm = ResultadosViewModel(peticion: .ejemplo, servicio: BusquedaQueFalla())

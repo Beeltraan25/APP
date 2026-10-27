@@ -3,6 +3,15 @@ import Foundation
 /// Busca alternativas a una prenda en las tiendas de la lista blanca.
 public protocol ServicioBusqueda: Sendable {
     func buscar(imagenUrl: URL?, ficha: FichaPrenda) async throws -> RespuestaBusqueda
+    /// Más prendas del mismo rollo, a partir de referencias de Pinterest.
+    func inspiracion(ficha: FichaPrenda, excluir: [String]) async throws -> RespuestaInspiracion
+}
+
+extension ServicioBusqueda {
+    /// Por defecto no hay inspiración (p. ej. en servicios de prueba que solo buscan).
+    public func inspiracion(ficha: FichaPrenda, excluir: [String]) async throws -> RespuestaInspiracion {
+        throw ErrorApp.desconocido
+    }
 }
 
 /// Datos de prueba: sirve para diseñar sin gastar búsquedas de SerpAPI.
@@ -19,6 +28,13 @@ public struct ServicioBusquedaSimulado: ServicioBusqueda {
         }
         return DatosSimulados.busqueda
     }
+
+    public func inspiracion(ficha: FichaPrenda, excluir: [String]) async throws -> RespuestaInspiracion {
+        if retraso > .zero {
+            try await Task.sleep(for: retraso)
+        }
+        return DatosSimulados.inspiracion
+    }
 }
 
 /// Búsqueda real en el backend (Google Lens + Google Shopping vía SerpAPI).
@@ -31,5 +47,9 @@ public struct ServicioBusquedaRemoto: ServicioBusqueda {
 
     public func buscar(imagenUrl: URL?, ficha: FichaPrenda) async throws -> RespuestaBusqueda {
         try await cliente.buscar(imagenUrl: imagenUrl, ficha: ficha)
+    }
+
+    public func inspiracion(ficha: FichaPrenda, excluir: [String]) async throws -> RespuestaInspiracion {
+        try await cliente.inspiracion(ficha: ficha, excluir: excluir)
     }
 }

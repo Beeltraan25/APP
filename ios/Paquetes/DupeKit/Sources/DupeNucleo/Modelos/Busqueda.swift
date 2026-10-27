@@ -23,6 +23,8 @@ public struct Alternativa: Codable, Hashable, Sendable, Identifiable {
     public var etiquetas: [Etiqueta]
     /// "lens" (búsqueda por imagen) o "shopping" (búsqueda por texto).
     public var fuente: String
+    /// Si es del mismo color que la prenda buscada (según la IA). nil si no se sabe.
+    public var mismoColor: Bool?
 
     public var id: String { producto.id }
 
@@ -72,7 +74,16 @@ public struct RespuestaBusqueda: Codable, Hashable, Sendable {
     public var busquedaId: String
     public var alternativas: [Alternativa]
     public var conteoPorRango: [String: Int]
+    /// Cuántas son de otro color (el backend las pone al final).
+    public var deOtroColor: Int?
     public var desdeCache: Bool
+}
+
+extension Alternativa {
+    /// Un producto suelto (p. ej. de las ideas de Pinterest), sin puntuación de parecido.
+    public init(producto: Producto) {
+        self.init(producto: producto, similitud: nil, etiquetas: [], fuente: "shopping", mismoColor: nil)
+    }
 }
 
 extension RangoPrecio {

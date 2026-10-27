@@ -28,6 +28,12 @@ public enum DatosSimulados {
         try! cargar("busqueda")
     }
 
+    /// Ideas de Pinterest de ejemplo para los vaqueros de la foto.
+    public static var inspiracion: RespuestaInspiracion {
+        // swiftlint:disable:next force_try
+        try! cargar("inspiracion")
+    }
+
     /// Outfits "old money" reales (60 € por prenda) para los vaqueros de la foto.
     public static var outfits: RespuestaOutfits {
         // swiftlint:disable:next force_try

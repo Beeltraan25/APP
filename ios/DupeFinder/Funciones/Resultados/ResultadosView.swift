@@ -6,6 +6,7 @@ import SwiftUI
 struct ResultadosView: View {
     @State private var vm: ResultadosViewModel
     @Environment(\.dynamicTypeSize) private var tamanoTexto
+    @Environment(\.accessibilityReduceMotion) private var reducirMovimiento
 
     /// Dos columnas; con los tamaños de texto de accesibilidad, una (si no, los precios se parten).
     private var columnas: [GridItem] {
@@ -18,13 +19,26 @@ struct ResultadosView: View {
     }
 
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: Espacio.m) {
-                resumen
-                contenido
+        ScrollViewReader { desplazamiento in
+            ScrollView {
+                VStack(alignment: .leading, spacing: Espacio.m) {
+                    resumen
+                    contenido
+                    if case .listo = vm.estado {
+                        BloqueInspiracion(estado: vm.inspiracion, columnas: columnas) {
+                            Task { await vm.cargarInspiracion() }
+                        }
+                        .id("inspiracion")
+                    }
+                }
+                .padding(.horizontal, Espacio.m)
+                .padding(.bottom, Espacio.xl)
             }
-            .padding(.horizontal, Espacio.m)
-            .padding(.bottom, Espacio.xl)
+            // Cuando llegan las ideas de Pinterest, baja hasta ellas.
+            .onChange(of: vm.inspiracion.valor?.rollo) { _, rollo in
+                guard rollo != nil else { return }
+                withAnimation(reducirMovimiento ? nil : .smooth) { desplazamiento.scrollTo("inspiracion", anchor: .top) }
+            }
         }
         .navigationTitle("Alternativas")
         .navigationBarTitleDisplayMode(.inline)
@@ -32,6 +46,7 @@ struct ResultadosView: View {
         .refreshable { await vm.cargar() }
         .task {
             if case .inactivo = vm.estado { await vm.cargar() }
+            if ModoCaptura.actual == .inspiracion { await vm.cargarInspiracion() }
         }
         .sensoryFeedback(.selection, trigger: vm.rango)
     }
@@ -93,16 +108,17 @@ struct ResultadosView: View {
         case .listo:
             if vm.visibles.isEmpty {
                 sinResultados
+            } else if vm.deOtrosColores.isEmpty {
+                rejilla(vm.visibles)
             } else {
-                LazyVGrid(columns: columnas, spacing: Espacio.l) {
-                    ForEach(vm.visibles) { alternativa in
-                        NavigationLink(value: Destino.detalle(alternativa)) {
-                            TarjetaAlternativa(alternativa: alternativa)
-                        }
-                        .buttonStyle(.plain)
-                    }
+                // Primero las del color de la prenda; después, las de otros colores.
+                let ficha = vm.peticion.ficha
+                if !vm.deTuColor.isEmpty {
+                    cabeceraSeccion("En \(ficha.colorPrincipal.nombre) · \(vm.deTuColor.count)", color: ficha.colorPrincipal.color)
+                    rejilla(vm.deTuColor)
                 }
-                .animation(.smooth, value: vm.rango)
+                cabeceraSeccion("En otros colores · \(vm.deOtrosColores.count)", color: nil)
+                rejilla(vm.deOtrosColores)
             }
         case .error(let error):
             ContentUnavailableView {
@@ -115,6 +131,36 @@ struct ResultadosView: View {
             }
             .frame(maxWidth: .infinity, minHeight: 420)
         }
+    }
+
+    private func rejilla(_ alternativas: [Alternativa]) -> some View {
+        LazyVGrid(columns: columnas, spacing: Espacio.l) {
+            ForEach(alternativas) { alternativa in
+                NavigationLink(value: Destino.detalle(alternativa)) {
+                    TarjetaAlternativa(alternativa: alternativa)
+                }
+                .buttonStyle(.plain)
+            }
+        }
+        .animation(.smooth, value: vm.rango)
+    }
+
+    private func cabeceraSeccion(_ texto: String, color: Color?) -> some View {
+        HStack(spacing: 6) {
+            if let color {
+                Circle()
+                    .fill(color)
+                    .frame(width: 10, height: 10)
+                    .overlay(Circle().strokeBorder(.primary.opacity(0.2), lineWidth: 0.5))
+                    .accessibilityHidden(true)
+            }
+            Text(texto)
+                .font(.footnote.weight(.semibold))
+                .textCase(.uppercase)
+                .foregroundStyle(.secondary)
+        }
+        .padding(.top, Espacio.s)
+        .accessibilityAddTraits(.isHeader)
     }
 
     @ViewBuilder

@@ -274,7 +274,7 @@ struct BuscarView: View {
         switch ModoCaptura.actual {
         case .menu: menuAbierto = true
         case .ficha: await vm.analizar(.foto(Data()))
-        case .resultados: ruta = [.resultados(.ejemplo)]
+        case .resultados, .inspiracion: ruta = [.resultados(.ejemplo)]
         case .detalle: ruta = [.resultados(.ejemplo), .detalle(DatosSimulados.busqueda.alternativas[2])]
         default: break
         }

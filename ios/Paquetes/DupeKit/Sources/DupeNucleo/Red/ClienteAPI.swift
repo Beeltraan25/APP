@@ -72,6 +72,16 @@ public final class ClienteAPI: Sendable {
         return try await enviar(peticion)
     }
 
+    /// POST /v1/inspiracion: el «rollo» de la prenda según Pinterest y más prendas de ese estilo.
+    public func inspiracion(ficha: FichaPrenda, excluir: [String]) async throws -> RespuestaInspiracion {
+        var peticion = peticion(ruta: "v1/inspiracion")
+        peticion.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let codificador = JSONEncoder()
+        codificador.keyEncodingStrategy = .convertToSnakeCase
+        peticion.httpBody = try codificador.encode(CuerpoInspiracion(ficha: ficha, excluir: excluir))
+        return try await enviar(peticion)
+    }
+
     /// POST /v1/outfits. La respuesta llega por líneas: progreso ("Analizando el estilo…") y, al final, el resultado.
     public func outfits(
         base: PrendaBase,
@@ -207,6 +217,11 @@ public final class ClienteAPI: Sendable {
 private struct CuerpoBusqueda: Encodable {
     let imagenUrl: URL?
     let ficha: FichaPrenda
+}
+
+private struct CuerpoInspiracion: Encodable {
+    let ficha: FichaPrenda
+    let excluir: [String]
 }
 
 /// Presupuesto con "null" explícito cuando no hay límite (JSONEncoder omitiría la clave).
