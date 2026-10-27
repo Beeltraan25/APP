@@ -62,9 +62,9 @@ final class PrendaBuscada {
 /// Guarda en el historial cada análisis (sin repetir la misma foto o el mismo enlace).
 enum Historial {
     /// Las más antiguas se borran solas a partir de aquí.
-    static let maximo = 60
+    nonisolated static let maximo = 60
     /// El servidor guarda la foto 24 h; con margen, a las 23 h se considera caducada.
-    static let vigencia: TimeInterval = 23 * 3600
+    nonisolated static let vigencia: TimeInterval = 23 * 3600
 
     static func huella(de analisis: AnalisisPresentado) -> String {
         if let foto = analisis.foto {
