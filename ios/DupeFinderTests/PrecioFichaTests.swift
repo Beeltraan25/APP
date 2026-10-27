@@ -4,7 +4,7 @@ import Testing
 @testable import DupeFinder
 
 @Suite("Precio de la ficha")
-struct FichaViewModelTests {
+struct PrecioFichaTests {
     @Test("Si la tienda dice el precio, viene puesto")
     func precioDeLaTienda() {
         let vm = FichaViewModel(analisis: AnalisisPresentado(respuesta: DatosSimulados.analisisEnlace, foto: nil))
